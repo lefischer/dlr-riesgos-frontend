@@ -5,7 +5,7 @@
 
 
 <clr-vertical-nav [clrVerticalNavCollapsible]="true" [(clrVerticalNavCollapsed)]="collapsedLayerControl"
-    [clr-nav-level]="2">
+    [clr-nav-level]="2" class="right">
 
     <app-changedetector></app-changedetector>
 
@@ -15,7 +15,7 @@
 
 
 <clr-vertical-nav [clrVerticalNavCollapsible]="true" [(clrVerticalNavCollapsed)]="collapsedConfigurationWizard"
-    class="left">
+    class="sidenav">
 
     <h3 class="clr-vertical-nav-header is-highlight">{{'Configuration Wizard' | translate}}</h3>
     <ukis-configuration-wizard [navExpanded]="!collapsedConfigurationWizard"></ukis-configuration-wizard>

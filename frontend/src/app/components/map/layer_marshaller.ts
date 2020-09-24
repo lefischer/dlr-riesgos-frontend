@@ -20,7 +20,7 @@ import { TranslateService, TranslateParser } from '@ngx-translate/core';
 import { Vector as olVectorLayer } from 'ol/layer';
 import { Vector as olVectorSource } from 'ol/source';
 import { GeoJSON } from 'ol/format';
-import { SldParserService } from 'src/app/services/sld-parser.service';
+import { SldParserService } from 'src/app/services/sld/sld-parser.service';
 
 
 interface WmsParameters {

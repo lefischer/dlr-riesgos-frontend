@@ -40,11 +40,11 @@ import { vei, direction } from './scenarios/ecuador/lahar';
 import { assetcategoryEcuador, losscategoryEcuador, taxonomiesEcuador } from './scenarios/ecuador/vulnerability';
 import { HttpClient } from '@angular/common/http';
 import { RiesgosScenarioMetadata } from './riesgos.state';
-import { ConfigService, Config } from '../services/config.service';
+import { ConfigService, Config } from '../services/config/config.service';
 import { Cache } from '@dlr-eoc/services-ogc';
 import { FakeCache } from '@dlr-eoc/services-ogc';
-import { IndexDbCache } from '../services/indexDbCache';
-import { RemoteCache } from '../services/remoteCache';
+import { IndexDbCache } from '../services/cache/indexDbCache';
+import { RemoteCache } from '../services/cache/remoteCache';
 
 
 

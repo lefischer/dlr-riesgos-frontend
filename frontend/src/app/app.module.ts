@@ -58,12 +58,13 @@ import { LayerentryGroupComponent } from './components/layer_control/layerentry-
 import { VectorLegendComponent } from './components/layer_control/vector-legend/vector-legend.component';
 import { ReversePipe } from './components/layer_control/utils/array-reverse.pipe';
 import { RegexTranslatePipe } from './helpers/regex-translate.pipe';
-import { ConfigService, Config } from './services/config.service';
+import { ConfigService, Config } from './services/config/config.service';
 import { RiesgosService } from './riesgos/riesgos.service';
 import { ChangedetectorComponent } from './components/changedetector/changedetector.component';
 import { BlinkerComponent } from './components/changedetector/blinker/blinker.component';
 import { FpserComponent } from './components/changedetector/fpser/fpser.component';
 import { CanvasComponent } from './components/layer_control/vector-legend/canvas/canvas.component';
+import { ThemePickerComponent } from './components/theme-picker/theme-picker.component';
 
 @NgModule({
   declarations: [
@@ -109,7 +110,8 @@ import { CanvasComponent } from './components/layer_control/vector-legend/canvas
     RegexTranslatePipe,
     ChangedetectorComponent,
     BlinkerComponent,
-    FpserComponent
+    FpserComponent,
+    ThemePickerComponent
   ],
   imports: [
     BrowserModule,

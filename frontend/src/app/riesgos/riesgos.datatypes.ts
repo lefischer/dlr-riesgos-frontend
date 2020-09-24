@@ -2,8 +2,8 @@ import { WpsDataDescription, WpsVerion, ProductId, WpsData, WpsClient, FakeCache
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
-import { RemoteCache } from '../services/remoteCache';
-import { IndexDbCache } from '../services/indexDbCache';
+import { RemoteCache } from '../services/cache/remoteCache';
+import { IndexDbCache } from '../services/cache/indexDbCache';
 import { environment } from 'src/environments/environment';
 
 
