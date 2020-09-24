@@ -14,7 +14,7 @@ import TileGrid from 'ol/tilegrid/TileGrid';
 import {click, noModifierKeys, altKeyOnly} from 'ol/events/condition';
 import Select from 'ol/interaction/Select';
 import { MapStateService } from '@dlr-eoc/services-map-state';
-import { OsmTileLayer } from '@dlr-eoc/base-layers-raster';
+import { OsmTileLayer, EocLitemapTile, EocLitemap } from '@dlr-eoc/base-layers-raster';
 import { Store, select } from '@ngrx/store';
 import { State } from 'src/app/ngrx_register';
 import { getMapableProducts, getScenario, getGraph } from 'src/app/riesgos/riesgos.selectors';
@@ -250,6 +250,14 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.layersSvc.addLayer(layer, 'Layers', false);
                 }
             }
+            const baselayers = this.getBaseLayers(scenario);
+            for (const layer of baselayers) {
+                if (layer instanceof LayerGroup) {
+                    this.layersSvc.addLayerGroup(layer, 'Baselayers');
+                } else {
+                    this.layersSvc.addLayer(layer, 'Baselayers', false);
+                }
+            }
         });
         this.subs.push(sub5);
     }
@@ -299,33 +307,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     /** TODO add openlayers Drag-and-Drop to add new Additional Layers https://openlayers.org/en/latest/examples/drag-and-drop-image-vector.html */
     private getInfoLayers(scenario: string) {
         const layers: Array<Layer | LayerGroup> = [];
-
-        const osmLayer = new OsmTileLayer({
-            visible: true,
-            removable: true,
-            legendImg: 'assets/layer-preview/osm-96px.jpg'
-        });
-        layers.push(osmLayer);
-
-        const gebco = new CustomLayer({
-            id: 'gebco',
-            name: 'GEBCO',
-            custom_layer: new TileLayer({
-                source: new TileWMS({
-                    url: 'https://www.gebco.net/data_and_products/gebco_web_services/2019/mapserv?',
-                    params: {
-                        layers: 'GEBCO_2019_Grid',
-                        tiled: true
-                    },
-                    crossOrigin: 'anonymous'
-                })
-            }),
-            visible: false,
-            opacity: 0.6,
-            legendImg: 'https://www.gebco.net/data_and_products/gebco_web_services/2019/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&layers=GEBCO_2019_Grid&tiled=true&WIDTH=128&HEIGHT=128&CRS=EPSG%3A4326&STYLES=&BBOX=-22.5%2C-90%2C0%2C-67.5',
-            attribution: '&copy, <a href="https://www.gebco.net/">GEBCO Compilation Group (2020) GEBCO 2020 Grid (doi:10.5285/a29c5465-b138-234d-e053-6c86abc040b9)</a>'
-        });
-        layers.push(gebco);
 
         if (scenario === 'c1') {
 
@@ -536,7 +517,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
                         opacity: 0.3,
                         visible: false,
                         // @ts-ignore
-                        crossOrigin: 'anonymous'
+                        crossOrigin: 'anonymous',
+                        hasFocus: false,
+                        productId: 'distribPeru'
                     }),
                     new ProductRasterLayer({
                         id: 'generacionPeru',
@@ -552,7 +535,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
                         opacity: 0.3,
                         visible: false,
                         // @ts-ignore
-                        crossOrigin: 'anonymous'
+                        crossOrigin: 'anonymous',
+                        hasFocus: false,
+                        productId: 'generacionPeru'
                     }),
                     new ProductRasterLayer({
                         id: 'transmissionPeru',
@@ -568,7 +553,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
                         opacity: 0.3,
                         visible: false,
                         // @ts-ignore
-                        crossOrigin: 'anonymous'
+                        crossOrigin: 'anonymous',
+                        hasFocus: false,
+                        productId: 'transmissionPeru'
                     }),
                 ]
             });
@@ -623,8 +610,54 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         return layers;
     }
 
+    private getBaseLayers(scenario: string) {
+        const layers: Array<Layer | LayerGroup> = [];
 
-        subscribeToMapState() {
+        const osmLayer = new OsmTileLayer({
+            visible: false,
+            legendImg: 'assets/layer-preview/osm-96px.jpg'
+        });
+        layers.push(osmLayer);
+
+        const gebco = new CustomLayer({
+            id: 'gebco',
+            name: 'GEBCO',
+            custom_layer: new TileLayer({
+                source: new TileWMS({
+                    url: 'https://www.gebco.net/data_and_products/gebco_web_services/2019/mapserv?',
+                    params: {
+                        layers: 'GEBCO_2019_Grid',
+                        tiled: true
+                    },
+                    crossOrigin: 'anonymous'
+                })
+            }),
+            visible: false,
+            opacity: 1.0,
+            legendImg: 'https://www.gebco.net/data_and_products/gebco_web_services/2019/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&layers=GEBCO_2019_Grid&tiled=true&WIDTH=128&HEIGHT=128&CRS=EPSG%3A4326&STYLES=&BBOX=-22.5%2C-90%2C0%2C-67.5',
+            attribution: '&copy, <a href="https://www.gebco.net/">GEBCO Compilation Group (2020) GEBCO 2020 Grid (doi:10.5285/a29c5465-b138-234d-e053-6c86abc040b9)</a>'
+        });
+        layers.push(gebco);
+
+        layers.push(new BlueMarbleTile({
+            params: {
+              layer: 'bmng_topo_bathy',
+              format: 'image/png',
+              style: '_empty',
+              matrixSetOptions: {
+                matrixSet: this.mapSvc.EPSG,
+                tileMatrixPrefix: this.mapSvc.EPSG
+              }
+            },
+          }));
+
+        layers.push(new EocLitemap());
+
+        return layers;
+    }
+
+
+    subscribeToMapState() {
         const sub7 = this.mapStateSvc.getMapState().subscribe((state) => {
             if (history.pushState) {
                 const url = parse(window.location.href.replace('#/', ''));

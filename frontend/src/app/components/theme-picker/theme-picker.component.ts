@@ -15,13 +15,15 @@ export class ThemePickerComponent implements OnInit {
     private themeService: ThemeService
   ) {
     this.themes = this.themeService.getThemes();
-    this.currentTheme = this.themeService.getActiveTheme();
+    this.themeService.getActiveTheme().subscribe(t => {
+      this.currentTheme = t;
+    });
   }
 
   ngOnInit(): void {
   }
 
-  selectTheme(themeName: string) {
+  selectTheme(themeName: string): void {
     this.themeService.selectTheme(themeName);
   }
 

@@ -3,7 +3,7 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { UkisRoutingModule } from './app-routing.module';
-import { UkisComponent } from './app.component';
+import { AppComponent } from './app.component';
 import { ClarityModule } from '@clr/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
@@ -24,8 +24,8 @@ import { FormComponent } from './components/config_wizard/form/form.component';
 import { FormFeatureSelectFieldComponent } from './components/config_wizard/form-featureselect-field/form-featureselect-field.component';
 import { FormStringFieldComponent } from './components/config_wizard/form-string-field/form-string-field.component';
 import { WizardPageComponent } from './components/config_wizard/wizard-page/wizard-page.component';
-import { ScenariosComponent } from './route-components/scenarios/scenarios.component';
-import { RouteMapComponent } from './route-components/route-map/route-map.component';
+import { ScenariosComponent } from './views/scenarios/scenarios.component';
+import { RouteMapComponent } from './views/route-map/route-map.component';
 import { MapOlModule, MapOlService } from '@dlr-eoc/map-ol';
 import { LayersModule, LayersService } from '@dlr-eoc/services-layers';
 import { MapComponent } from './components/map/map.component';
@@ -41,14 +41,14 @@ import { LanguageSwitcherComponent } from './components/language-switcher/langua
 import { GraphvizcompComponent } from './components/graphvizcomp/graphvizcomp.component';
 import { ShowgraphComponent } from './components/showgraph/showgraph.component';
 import { BboxfieldComponent } from './components/config_wizard/form-bbox-field/bboxfield/bboxfield.component';
-import { RouteDocumentationComponent } from './route-components/route-documentation/route-documentation.component';
+import { RouteDocumentationComponent } from './views/route-documentation/route-documentation.component';
 import { ReadMoreComponent } from './components/read-more/read-more.component';
 import { Action } from '@ngrx/store';
 import { TextModalComponent } from './components/text-modal/text-modal.component';
 import { DisclaimerComponent } from './components/disclaimer/disclaimer.component';
 import { DisclaimerpopupComponent } from './components/disclaimerpopup/disclaimerpopup.component';
 import { InteractionstatemonitorComponent } from './components/interactionstatemonitor/interactionstatemonitor.component';
-import { LicensesComponent } from './route-components/licenses/licenses.component';
+import { LicensesComponent } from './views/licenses/licenses.component';
 import { BlogentryComponent } from './components/blogentry/blogentry.component';
 import { DndDirective } from './components/save-button/dnd/dnd.directive';
 import { LayerControlComponent } from './components/layer_control/layer-control/layer-control.component';
@@ -68,7 +68,7 @@ import { ThemePickerComponent } from './components/theme-picker/theme-picker.com
 
 @NgModule({
   declarations: [
-    UkisComponent,
+    AppComponent,
     GlobalAlertComponent,
     GlobalFooterComponent,
     GlobalProgressComponent,
@@ -156,6 +156,6 @@ import { ThemePickerComponent } from './components/theme-picker/theme-picker.com
       deps: [ConfigService]
     },
   ],
-  bootstrap: [UkisComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

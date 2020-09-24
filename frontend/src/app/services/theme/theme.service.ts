@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { StyleManager } from './style.manager';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 export interface ThemeMetadata {
   name: string;
@@ -14,29 +14,30 @@ export class ThemeService {
 
   private themes: ThemeMetadata[] = [{
       displayName: 'Light',
-      name: 'clr-ui',
+      name: 'light',
     }, {
       displayName: 'Dark',
-      name: 'clr-ui-dark',
+      name: 'dark',
     }];
 
-    private activeTheme: ThemeMetadata = this.themes[1];
+    private activeTheme: BehaviorSubject<ThemeMetadata>;
 
-  constructor(private styleMngr: StyleManager) {
-    this.selectTheme(this.activeTheme.name);
+  constructor() {
+    const initialTheme = this.themes[0];
+    this.activeTheme = new BehaviorSubject<ThemeMetadata>(initialTheme);
+    this.selectTheme(initialTheme.name);
   }
 
-  public getThemes() {
+  public getThemes(): ThemeMetadata[] {
     return this.themes;
   }
 
-  public getActiveTheme() {
+  public getActiveTheme(): Observable<ThemeMetadata> {
     return this.activeTheme;
   }
 
   public selectTheme(themeName: string) {
     const theme = this.themes.find(t => t.name === themeName);
-    this.styleMngr.setStyle('theme', `assets/${theme.name}.css`);
-    this.activeTheme = theme;
+    this.activeTheme.next(theme);
   }
 }

@@ -15,7 +15,6 @@ import { WizardableProcess, isWizardableProcess } from '../wizardable_processes'
     selector: 'ukis-configuration-wizard',
     templateUrl: './configuration-wizard.component.html',
     styleUrls: ['./configuration-wizard.component.scss'],
-    encapsulation: ViewEncapsulation.None
 })
 export class ConfigurationWizardComponent implements OnInit {
 
