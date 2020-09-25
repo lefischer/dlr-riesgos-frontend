@@ -335,6 +335,10 @@ export class LayerMarshaller  {
         return wmsParameters$.pipe(map((paras: WmsParameters) => {
             const layers: ProductRasterLayer[] = [];
             if (paras) {
+
+                // @todo: if lahar layers, create layer-groups instead.
+                // also, add a layergroup-slider to it.
+
                 for (const layername of paras.layers) {
                     // @TODO: convert all searchparameter names to uppercase
                     const layer: ProductRasterLayer = new ProductRasterLayer({

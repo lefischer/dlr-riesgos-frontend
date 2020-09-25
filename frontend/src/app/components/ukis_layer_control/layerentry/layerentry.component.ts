@@ -17,6 +17,7 @@ import { ProductLayer } from '../../map/map.types';
 })
 export class LayerentryComponent implements OnInit {
   @HostBinding('class.layer-visible') get visible() { return this.layer.visible; }
+  @HostBinding('class') get cssClass() { return this.layer.cssClass; }
 
   @Input('layersSvc') layersSvc: LayersService;
   @Input('mapState') mapState?: MapStateService;
@@ -24,11 +25,22 @@ export class LayerentryComponent implements OnInit {
 
   @Input('group') group?: LayerGroup;
   @Input('layerGroups') layerGroups?: LayerGroup[];
-  @Input('expanded') openProperties = false;
+  @Input('expanded') set expanded(value: boolean) {
+    if (this.layer) {
+      this.layer.expanded = value;
+    }
+  }
+  get expanded() {
+    if (this.layer) {
+      return this.layer.expanded;
+    } else {
+      return false;
+    }
+  }
   @Input('expandable') expandable = true;
 
 
-  @Output() update = new EventEmitter<any>();
+  @Output() update = new EventEmitter<{ layer: Layer }>();
 
   public canZoomToLayer = false;
 
@@ -40,8 +52,27 @@ export class LayerentryComponent implements OnInit {
     changeStyle: false
   };
 
+
   constructor() {
 
+  }
+
+  /**
+   * obj: {any| IDynamicComponent}
+   */
+  checkIsComponentItem(obj: any, layer: Layer) {
+    let isComp = false;
+    if (obj && typeof obj === 'object') {
+      if ('component' in obj) {
+        if (!obj.inputs) {
+          obj.inputs = { layer };
+        } else if (obj.inputs && !obj.inputs.layer) {
+          obj.inputs = Object.assign({ layer }, obj.inputs);
+        }
+        isComp = true;
+      }
+    }
+    return isComp;
   }
 
   getLayerName(layer: Layer) {
@@ -93,26 +124,41 @@ export class LayerentryComponent implements OnInit {
         this.layersSvc.updateLayer(selectedLayer, selectedLayer.filtertype || 'Layers'); // TODO check for baselayers!!!!!!
       }
     } else {
-      /** "radio" for Baselayers */
-      if (group.filtertype === 'Baselayers') {
-        for (const layer of group.layers) {
-          layer.visible = layer === selectedLayer;
+      if (group.layers.length > 0) {
+        /** "radio" for Baselayers */
+        if (group.filtertype === 'Baselayers') {
+          for (const layer of group.layers) {
+            layer.visible = layer === selectedLayer;
+          }
+          this.update.emit({
+            layer: this.layer
+          });
+          /** "checkbox" for all other layers */
+        } else {
+          const tempGroupVisible = group.visible;
+          /** change visibility of the selected layer */
+          selectedLayer.visible = !selectedLayer.visible;
+
+          /** check if group visibility has changed */
+          if (tempGroupVisible !== group.visible) {
+            this.update.emit({
+              layer: this.layer
+            });
+          } else {
+            /** If the visibility of the group don't changes update only the layer  */
+            this.layersSvc.updateLayer(selectedLayer, selectedLayer.filtertype || 'Layers');
+          }
         }
-        /** "checkbox" for all other layers */
-      } else {
-        selectedLayer.visible = !selectedLayer.visible;
       }
-      this.update.emit({
-        layer: this.layer
-      });
     }
   }
   /**
    * setLayerIndex
    */
   setLayerIndex(layer: Layer, dir, group?: LayerGroup) {
-    console.log('is First', this.isFirst(layer));
-    console.log('is Last', this.isLast(layer));
+    // console.log('is First', this.isFirst(layer));
+    // console.log('is Last', this.isLast(layer));
+    // console.log(layer, group);
     if (group) {
       this.layersSvc.setLayerIndexInGroup(layer, dir, group);
     } else {
@@ -127,14 +173,14 @@ export class LayerentryComponent implements OnInit {
     if (group) {
       this.layersSvc.removeLayerFromGroup(selectedLayer, group);
     } else {
-      console.log('delete single layer');
+      // console.log('delete single layer');
       this.layersSvc.removeLayer(selectedLayer, selectedLayer.filtertype);
     }
   }
 
   zoomTo(layer: Layer) {
     if (this.mapState && layer.bbox && layer.bbox.length >= 4) {
-      this.mapState.setExtent( layer.bbox as [number, number, number, number]);
+      this.mapState.setExtent(layer.bbox as [number, number, number, number]);
     }
   }
 
@@ -169,7 +215,7 @@ export class LayerentryComponent implements OnInit {
 
   showProperties() {
     if (!this.is_expandable()) {
-      this.openProperties = !this.openProperties;
+      this.expanded = !this.expanded;
     }
   }
 
@@ -226,5 +272,11 @@ export class LayerentryComponent implements OnInit {
       return this.layersSvc.isGroupLast(layer, null, layer.filtertype);
     }
   }
+
+  getExpandShape() {
+    // return this.openProperties ? 'down' : 'right';
+    return this.expanded ? { transform: 'rotate(180deg)' } : { transform: 'rotate(90deg)' };
+  }
+
 }
 
