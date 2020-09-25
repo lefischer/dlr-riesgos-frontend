@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, AfterViewChecked, AfterContentChecked } from '@angular/core';
+import { Component, OnInit, AfterViewInit, AfterViewChecked, AfterContentChecked, HostBinding } from '@angular/core';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
@@ -30,6 +30,7 @@ interface BlogEntry extends Entry {
   styleUrls: ['./route-documentation.component.scss']
 })
 export class RouteDocumentationComponent implements OnInit, AfterContentChecked {
+  @HostBinding('class') class = 'content-container';
 
   public entries$: Observable<BlogEntry[]>;
 
