@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, HostBinding, ViewEncapsulation, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/ngrx_register';
 import { ActivatedRoute } from '@angular/router';
@@ -48,11 +48,9 @@ export class RouteMapComponent implements OnInit {
     this._collapsedConfigurationWizard = value;
   }
 
-
   ngOnInit() {
     const scenario = this.activeRoute.snapshot.queryParams['id'] || 'c1';
     this.olSvc.setProjection('EPSG:4326');
     this.store.dispatch(new ScenarioChosen({ scenario }));
   }
-
 }

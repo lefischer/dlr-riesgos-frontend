@@ -65,6 +65,9 @@ import { BlinkerComponent } from './components/changedetector/blinker/blinker.co
 import { FpserComponent } from './components/changedetector/fpser/fpser.component';
 import { CanvasComponent } from './components/layer_control/vector-legend/canvas/canvas.component';
 import { ThemePickerComponent } from './components/theme-picker/theme-picker.component';
+import { PrintComponent } from './components/print/print.component';
+import { PrintMapComponent } from './components/print/print-map/print-map.component';
+import { ScalerComponent } from './components/scaler/scaler.component';
 import { WMTSLayerFactory } from './components/map/wmts';
 
 @NgModule({
@@ -112,7 +115,10 @@ import { WMTSLayerFactory } from './components/map/wmts';
     ChangedetectorComponent,
     BlinkerComponent,
     FpserComponent,
-    ThemePickerComponent
+    ThemePickerComponent,
+    PrintComponent,
+    PrintMapComponent,
+    ScalerComponent
   ],
   imports: [
     BrowserModule,

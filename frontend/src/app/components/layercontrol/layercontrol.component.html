@@ -1,5 +1,5 @@
 <clr-vertical-nav-group [(clrVerticalNavGroupExpanded)]="expandedResults" class="layers">
-    <clr-icon shape="world" title="{{'Results' | translate}}" [ngClass]="{'is-highlight': expandedResults}"
+    <clr-icon shape="world" class="is-solid" title="{{'Results' | translate}}" [ngClass]="{'is-highlight': expandedResults}"
         clrVerticalNavIcon></clr-icon>
     <span class="p1">{{'Results' | translate}}</span>
     <clr-vertical-nav-group-children class="padding title-ellipsis">
@@ -8,7 +8,7 @@
 </clr-vertical-nav-group>
 
 <clr-vertical-nav-group [(clrVerticalNavGroupExpanded)]="expandedLayers" class="layers">
-    <clr-icon shape="layers" title="{{'Additional layers' | translate}}" [ngClass]="{'is-highlight': expandedLayers}"
+    <clr-icon shape="world" title="{{'Additional layers' | translate}}" [ngClass]="{'is-highlight': expandedLayers}"
         clrVerticalNavIcon></clr-icon>
     <span class="p1">{{'Additional layers' | translate}}</span>
     <clr-vertical-nav-group-children class="padding title-ellipsis">
@@ -17,7 +17,7 @@
 </clr-vertical-nav-group>
 
 <clr-vertical-nav-group [(clrVerticalNavGroupExpanded)]="expandedBaseLayers" class="layers">
-    <clr-icon shape="layers" title="{{'Additional layers' | translate}}" [ngClass]="{'is-highlight': expandedBaseLayers}"
+    <clr-icon shape="world" title="{{'Additional layers' | translate}}" [ngClass]="{'is-highlight': expandedBaseLayers}"
         clrVerticalNavIcon></clr-icon>
     <span class="p1">{{'Base layers' | translate}}</span>
     <clr-vertical-nav-group-children class="padding title-ellipsis">
