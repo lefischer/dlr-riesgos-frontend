@@ -20,7 +20,7 @@ import { State } from 'src/app/ngrx_register';
 import { getMapableProducts, getScenario, getGraph } from 'src/app/riesgos/riesgos.selectors';
 import { Product } from 'src/app/riesgos/riesgos.datatypes';
 import { InteractionCompleted } from 'src/app/interactions/interactions.actions';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, Subscription } from 'rxjs';
 import { InteractionState, initialInteractionState } from 'src/app/interactions/interactions.state';
 import { LayerMarshaller } from './layer_marshaller';
 import { Layer, LayersService, RasterLayer, CustomLayer, LayerGroup } from '@dlr-eoc/services-layers';
@@ -32,7 +32,7 @@ import { featureCollection as tFeatureCollection } from '@turf/helpers';
 import { parse } from 'url';
 import { WpsBboxValue } from '@dlr-eoc/services-ogc';
 import { BlueMarbleTile } from '@dlr-eoc/base-layers-raster';
-
+import { WMTSLayerFactory } from './wmts';
 
 const mapProjection = 'EPSG:4326';
 
@@ -58,6 +58,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         public mapSvc: MapOlService,
         private store: Store<State>,
         private layerMarshaller: LayerMarshaller,
+        private wmtsFactory: WMTSLayerFactory,
         public layersSvc: LayersService
     ) {
         this.controls = { attribution: true, scaleLine: true };
@@ -250,14 +251,16 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.layersSvc.addLayer(layer, 'Layers', false);
                 }
             }
-            const baselayers = this.getBaseLayers(scenario);
-            for (const layer of baselayers) {
-                if (layer instanceof LayerGroup) {
-                    this.layersSvc.addLayerGroup(layer, 'Baselayers');
-                } else {
-                    this.layersSvc.addLayer(layer, 'Baselayers', false);
+
+            this.getBaseLayers(scenario).subscribe(baseLayers => {
+                for (const layer of baseLayers) {
+                    if (layer instanceof LayerGroup) {
+                        this.layersSvc.addLayerGroup(layer, 'Baselayers');
+                    } else {
+                        this.layersSvc.addLayer(layer, 'Baselayers', false);
+                    }
                 }
-            }
+            })
         });
         this.subs.push(sub5);
     }
@@ -610,50 +613,85 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         return layers;
     }
 
-    private getBaseLayers(scenario: string) {
-        const layers: Array<Layer | LayerGroup> = [];
+    private getBaseLayers(scenario: string): Observable<(Layer | LayerGroup)[]> {
 
-        const osmLayer = new OsmTileLayer({
-            visible: false,
-            legendImg: 'assets/layer-preview/osm-96px.jpg'
-        });
-        layers.push(osmLayer);
-
-        const gebco = new CustomLayer({
-            id: 'gebco',
-            name: 'GEBCO',
-            custom_layer: new TileLayer({
-                source: new TileWMS({
-                    url: 'https://www.gebco.net/data_and_products/gebco_web_services/2019/mapserv?',
-                    params: {
-                        layers: 'GEBCO_2019_Grid',
-                        tiled: true
-                    },
-                    crossOrigin: 'anonymous'
+        const lightMap$ = this.wmtsFactory.createWmtsLayer(
+            'https://tiles.geoservice.dlr.de/service/wmts', 'eoc:litemap', this.mapSvc.EPSG).pipe(
+                map(l => {
+                    return new CustomLayer({
+                        custom_layer: l,
+                        id: 'lightMap',
+                        name: 'Light map',
+                        attribution: '&copy, <a href="//geoservice.dlr.de/eoc/basemap/">DLR</a>',
+                        continuousWorld: false,
+                        legendImg: 'https://geoservice.dlr.de/eoc/basemap/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&LAYERS=litemap&ATTRIBUTION=&WIDTH=256&HEIGHT=256&CRS=EPSG%3A3857&STYLES=&BBOX=0%2C0%2C10018754.171394622%2C10018754.171394622',
+                        description: 'http://www.naturalearthdata.com/about/',
+                        opacity: 1
+                    });
                 })
+            );
+        const blueMarble$ = this.wmtsFactory.createWmtsLayer(
+            'https://tiles.geoservice.dlr.de/service/wmts', 'bmng_topo_bathy', this.mapSvc.EPSG).pipe(
+                map(l => {
+                    return new CustomLayer({
+                        custom_layer: l,
+                        id: 'blueMarble',
+                        name: 'Blue marble',
+                        attribution: '&copy, <a href="//geoservice.dlr.de/eoc/basemap/">DLR</a>',
+                        continuousWorld: false,
+                        legendImg: 'https://tiles.geoservice.dlr.de/service/wmts?layer=bmng_topo_bathy&style=_empty&tilematrixset=EPSG%3A3857&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix=EPSG%3A3857%3A5&TileCol=18&TileRow=11',
+                        description: 'Blue Marble NG dataset with topography and bathymetry',
+                        opacity: 1
+                    });
+                })
+            );
+        const relief$ = this.wmtsFactory.createWmtsLayer(
+            'https://tiles.geoservice.dlr.de/service/wmts', 'eoc:world_relief_bw', this.mapSvc.EPSG).pipe(
+                map(l => {
+                    return new CustomLayer({
+                        custom_layer: l,
+                        id: 'relief',
+                        name: 'World relief',
+                        attribution: '&copy, <a href="//geoservice.dlr.de/eoc/basemap/">DLR</a>',
+                        continuousWorld: false,
+                        legendImg: 'https://tiles.geoservice.dlr.de/service/wmts?layer=eoc%3Aworld_relief_bw&style=_empty&tilematrixset=EPSG%3A3857&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix=EPSG%3A3857%3A5&TileCol=18&TileRow=11',
+                        description: 'World Relief Black / White',
+                        opacity: 1
+                    });
+                })
+            );
+
+        return forkJoin([lightMap$, blueMarble$, relief$]).pipe(
+            map((layers: (Layer | LayerGroup)[]) => {
+
+                    const osmLayer = new OsmTileLayer({
+                        visible: false,
+                        legendImg: 'assets/layer-preview/osm-96px.jpg'
+                    });
+                    layers.push(osmLayer);
+
+                    const gebco = new CustomLayer({
+                        id: 'gebco',
+                        name: 'GEBCO',
+                        custom_layer: new TileLayer({
+                            source: new TileWMS({
+                                url: 'https://www.gebco.net/data_and_products/gebco_web_services/2019/mapserv?',
+                                params: {
+                                    layers: 'GEBCO_2019_Grid',
+                                    tiled: true
+                                },
+                                crossOrigin: 'anonymous'
+                            })
+                        }),
+                        visible: false,
+                        opacity: 1.0,
+                        legendImg: 'https://www.gebco.net/data_and_products/gebco_web_services/2019/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&layers=GEBCO_2019_Grid&tiled=true&WIDTH=128&HEIGHT=128&CRS=EPSG%3A4326&STYLES=&BBOX=-22.5%2C-90%2C0%2C-67.5',
+                        attribution: '&copy, <a href="https://www.gebco.net/">GEBCO Compilation Group (2020) GEBCO 2020 Grid (doi:10.5285/a29c5465-b138-234d-e053-6c86abc040b9)</a>'
+                    });
+                    layers.push(gebco);
+                    return layers;
             }),
-            visible: false,
-            opacity: 1.0,
-            legendImg: 'https://www.gebco.net/data_and_products/gebco_web_services/2019/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&layers=GEBCO_2019_Grid&tiled=true&WIDTH=128&HEIGHT=128&CRS=EPSG%3A4326&STYLES=&BBOX=-22.5%2C-90%2C0%2C-67.5',
-            attribution: '&copy, <a href="https://www.gebco.net/">GEBCO Compilation Group (2020) GEBCO 2020 Grid (doi:10.5285/a29c5465-b138-234d-e053-6c86abc040b9)</a>'
-        });
-        layers.push(gebco);
-
-        layers.push(new BlueMarbleTile({
-            params: {
-              layer: 'bmng_topo_bathy',
-              format: 'image/png',
-              style: '_empty',
-              matrixSetOptions: {
-                matrixSet: this.mapSvc.EPSG,
-                tileMatrixPrefix: this.mapSvc.EPSG
-              }
-            },
-          }));
-
-        layers.push(new EocLitemap());
-
-        return layers;
+        );
     }
 
 

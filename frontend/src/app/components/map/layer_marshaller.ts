@@ -23,6 +23,8 @@ import { GeoJSON } from 'ol/format';
 import { SldParserService } from 'src/app/services/sld/sld-parser.service';
 
 
+
+
 interface WmsParameters {
     origin: string;
     path: string;
@@ -65,7 +67,7 @@ export class LayerMarshaller  {
         for (const product of products) {
             obsables.push(this.toLayers(product));
         }
-        return forkJoin(...obsables).pipe(
+        return forkJoin(obsables).pipe(
             map((results: ProductLayer[][]) => {
                 const newLayers: ProductLayer[] = [];
                 for (const result of results) {
@@ -299,7 +301,7 @@ export class LayerMarshaller  {
             for (const val of product.value) {
                 parseProcesses$.push(this.makeWmsLayersFromValue(val, product.uid, product.description));
             }
-            return forkJoin(...parseProcesses$).pipe(map((results: ProductRasterLayer[][]) => {
+            return forkJoin(parseProcesses$).pipe(map((results: ProductRasterLayer[][]) => {
                 const newLayers: ProductRasterLayer[] = [];
                 for (const result of results) {
                     for (const layer of result) {

@@ -65,6 +65,7 @@ import { BlinkerComponent } from './components/changedetector/blinker/blinker.co
 import { FpserComponent } from './components/changedetector/fpser/fpser.component';
 import { CanvasComponent } from './components/layer_control/vector-legend/canvas/canvas.component';
 import { ThemePickerComponent } from './components/theme-picker/theme-picker.component';
+import { WMTSLayerFactory } from './components/map/wmts';
 
 @NgModule({
   declarations: [
@@ -147,6 +148,7 @@ import { ThemePickerComponent } from './components/theme-picker/theme-picker.com
     ProgressService,
     RiesgosService,
     ConfigService,
+    WMTSLayerFactory,
     {
       provide: APP_INITIALIZER,
       useFactory: (cs: ConfigService) => {
