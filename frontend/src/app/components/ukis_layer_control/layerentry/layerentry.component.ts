@@ -275,7 +275,11 @@ export class LayerentryComponent implements OnInit {
 
   getExpandShape() {
     // return this.openProperties ? 'down' : 'right';
-    return this.expanded ? { transform: 'rotate(180deg)' } : { transform: 'rotate(90deg)' };
+    if (this.layer.icon) {
+      return {transform: 'rotate(0deg)'};
+    } else {
+      return this.expanded ? { transform: 'rotate(90deg)' } : { transform: 'rotate(0deg)' };
+    }
   }
 
 }

@@ -20,7 +20,14 @@ import { TranslateService, TranslateParser } from '@ngx-translate/core';
 import { Vector as olVectorLayer } from 'ol/layer';
 import { Vector as olVectorSource } from 'ol/source';
 import { GeoJSON } from 'ol/format';
+import olCollection from 'ol/Collection';
 import { SldParserService } from 'src/app/services/sld/sld-parser.service';
+import { CustomLayer, LayerGroup } from '@dlr-eoc/services-layers';
+import { laharWms } from 'src/app/riesgos/scenarios/ecuador/lahar';
+import { laharContoursWms } from 'src/app/riesgos/scenarios/ecuador/laharWrapper';
+import olTileLayer from 'ol/layer/Tile';
+import olTileWMS from 'ol/source/TileWMS';
+import olLayerGroup from 'ol/layer/Group';
 
 
 
@@ -82,6 +89,10 @@ export class LayerMarshaller  {
 
 
     toLayers(product: Product): Observable<ProductLayer[]> {
+        if (product.uid === laharContoursWms.uid) {
+            return this.createLaharContourLayers(product);
+        }
+
         if (isWmsProduct(product)) {
             return this.makeWmsLayers(product);
         } else if (isMultiVectorLayerProduct(product)) {
@@ -93,6 +104,34 @@ export class LayerMarshaller  {
         } else {
             throw new Error(`this product cannot be converted into a layer: ${product}`);
         }
+    }
+
+    createLaharContourLayers(laharProduct: Product): Observable<ProductCustomLayer[]> {
+        const basicLayers$ = this.makeWmsLayers(laharProduct as WmsLayerProduct);
+        const laharLayers$ = basicLayers$.pipe(
+            map(layers => {
+                const olLayers = layers.map(l => {
+                    return new olTileLayer({
+                        source: new olTileWMS({
+                          url: l.url,
+                          params: l.params
+                        })
+                    });
+                });
+                const laharLayer = new ProductCustomLayer({
+                    hasFocus: false,
+                    productId: laharProduct.uid,
+                    custom_layer: new olLayerGroup({
+                        layers: olLayers
+                    }),
+                    id: laharProduct.uid,
+                    name: laharProduct.uid,
+                    // action: // @TODO: create the slider-component
+                });
+                return [laharLayer];
+            })
+        );
+        return laharLayers$;
     }
 
     makeBboxLayer(product: BboxLayerProduct): Observable<ProductVectorLayer> {
@@ -336,9 +375,6 @@ export class LayerMarshaller  {
             const layers: ProductRasterLayer[] = [];
             if (paras) {
 
-                // @todo: if lahar layers, create layer-groups instead.
-                // also, add a layergroup-slider to it.
-
                 for (const layername of paras.layers) {
                     // @TODO: convert all searchparameter names to uppercase
                     const layer: ProductRasterLayer = new ProductRasterLayer({
@@ -391,7 +427,7 @@ export class LayerMarshaller  {
                                     downloadBlob(data, `data_${theLayer.name}.tiff`);
                                 });
                             }
-                        }]
+                        }],
                     });
                     layer.productId = uid;
 
@@ -411,6 +447,7 @@ export class LayerMarshaller  {
                 }
             }
             layers.reverse();
+            
             return layers;
         }));
     }

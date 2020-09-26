@@ -24,7 +24,10 @@ export class WMTSLayerFactory {
 
     layerFromOptions(options): TileLayer {
         return new TileLayer({
-            source: new WMTS(options)
+            source: new WMTS({
+                ...options,
+                crossOrigin: 'anonymous'
+            })
         });
     }
 
