@@ -1,0 +1,9 @@
+Hi there!
+<form clrForm [formGroup]="groupSliderForm" clrLayout="vertical">
+    <clr-input-container>
+        <label>{{ 'Layer' | translate }}:</label>
+        <input type="range" min="1" max="100" value="1" clrInput formControlName="layerSlider">
+        <clr-control-helper>{{ 'The currently visible layer' | translate }}</clr-control-helper>
+    </clr-input-container>
+</form>
+

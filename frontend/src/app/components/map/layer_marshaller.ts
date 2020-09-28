@@ -20,14 +20,12 @@ import { TranslateService, TranslateParser } from '@ngx-translate/core';
 import { Vector as olVectorLayer } from 'ol/layer';
 import { Vector as olVectorSource } from 'ol/source';
 import { GeoJSON } from 'ol/format';
-import olCollection from 'ol/Collection';
-import { SldParserService } from 'src/app/services/sld/sld-parser.service';
-import { CustomLayer, LayerGroup } from '@dlr-eoc/services-layers';
-import { laharWms } from 'src/app/riesgos/scenarios/ecuador/lahar';
-import { laharContoursWms } from 'src/app/riesgos/scenarios/ecuador/laharWrapper';
 import olTileLayer from 'ol/layer/Tile';
 import olTileWMS from 'ol/source/TileWMS';
 import olLayerGroup from 'ol/layer/Group';
+import { SldParserService } from 'src/app/services/sld/sld-parser.service';
+import { laharContoursWms } from 'src/app/riesgos/scenarios/ecuador/laharWrapper';
+import { GroupSliderComponent } from '../group-slider/group-slider.component';
 
 
 
@@ -89,9 +87,9 @@ export class LayerMarshaller  {
 
 
     toLayers(product: Product): Observable<ProductLayer[]> {
-        // if (product.uid === laharContoursWms.uid) {
-        //     return this.createLaharContourLayers(product);
-        // }
+        if (product.uid === laharContoursWms.uid) {
+            return this.createLaharContourLayers(product);
+        }
 
         if (isWmsProduct(product)) {
             return this.makeWmsLayers(product);
@@ -114,19 +112,32 @@ export class LayerMarshaller  {
                     return new olTileLayer({
                         source: new olTileWMS({
                           url: l.url,
-                          params: l.params
+                          params: l.params,
+                          crossOrigin: 'anonymous'
                         })
                     });
                 });
+                const layerGroup = new olLayerGroup({
+                    layers: olLayers
+                });
                 const laharLayer = new ProductCustomLayer({
                     hasFocus: false,
+                    filtertype: 'Overlays',
                     productId: laharProduct.uid,
-                    custom_layer: new olLayerGroup({
-                        layers: olLayers
-                    }),
+                    custom_layer: layerGroup,
                     id: laharProduct.uid,
                     name: laharProduct.uid,
-                    // action: // @TODO: create the slider-component
+                    action: {
+                        component: GroupSliderComponent,
+                        inputs: { group: layerGroup },
+                        // outputs: {
+                        //   valueChange: (groupVisibilities: number[]) => {
+                        //       layerGroup.forEach((l, i) => {
+                        //         l.setOpacity(groupVisibilities[i]);
+                        //       });
+                        //   }
+                        // }
+                      }
                 });
                 return [laharLayer];
             })

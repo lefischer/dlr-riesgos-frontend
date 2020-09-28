@@ -72,6 +72,7 @@ import { WMTSLayerFactory } from './components/map/wmts';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { GroupSliderComponent } from './components/group-slider/group-slider.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -125,7 +126,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ThemePickerComponent,
     PrintComponent,
     PrintMapComponent,
-    ScalerComponent
+    ScalerComponent,
+    GroupSliderComponent
   ],
   imports: [
     BrowserModule,

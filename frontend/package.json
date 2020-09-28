@@ -25,6 +25,7 @@
     "@clr/icons": "4.0.2",
     "@clr/ui": "4.0.2",
     "@dlr-eoc/base-layers-raster": "^7.2.0",
+    "@dlr-eoc/core-ui": "^7.2.0",
     "@dlr-eoc/map-ol": "^7.2.0",
     "@dlr-eoc/services-layers": "^7.2.0",
     "@dlr-eoc/services-ogc": "^7.2.0",
