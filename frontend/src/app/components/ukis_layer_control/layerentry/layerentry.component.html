@@ -79,7 +79,9 @@
 
         <!-- show custom-control-component -->
         <ng-container *ngIf="checkIsComponentItem(layer.action, layer);">
-          <app-group-slider [group]="layer.action.inputs.group"></app-group-slider>
+          <!-- @TODO: ukis-dynamic-component does not seem to get loaded ... maybe include core-ui in app.module ... -->
+          <!-- <app-group-slider [group]="layer.action.inputs.group"></app-group-slider> -->
+          Hi there!
           <ukis-dynamic-component [(dynamicComponent)]="layer.action">
           </ukis-dynamic-component>
         </ng-container>

@@ -1,8 +1,10 @@
-Hi there!
 <form clrForm [formGroup]="groupSliderForm" clrLayout="vertical">
     <clr-input-container>
         <label>{{ 'Layer' | translate }}:</label>
-        <input type="range" min="1" max="100" value="1" clrInput formControlName="layerSlider">
+        <input type="range"  list="tickmarks" clrInput formControlName="slider">
+        <datalist id="tickmarks">
+            <option *ngFor="let entry of entries" value="entry.id" label="entry.displayName"></option>
+        </datalist>
         <clr-control-helper>{{ 'The currently visible layer' | translate }}</clr-control-helper>
     </clr-input-container>
 </form>

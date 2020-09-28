@@ -73,6 +73,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { GroupSliderComponent } from './components/group-slider/group-slider.component';
+import { DynamicComponentComponent, ViewRefDirective } from './components/dynamic-component/dynamic-component.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -127,7 +128,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PrintComponent,
     PrintMapComponent,
     ScalerComponent,
-    GroupSliderComponent
+    GroupSliderComponent,
+    DynamicComponentComponent,
+    ViewRefDirective
   ],
   imports: [
     BrowserModule,

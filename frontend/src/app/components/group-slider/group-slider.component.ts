@@ -1,6 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import LayerGroup from 'ol/layer/Group';
+
+
+export interface SliderEntry {
+  id: string,
+  value: number,
+  displayName: string
+}
 
 
 @Component({
@@ -10,12 +16,12 @@ import LayerGroup from 'ol/layer/Group';
 })
 export class GroupSliderComponent implements OnInit {
 
-  @Input() group: LayerGroup;
+  @Input() entries: SliderEntry[];
   public groupSliderForm: FormGroup;
 
   constructor() {
     this.groupSliderForm = new FormGroup({
-      layerSlider: new FormControl(1)
+      slider: new FormControl(1)
     });
 
 
