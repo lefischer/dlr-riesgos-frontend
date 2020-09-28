@@ -8,30 +8,27 @@ import { get as getProjection } from 'ol/proj';
 import Feature from 'ol/Feature';
 import {getWidth} from 'ol/extent';
 import { MapOlService } from '@dlr-eoc/map-ol';
-import * as olEvents from 'ol/events';
-import XYZ from 'ol/source/XYZ';
 import TileGrid from 'ol/tilegrid/TileGrid';
-import {click, noModifierKeys, altKeyOnly} from 'ol/events/condition';
+import {click, noModifierKeys} from 'ol/events/condition';
 import Select from 'ol/interaction/Select';
 import { MapStateService } from '@dlr-eoc/services-map-state';
-import { OsmTileLayer, EocLitemapTile, EocLitemap } from '@dlr-eoc/base-layers-raster';
+import { OsmTileLayer } from '@dlr-eoc/base-layers-raster';
 import { Store, select } from '@ngrx/store';
 import { State } from 'src/app/ngrx_register';
 import { getMapableProducts, getScenario, getGraph } from 'src/app/riesgos/riesgos.selectors';
 import { Product } from 'src/app/riesgos/riesgos.datatypes';
 import { InteractionCompleted } from 'src/app/interactions/interactions.actions';
-import { BehaviorSubject, forkJoin, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, of, Subscription } from 'rxjs';
 import { InteractionState, initialInteractionState } from 'src/app/interactions/interactions.state';
 import { LayerMarshaller } from './layer_marshaller';
 import { Layer, LayersService, RasterLayer, CustomLayer, LayerGroup } from '@dlr-eoc/services-layers';
 import { getFocussedProcessId } from 'src/app/focus/focus.selectors';
 import { Graph } from 'graphlib';
 import { ProductLayer, ProductRasterLayer } from './map.types';
-import { map, withLatestFrom, switchMap, tap } from 'rxjs/operators';
+import { map, withLatestFrom, switchMap } from 'rxjs/operators';
 import { featureCollection as tFeatureCollection } from '@turf/helpers';
 import { parse } from 'url';
 import { WpsBboxValue } from '@dlr-eoc/services-ogc';
-import { BlueMarbleTile } from '@dlr-eoc/base-layers-raster';
 import { WMTSLayerFactory } from './wmts';
 
 const mapProjection = 'EPSG:4326';
@@ -40,8 +37,7 @@ const mapProjection = 'EPSG:4326';
     selector: 'ukis-map',
     templateUrl: './map.component.html',
     styleUrls: ['./map.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    // changeDetection: ChangeDetectionStrategy.OnPush
+    encapsulation: ViewEncapsulation.None
 })
 export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -243,24 +239,29 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         // listening for change in scenario - onInit
         const sub5 = this.store.pipe(select(getScenario)).subscribe((scenario: string) => {
             this.layersSvc.removeLayers();
-            const infolayers = this.getInfoLayers(scenario);
-            for (const layer of infolayers) {
-                if (layer instanceof LayerGroup) {
-                    this.layersSvc.addLayerGroup(layer, 'Layers');
-                } else {
-                    this.layersSvc.addLayer(layer, 'Layers', false);
-                }
-            }
+            const baseLayers$ = this.getBaseLayers(scenario);
+            const infoLayers$ = this.getInfoLayers(scenario);
 
-            this.getBaseLayers(scenario).subscribe(baseLayers => {
+            forkJoin([baseLayers$, infoLayers$]).subscribe((layers) => {
+                const baseLayers = layers[0];
+                const infoLayers = layers[1];
+
                 for (const layer of baseLayers) {
                     if (layer instanceof LayerGroup) {
-                        this.layersSvc.addLayerGroup(layer, 'Baselayers');
+                        this.layersSvc.addLayerGroup(layer, 'Layers');
                     } else {
-                        this.layersSvc.addLayer(layer, 'Baselayers', false);
+                        this.layersSvc.addLayer(layer, 'Layers', false);
                     }
                 }
-            })
+
+                for (const layer of infoLayers) {
+                    if (layer instanceof LayerGroup) {
+                        this.layersSvc.addLayerGroup(layer, 'Layers');
+                    } else {
+                        this.layersSvc.addLayer(layer, 'Layers', false);
+                    }
+                }
+            });
         });
         this.subs.push(sub5);
     }
@@ -308,7 +309,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     /** TODO add openlayers Drag-and-Drop to add new Additional Layers https://openlayers.org/en/latest/examples/drag-and-drop-image-vector.html */
-    private getInfoLayers(scenario: string) {
+    private getInfoLayers(scenario: string): Observable<(Layer | LayerGroup)[]> {
         const layers: Array<Layer | LayerGroup> = [];
 
         if (scenario === 'c1') {
@@ -610,7 +611,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
             layers.push(sniLayers);
         }
 
-        return layers;
+        return of(layers);
     }
 
     private getBaseLayers(scenario: string): Observable<(Layer | LayerGroup)[]> {
@@ -626,7 +627,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
                         continuousWorld: false,
                         legendImg: 'https://geoservice.dlr.de/eoc/basemap/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&LAYERS=litemap&ATTRIBUTION=&WIDTH=256&HEIGHT=256&CRS=EPSG%3A3857&STYLES=&BBOX=0%2C0%2C10018754.171394622%2C10018754.171394622',
                         description: 'http://www.naturalearthdata.com/about/',
-                        opacity: 1
+                        opacity: 1,
+                        visible: true
                     });
                 })
             );
@@ -641,7 +643,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
                         continuousWorld: false,
                         legendImg: 'https://tiles.geoservice.dlr.de/service/wmts?layer=bmng_topo_bathy&style=_empty&tilematrixset=EPSG%3A3857&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix=EPSG%3A3857%3A5&TileCol=18&TileRow=11',
                         description: 'Blue Marble NG dataset with topography and bathymetry',
-                        opacity: 1
+                        opacity: 1,
+                        visible: false
                     });
                 })
             );
@@ -656,7 +659,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
                         continuousWorld: false,
                         legendImg: 'https://tiles.geoservice.dlr.de/service/wmts?layer=eoc%3Aworld_relief_bw&style=_empty&tilematrixset=EPSG%3A3857&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix=EPSG%3A3857%3A5&TileCol=18&TileRow=11',
                         description: 'World Relief Black / White',
-                        opacity: 1
+                        opacity: 1,
+                        visible: false
                     });
                 })
             );

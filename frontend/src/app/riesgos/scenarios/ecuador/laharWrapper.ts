@@ -139,7 +139,7 @@ export class LaharWrapper implements ExecutableProcess, WizardableProcess {
             [directionV, veiV, { ... parameter, value: 'MaxHeight' }], [laharHeightWms, laharHeightShakemapRef], doWhile);
         const velProc$ = this.laharWps.execute(
             [directionV, veiV, { ... parameter, value: 'MaxVelocity' }], [laharVelocityWms, laharVelocityShakemapRef], doWhile);
-        const preassureProc$ = this.laharWps.execute(
+        const pressureProc$ = this.laharWps.execute(
             [directionV, veiV, { ... parameter, value: 'MaxPressure' }], [laharPressureWms], doWhile);
         const erosionProc$ = this.laharWps.execute(
             [directionV, veiV, { ... parameter, value: 'MaxErosion' }], [laharErosionWms], doWhile);
@@ -147,7 +147,7 @@ export class LaharWrapper implements ExecutableProcess, WizardableProcess {
             [directionV, veiV, { ... parameter, value: 'Deposition' }], [laharDepositionWms], doWhile);
 
         // merge
-        return forkJoin([heightProc$, velProc$, preassureProc$, erosionProc$, depositionProc$]).pipe(
+        return forkJoin([heightProc$, velProc$, pressureProc$, erosionProc$, depositionProc$]).pipe(
             map((results: Product[][]) => {
                 const flattened: Product[] = [];
                 for (const result of results) {

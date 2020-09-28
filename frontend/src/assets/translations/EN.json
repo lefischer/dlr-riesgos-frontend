@@ -41,6 +41,30 @@
     "Lahar_S_VEI40mio_maxerosion_25m": "Lahar: maximum erosion",
     "Lahar_S_VEI40mio_maxdeposition_25m": "Lahar: maximum deposition",
 
+    "Lahar_S_VEI1_maxheight_10m": "Lahar: maximum depth",
+    "Lahar_S_VEI1_maxpressure_10m": "Lahar: maximum preassure",
+    "Lahar_S_VEI1_maxvelocity_10m": "Lahar: maximum velocity",
+    "Lahar_S_VEI1_maxerosion_10m": "Lahar: maximum erosion",
+    "Lahar_S_VEI1_deposition_10m": "Lahar: maximum deposition",
+
+    "Lahar_S_VEI2_maxheight_10m": "Lahar: maximum depth",
+    "Lahar_S_VEI2_maxpressure_10m": "Lahar: maximum preassure",
+    "Lahar_S_VEI2_maxvelocity_10m": "Lahar: maximum velocity",
+    "Lahar_S_VEI2_maxerosion_10m": "Lahar: maximum erosion",
+    "Lahar_S_VEI2_deposition_10m": "Lahar: maximum deposition",
+
+    "Lahar_S_VEI3_maxheight_10m": "Lahar: maximum depth",
+    "Lahar_S_VEI3_maxpressure_10m": "Lahar: maximum preassure",
+    "Lahar_S_VEI3_maxvelocity_10m": "Lahar: maximum velocity",
+    "Lahar_S_VEI3_maxerosion_10m": "Lahar: maximum erosion",
+    "Lahar_S_VEI3_deposition_10m": "Lahar: maximum deposition",
+
+    "Lahar_S_VEI4_maxheight_10m": "Lahar: maximum depth",
+    "Lahar_S_VEI4_maxpressure_10m": "Lahar: maximum preassure",
+    "Lahar_S_VEI4_maxvelocity_10m": "Lahar: maximum velocity",
+    "Lahar_S_VEI4_maxerosion_10m": "Lahar: maximum erosion",
+    "Lahar_S_VEI4_deposition_10m": "Lahar: maximum deposition",
+
     "arrivalTimes": "Arrival times",
     "epiCenter": "Epicenter",
     "mwh": "Maximum tsunami amplitude",

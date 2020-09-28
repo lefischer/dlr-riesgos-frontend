@@ -162,6 +162,30 @@
     "Lahar_S_VEI40mio_maxerosion_25m": "Erosión máxima de lahar",
     "Lahar_S_VEI40mio_maxdeposition_25m": "Deposición máxima de lahar",
 
+    "Lahar_S_VEI1_maxheight_10m": "Profundidád máxima de lahar",
+    "Lahar_S_VEI1_maxpressure_10m": "Presión máxima de lahar",
+    "Lahar_S_VEI1_maxvelocity_10m": "Velocidad máxima de lahar",
+    "Lahar_S_VEI1_maxerosion_10m": "Erosión máxima de lahar",
+    "Lahar_S_VEI1_deposition_10m": "Deposición máxima de lahar",
+
+    "Lahar_S_VEI2_maxheight_10m": "Profundidád máxima de lahar",
+    "Lahar_S_VEI2_maxpressure_10m": "Presión máxima de lahar",
+    "Lahar_S_VEI2_maxvelocity_10m": "Velocidad máxima de lahar",
+    "Lahar_S_VEI2_maxerosion_10m": "Erosión máxima de lahar",
+    "Lahar_S_VEI2_deposition_10m": "Deposición máxima de lahar",
+
+    "Lahar_S_VEI3_maxheight_10m": "Profundidád máxima de lahar",
+    "Lahar_S_VEI3_maxpressure_10m": "Presión máxima de lahar",
+    "Lahar_S_VEI3_maxvelocity_10m": "Velocidad máxima de lahar",
+    "Lahar_S_VEI3_maxerosion_10m": "Erosión máxima de lahar",
+    "Lahar_S_VEI3_deposition_10m": "Deposición máxima de lahar",
+
+    "Lahar_S_VEI4_maxheight_10m": "Profundidád máxima de lahar",
+    "Lahar_S_VEI4_maxpressure_10m": "Presión máxima de lahar",
+    "Lahar_S_VEI4_maxvelocity_10m": "Velocidad máxima de lahar",
+    "Lahar_S_VEI4_maxerosion_10m": "Erosión máxima de lahar",
+    "Lahar_S_VEI4_deposition_10m": "Deposición máxima de lahar",
+
 
     "How to use this site ...": "El asistente de configuración en el lado izquierdo de la pantalla contiene una lista de todos los procesos por los que pasará la simulación. Los procesos se colorean de acuerdo al estado actual de la simulación. Si un proceso requiere seleccionar opciones para ejecutarse, éste tendrá un formulario para seleccionarlas. Cuando esté satisfecho son su selección, presione \"enviar\" para ejecutar el proceso.",
     "More on how to use this": "A medida que avanza la simulación, los resultados se acumularán en el control de capas, al lado derecho de la pantalla. Los resultados se muestran en el mapa y se enumeran en el control de capas. En el control de capas, puede cambiar el orden de las capas, alterar su opacidad, etc. En \"Capas adicionales\" puede encontrar más información.",
@@ -278,5 +302,29 @@
     "Deus Lahar + Ashfall description": "Este servicio calcula el daño combinado causado por la caída de ceniza y un lahar.",
     "Ashfall Service description": "Este servicio devuelve una simulación de una nube de cenizas y la deposición resultante",
     "This is a process to compute the damage of a flood in Ecuador.": "Este es un proceso para calcular el daño de una inundación en Ecuador.",
-    "Process to compute the damage of a flood in ecuador.": "Este es un proceso para calcular el daño de una inundación en Ecuador."
+    "Process to compute the damage of a flood in ecuador.": "Este es un proceso para calcular el daño de una inundación en Ecuador.",
+
+    "Tools": "Herramientas",
+    "Print": "Imprimir",
+    "Print preview": "Vista previa",
+    "Map title": "Título del mapa",
+    "Description": "Descripción",
+    "Format": "Formato",
+    "Orientation": "Orientación",
+    "landscape": "paisaje",
+    "portrait": "retrato",
+    "Resolution": "Resolución",
+    "Update page": "Actualizar pagina",
+    "Print page": "Imprimir página",
+    "This is a required field": "Este es un parámetro requerido",
+    "Rendering ...": "Renderizando ...",
+    "Map is being rendered in": "El mapa esta denderizado en",
+    "Title": "Titulo",
+    "Light": "Claro",
+    "Dark": "Oscuro",
+
+    "OpenStreetMap z-x-y Tiles": "Azulejos OpenStreetMap z-x-y",
+    "World Relief Black / White": "World Relief Negro / Blanco",
+    "Blue Marble NG Blue Marble NG dataset with topography and bathymetry": "Conjunto de datos de Blue Marble NG con topografía y batimetría"
+
 }

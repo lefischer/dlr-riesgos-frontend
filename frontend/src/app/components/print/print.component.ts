@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MapOlService } from '@dlr-eoc/map-ol';
+import { TranslateService } from '@ngx-translate/core';
 import { MapParameters, PrintService } from './print-service/print.service';
 
 @Component({
@@ -36,11 +37,12 @@ export class PrintComponent {
 
   constructor(
     private mapSvc: MapOlService,
-    private printSvc: PrintService
+    private printSvc: PrintService,
+    private translator: TranslateService
   ) {
     this.pdfParametersForm = new FormGroup({
-      title: new FormControl('Title'),
-      description: new FormControl('Description'),
+      title: new FormControl(this.translator.instant('Titulo')),
+      description: new FormControl(this.translator.instant('Descripción')),
       format: new FormControl(this.formatOptions[0]),
       orientation: new FormControl(this.orientationOptions[0]),
       resolution: new FormControl(this.resolutionOptions[0])

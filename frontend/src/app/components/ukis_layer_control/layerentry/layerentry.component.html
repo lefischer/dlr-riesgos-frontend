@@ -101,7 +101,7 @@
       </div>
       <!-- show Description -->
       <div *ngIf="activeTabs.description && layer.description">
-        <span [innerHTML]="layer.description"></span>
+        <span innerHTML="{{ layer.description | translate}}"></span>
       </div>
       <!-- show style-switcher -->
       <div *ngIf="activeTabs.changeStyle && layer.styles && layer.styles?.length > 1">

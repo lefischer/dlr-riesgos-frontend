@@ -89,9 +89,9 @@ export class LayerMarshaller  {
 
 
     toLayers(product: Product): Observable<ProductLayer[]> {
-        if (product.uid === laharContoursWms.uid) {
-            return this.createLaharContourLayers(product);
-        }
+        // if (product.uid === laharContoursWms.uid) {
+        //     return this.createLaharContourLayers(product);
+        // }
 
         if (isWmsProduct(product)) {
             return this.makeWmsLayers(product);
