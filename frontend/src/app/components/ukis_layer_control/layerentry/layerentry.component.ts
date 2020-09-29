@@ -7,7 +7,6 @@ import {
 } from '@dlr-eoc/services-layers';
 import { MapStateService } from '@dlr-eoc/services-map-state';
 import {  } from '@dlr-eoc/services-layers';
-import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ProductLayer } from '../../map/map.types';
 
 @Component({

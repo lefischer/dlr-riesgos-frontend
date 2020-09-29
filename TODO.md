@@ -8,10 +8,6 @@ TODOS
        - merge-request for frontend-libraries
          - create testcase
    
-   - vectorLegend to dynamic legend-component
-     - remove all vectorLayerAttributes.legendEntries
-     - add legendImg == IDynamicComponent { component: VectorLegendComponent, inputs: {legendTitle, resolution, styleFunction, elementList} }
-   
    - vei3 -> lahar_arrival: slider
      - create controller to slide between members of the group
 
