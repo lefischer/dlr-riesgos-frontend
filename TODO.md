@@ -2,11 +2,18 @@ TODOS
 =====
 
  - frontend
+   - translate info
+     - info to dynamic component
+   - vectorLegend to dynamic legend-component
    - vei3 -> lahar_arrival: slider
      - create custom-ol-layer olGroupLayer
        - is this really necessary? why does map-ol not render an olGroup in a custom layer?
      - create controller to slide between members of the group
      - bug: somehow, layers end up in capas-adicionales
+
+
+
+
    - get all chains from middleware
      - add styling on the fly
  - middleware
@@ -20,7 +27,7 @@ Copy dynamic-comp in riesgos-code
 
 
 Printmodus: 
-    verstecken bis Riesgos 2.0.
+    raus bis Riesgos 2.0.
     Auch nicht in video
     Auch nicht in video: darkmode
 

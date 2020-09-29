@@ -274,7 +274,7 @@ export const tsUpdatedExposurePeru: VectorLayerProduct & WpsData & Product = {
                           [ 5.627918243408203, 50.963075942052164 ] ] ]
                     }
                 },
-                text: 'Estados de daño: 90/10/0/0/0/0'
+                text: 'Damage states: 90/10/0/0/0/0'
             }, {
                 feature: {
                     'type': 'Feature',
@@ -288,7 +288,7 @@ export const tsUpdatedExposurePeru: VectorLayerProduct & WpsData & Product = {
                           [ 5.627918243408203, 50.963075942052164 ] ] ]
                     }
                 },
-                text: 'Estados de daño: 0/10/40/40/10/0'
+                text: 'Damage states: 0/10/40/40/10/0'
             }, {
                 feature: {
                     'type': 'Feature',
@@ -302,7 +302,7 @@ export const tsUpdatedExposurePeru: VectorLayerProduct & WpsData & Product = {
                           [ 5.627918243408203, 50.963075942052164 ] ] ]
                     }
                 },
-                text: 'Estados de daño: 0/0/0/0/20/80'
+                text: 'Damage states: 0/0/0/0/20/80'
             }],
             text: (props: object) => {
                 const anchor = document.createElement('div');

@@ -16,7 +16,7 @@ import { State } from 'src/app/ngrx_register';
 import { MapStateService } from '@dlr-eoc/services-map-state';
 import { ProductVectorLayer, ProductRasterLayer, ProductLayer, ProductCustomLayer } from './map.types';
 import { downloadBlob, downloadJson } from 'src/app/helpers/others';
-import { TranslateService, TranslateParser } from '@ngx-translate/core';
+import { TranslateService, TranslateParser, LangChangeEvent } from '@ngx-translate/core';
 import { Vector as olVectorLayer } from 'ol/layer';
 import { Vector as olVectorSource } from 'ol/source';
 import { GeoJSON } from 'ol/format';
@@ -48,6 +48,7 @@ export class LayerMarshaller  {
 
     private dictEn: Object;
     private dictEs: Object;
+    private currentLang: string;
 
     constructor(
         private httpClient: HttpClient,
@@ -59,8 +60,22 @@ export class LayerMarshaller  {
         private translateParser: TranslateParser
         ) {
             this.translator.getTranslation('EN').subscribe(d => this.dictEn = d);
-            this.translator.getTranslation('ES').subscribe(d => this.dictEn = d);
+            this.translator.getTranslation('ES').subscribe(d => this.dictEs = d);
+            this.currentLang = this.translator.currentLang;
+            this.translator.onLangChange.subscribe((lce: LangChangeEvent) => {
+                this.currentLang = lce.lang;
+            });
         }
+
+    private getDict(): Object {
+        switch (this.currentLang) {
+            case 'EN':
+                return this.dictEn;
+            default:
+            case 'ES':
+                return this.dictEs;
+        }
+    }
 
 
     productsToLayers(products: Product[]): Observable<ProductLayer[]> {
@@ -68,11 +83,11 @@ export class LayerMarshaller  {
             return of([]);
         }
 
-        const obsables = [];
+        const obsables$ = [];
         for (const product of products) {
-            obsables.push(this.toLayers(product));
+            obsables$.push(this.toLayers(product));
         }
-        return forkJoin(obsables).pipe(
+        return forkJoin(obsables$).pipe(
             map((results: ProductLayer[][]) => {
                 const newLayers: ProductLayer[] = [];
                 for (const result of results) {
@@ -194,7 +209,9 @@ export class LayerMarshaller  {
                 description = this.translator.instant(vectorLayerProps.description);
             }
             if (vectorLayerProps.vectorLayerAttributes.summary) {
-                description += '<br/>' + vectorLayerProps.vectorLayerAttributes.summary(product.value);
+                const dict = this.getDict();
+                const html = this.translateParser.interpolate(vectorLayerProps.vectorLayerAttributes.summary(product.value), dict);
+                description += '<br/>' + html;
             }
 
             const productLayer: ProductCustomLayer = new ProductCustomLayer({
@@ -272,7 +289,9 @@ export class LayerMarshaller  {
                     description = this.translator.instant(product.description.description);
                 }
                 if (product.description.vectorLayerAttributes.summary) {
-                    description += '<br/>' + product.description.vectorLayerAttributes.summary(product.value);
+                    const dict = this.getDict();
+                    const html = this.translateParser.interpolate(product.description.vectorLayerAttributes.summary(product.value), dict);
+                    description += '<br/>' + html;
                 }
 
                 const layer: ProductVectorLayer = new ProductVectorLayer({
@@ -597,15 +616,4 @@ export class LayerMarshaller  {
         return html;
     }
 
-
-    private getDict(): Object {
-        const currentLang = this.translator.currentLang;
-        switch (currentLang) {
-            case 'es':
-                return this.dictEs;
-            case 'en':
-            default:
-                return this.dictEn;
-        }
-    }
 }

@@ -30,6 +30,7 @@ import { featureCollection as tFeatureCollection } from '@turf/helpers';
 import { parse } from 'url';
 import { WpsBboxValue } from '@dlr-eoc/services-ogc';
 import { WMTSLayerFactory } from './wmts';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 const mapProjection = 'EPSG:4326';
 
@@ -55,13 +56,15 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         private store: Store<State>,
         private layerMarshaller: LayerMarshaller,
         private wmtsFactory: WMTSLayerFactory,
-        public layersSvc: LayersService
+        public layersSvc: LayersService,
+        private translator: TranslateService
     ) {
         this.controls = { attribution: true, scaleLine: true };
     }
 
 
     ngOnInit() {
+
         this.subscribeToMapState();
 
         // listening for interaction modes
@@ -264,6 +267,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
             });
         });
         this.subs.push(sub5);
+
+        // closing popups when language changes, to mask the fact that they are not rebuilt dynamically.
+        this.translator.onLangChange.subscribe(lce => {
+            this.mapSvc.removeAllPopups();
+        });
     }
 
     private printAllLayers(message: string): void {

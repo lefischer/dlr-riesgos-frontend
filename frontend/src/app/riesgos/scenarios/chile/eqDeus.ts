@@ -59,7 +59,7 @@ export const damageProps: VectorLayerProperties = {
                           [ 5.627918243408203, 50.963075942052164 ] ] ]
                     }
                 },
-                text: 'Perdida 100.000 USD'
+                text: 'Loss 100.000 USD'
             }, {
                 feature: {
                     "type": "Feature",
@@ -73,7 +73,7 @@ export const damageProps: VectorLayerProperties = {
                           [ 5.627918243408203, 50.963075942052164 ] ] ]
                     }
                 },
-                text: 'Perdida 500.000 USD'
+                text: 'Loss 500.000 USD'
             }, {
                 feature: {
                     "type": "Feature",
@@ -87,20 +87,20 @@ export const damageProps: VectorLayerProperties = {
                           [ 5.627918243408203, 50.963075942052164 ] ] ]
                     }
                 },
-                text: 'Perdida 1.000.000 USD'
+                text: 'Loss 1.000.000 USD'
             }],
             text: (props: object) => {
-                return `<h4>Perdida </h4><p>${toDecimalPlaces(props['loss_value'] / 1000000, 2)} M${props['loss_unit']}</p>`;
+                return `<h4>Loss </h4><p>${toDecimalPlaces(props['loss_value'] / 1000000, 2)} M${props['loss_unit']}</p>`;
             },
             summary: (value: [FeatureCollection]) => {
                 const features = value[0].features;
                 const damages = features.map(f => f.properties['loss_value']);
                 const totalDamage = damages.reduce((carry, current) => carry + current, 0);
                 const totalDamageFormatted = toDecimalPlaces(totalDamage / 1000000, 0) + ' MUSD';
-                return createKeyValueTableHtml('', {'daño total': totalDamageFormatted}, 'medium');
+                return createKeyValueTableHtml('', {'Total damage': totalDamageFormatted}, 'medium');
             }
         },
-        description: 'Daño en USD.',
+        description: 'Damage in USD.',
         icon: 'dot-circle'
 
 };
@@ -278,7 +278,7 @@ const updatedExposureProps: VectorLayerProperties = {
                           [ 5.627918243408203, 50.963075942052164 ] ] ]
                     }
                 },
-                text: 'Estados de daño: 90/10/0/0'
+                text: 'Damage states: 90/10/0/0'
             }, {
                 feature: {
                     "type": "Feature",
@@ -292,7 +292,7 @@ const updatedExposureProps: VectorLayerProperties = {
                           [ 5.627918243408203, 50.963075942052164 ] ] ]
                     }
                 },
-                text: 'Estados de daño: 0/50/50/0'
+                text: 'Damage states: 0/50/50/0'
             }, {
                 feature: {
                     "type": "Feature",
@@ -306,7 +306,7 @@ const updatedExposureProps: VectorLayerProperties = {
                           [ 5.627918243408203, 50.963075942052164 ] ] ]
                     }
                 },
-                text: 'Estados de daño: 0/0/20/80'
+                text: 'Damage states: 0/0/20/80'
             }],
             text: (props: object) => {
                 const anchor = document.createElement('div');

@@ -237,7 +237,7 @@ export const laharUpdatedExposureProps: VectorLayerProperties = {
                           [ 5.627918243408203, 50.963075942052164 ] ] ]
                     }
                 },
-                text: 'Estados de daño'
+                text: 'Damage states'
             }],
             text: (props: object) => {
                 const anchor = document.createElement('div');

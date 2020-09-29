@@ -325,6 +325,14 @@
 
     "OpenStreetMap z-x-y Tiles": "Azulejos OpenStreetMap z-x-y",
     "World Relief Black / White": "World Relief Negro / Blanco",
-    "Blue Marble NG Blue Marble NG dataset with topography and bathymetry": "Conjunto de datos de Blue Marble NG con topografía y batimetría"
+    "Blue Marble NG Blue Marble NG dataset with topography and bathymetry": "Conjunto de datos de Blue Marble NG con topografía y batimetría",
+    "deleteme works!": "funcciona bien!",
+    "Click me": "Haz click aqui",
+
+    "Available_earthquakes": "Terremotos disponibles",
+    "Magnitude": "Magnitúd",
+    "Depth": "Profundidád",
+    "Id": "Id",
+    "Date": "Fecha"
 
 }

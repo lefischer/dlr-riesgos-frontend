@@ -15,7 +15,7 @@
 
 <app-showgraph></app-showgraph>
 
-<ukis-print></ukis-print>
+<ukis-print *ngIf="isRiesgos2"></ukis-print>
 
 
 <clr-modal [(clrModalOpen)]="showResetModal" [clrModalStaticBackdrop]="false">

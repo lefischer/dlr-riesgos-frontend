@@ -34,8 +34,6 @@ export class VectorLegendComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log("legend component init'ed...")
-
     const legend = new Legend({
       title: this.legendTitle,
       style: (feature: olFeature) => this.styleFunction(feature, this.resolution),
