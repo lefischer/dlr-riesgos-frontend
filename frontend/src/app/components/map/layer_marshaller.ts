@@ -26,6 +26,7 @@ import olLayerGroup from 'ol/layer/Group';
 import { SldParserService } from 'src/app/services/sld/sld-parser.service';
 import { laharContoursWms } from 'src/app/riesgos/scenarios/ecuador/laharWrapper';
 import { GroupSliderComponent } from '../group-slider/group-slider.component';
+import { VectorLegendComponent } from '../dynamic/vector-legend/vector-legend.component';
 
 
 
@@ -204,16 +205,6 @@ export class LayerMarshaller  {
                 }
             });
 
-            let description = '';
-            if (vectorLayerProps.description) {
-                description = this.translator.instant(vectorLayerProps.description);
-            }
-            if (vectorLayerProps.vectorLayerAttributes.summary) {
-                const dict = this.getDict();
-                const html = this.translateParser.interpolate(vectorLayerProps.vectorLayerAttributes.summary(product.value), dict);
-                description += '<br/>' + html;
-            }
-
             const productLayer: ProductCustomLayer = new ProductCustomLayer({
                 custom_layer: layer,
                 productId: product.uid,
@@ -223,7 +214,7 @@ export class LayerMarshaller  {
                 visible: true,
                 attribution: '',
                 type: 'custom',
-                description: description,
+                description: vectorLayerProps.vectorLayerAttributes.summary(product.value),
                 removable: true,
                 continuousWorld: true,
                 time: null,
@@ -261,8 +252,16 @@ export class LayerMarshaller  {
                     return vectorLayerProps.vectorLayerAttributes.style(feature, resolution, props.selected);
                 }
             };
+
             if (vectorLayerProps.vectorLayerAttributes.legendEntries) {
-                productLayer['legendEntries'] = vectorLayerProps.vectorLayerAttributes.legendEntries;
+                productLayer.legendImg = {
+                    component: VectorLegendComponent,
+                    inputs: {
+                        legendTitle: vectorLayerProps.description,
+                        resolution: 0.00005,
+                        styleFunction: vectorLayerProps.vectorLayerAttributes.style,
+                        elementList: vectorLayerProps.vectorLayerAttributes.legendEntries}
+                };
             }
 
             layers.push(productLayer);
@@ -284,22 +283,12 @@ export class LayerMarshaller  {
                 //     console.log('could not do buffer with ', data, error);
                 // }
 
-                let description = '';
-                if (product.description.description) {
-                    description = this.translator.instant(product.description.description);
-                }
-                if (product.description.vectorLayerAttributes.summary) {
-                    const dict = this.getDict();
-                    const html = this.translateParser.interpolate(product.description.vectorLayerAttributes.summary(product.value), dict);
-                    description += '<br/>' + html;
-                }
-
                 const layer: ProductVectorLayer = new ProductVectorLayer({
                     productId: product.uid,
                     id: `${product.uid}_${product.description.id}_result_layer`,
                     name: `${product.description.name}`,
                     attribution: '',
-                    description: description,
+                    description: product.description.vectorLayerAttributes.summary(data),
                     opacity: 0.6,
                     removable: true,
                     type: 'geojson',
@@ -333,7 +322,14 @@ export class LayerMarshaller  {
                 layer.productId = product.uid;
 
                 if (product.description.vectorLayerAttributes.legendEntries) {
-                    layer.legendEntries = product.description.vectorLayerAttributes.legendEntries;
+                    layer.legendImg = {
+                        component: VectorLegendComponent,
+                        inputs: {
+                            legendTitle: product.description.description,
+                            resolution: 0.00005,
+                            styleFunction: product.description.vectorLayerAttributes.style,
+                            elementList: product.description.vectorLayerAttributes.legendEntries}
+                    };
                 }
 
                 return layer;

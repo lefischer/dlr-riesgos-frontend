@@ -47,8 +47,8 @@ import { LayerControlComponent } from './components/ukis_layer_control/layer-con
 import { BaseLayerControlComponent } from './components/ukis_layer_control/base-layer-control/base-layer-control.component';
 import { LayerentryComponent } from './components/ukis_layer_control/layerentry/layerentry.component';
 import { LayerentryGroupComponent } from './components/ukis_layer_control/layerentry-group/layerentry-group.component';
-import { VectorLegendComponent } from './components/ukis_layer_control/vector-legend/vector-legend.component';
-import { CanvasComponent } from './components/ukis_layer_control/vector-legend/canvas/canvas.component';
+import { VectorLegendComponent } from './components/dynamic/vector-legend/vector-legend.component';
+import { CanvasComponent } from './components/dynamic/vector-legend/canvas/canvas.component';
 import { ChangedetectorComponent } from './components/changedetector/changedetector.component';
 import { BlinkerComponent } from './components/changedetector/blinker/blinker.component';
 import { FpserComponent } from './components/changedetector/fpser/fpser.component';
@@ -77,6 +77,7 @@ import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
 import { environment } from '../environments/environment';
+import { InfoTableComponentComponent } from './components/dynamic/info-table-component/info-table-component.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -133,7 +134,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ScalerComponent,
     GroupSliderComponent,
     DynamicComponentComponent,
-    ViewRefDirective
+    ViewRefDirective,
+    InfoTableComponentComponent
   ],
   imports: [
     BrowserModule,

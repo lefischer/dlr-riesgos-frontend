@@ -2,7 +2,8 @@ import { ProductDescription, Product } from 'src/app/riesgos/riesgos.datatypes';
 import { WpsBboxValue } from '@dlr-eoc/services-ogc';
 import { shape } from '../components/config_wizard/wizardable_processes';
 import { FeatureCollection, Feature } from '@turf/helpers';
-import { LegendElement } from '../components/ukis_layer_control/vector-legend/vector-legend.component';
+import { LegendElement } from '../components/dynamic/vector-legend/vector-legend.component';
+import { IDynamicComponent } from '../components/dynamic-component/dynamic-component.component';
 
 
 
@@ -33,7 +34,7 @@ export interface VectorLayerProperties {
     vectorLayerAttributes: {
         style?: (feature: Feature, resolution: number, selected: boolean) => any;
         text?: any;
-        summary?: (value: any) => string,
+        summary?: (value: any) => IDynamicComponent | string,
         sldFile?: string,
         legendEntries?: LegendElement[]
     };

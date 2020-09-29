@@ -17,7 +17,7 @@
     ],
     "paths": {
       "@dlr-eoc/*": [
-        "frontend-libraries/projects/*"
+        "ukis-frontend-libraries/projects/*"
       ]
     }
   }

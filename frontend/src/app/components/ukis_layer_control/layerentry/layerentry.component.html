@@ -94,16 +94,6 @@
         </ng-template>
       </div>
 
-      <!-- show auto-generated legend -->
-      <div *ngIf="activeTabs['styleLegend'] && layer.options?.style && layer.legendEntries">
-        <ukis-vector-legend 
-          [legendTitle]="'testtitle'"
-          [resolution]="0.0005"
-          [styleFunction]="layer.options.style"
-          [elementList]="layer.legendEntries"
-        ></ukis-vector-legend>
-      </div>
-
       <!-- show Description -->
       <div *ngIf="activeTabs.description && layer.description">
         <ng-container *ngIf="checkIsComponentItem(layer.description, layer); else descriptionPlaintext">

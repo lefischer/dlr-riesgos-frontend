@@ -10,8 +10,7 @@ import { toDecimalPlaces, redGreenRange, linInterpolate, linInterpolateXY } from
 import { HttpClient } from '@angular/common/http';
 import { Style as olStyle, Fill as olFill, Stroke as olStroke, Circle as olCircle, Text as olText } from 'ol/style';
 import { Feature as olFeature } from 'ol/Feature';
-import { createOlFeature } from 'src/app/helpers/others';
-import { feature } from '@turf/helpers';
+import { InfoTableComponentComponent, TableEntry } from 'src/app/components/dynamic/info-table-component/info-table-component.component';
 
 
 export class InputBoundingbox implements BboxUconfProduct, BboxLayerProduct, WpsData {
@@ -173,6 +172,7 @@ export const selectedEqs: VectorLayerProduct & WpsData = {
         id: 'selectedRows',
         icon: 'earthquake',
         name: 'available earthquakes',
+        description: 'Catalog data',
         format: 'application/vnd.geo+json',
         reference: false,
         type: 'complex',
@@ -226,6 +226,21 @@ export const selectedEqs: VectorLayerProduct & WpsData = {
                 }
                 text += '</tbody></table>';
                 return text;
+            },
+            summary: (data) => {
+
+                const tableData: TableEntry[][] = [
+                    [{ value: 'V1', style: {'font-weight': 'bold'} }],
+                    [{ value: 'V2'}]
+                ];
+
+                return {
+                    component: InfoTableComponentComponent,
+                    inputs: {
+                        title: 'Available earthquakes',
+                        data: tableData
+                    }
+                };
             },
             legendEntries: [{
                 feature: {

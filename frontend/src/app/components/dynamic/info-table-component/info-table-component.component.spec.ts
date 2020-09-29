@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VectorLegendComponent } from './vector-legend.component';
+import { InfoTableComponentComponent } from './info-table-component.component';
 
-describe('VectorLegendComponent', () => {
-  let component: VectorLegendComponent;
-  let fixture: ComponentFixture<VectorLegendComponent>;
+describe('InfoTableComponentComponent', () => {
+  let component: InfoTableComponentComponent;
+  let fixture: ComponentFixture<InfoTableComponentComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VectorLegendComponent ]
+      declarations: [ InfoTableComponentComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VectorLegendComponent);
+    fixture = TestBed.createComponent(InfoTableComponentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -2,14 +2,18 @@ TODOS
 =====
 
  - frontend
+  
    - translate info
      - info to dynamic component
+       - merge-request for frontend-libraries
+         - create testcase
+   
    - vectorLegend to dynamic legend-component
+     - remove all vectorLayerAttributes.legendEntries
+     - add legendImg == IDynamicComponent { component: VectorLegendComponent, inputs: {legendTitle, resolution, styleFunction, elementList} }
+   
    - vei3 -> lahar_arrival: slider
-     - create custom-ol-layer olGroupLayer
-       - is this really necessary? why does map-ol not render an olGroup in a custom layer?
      - create controller to slide between members of the group
-     - bug: somehow, layers end up in capas-adicionales
 
 
 

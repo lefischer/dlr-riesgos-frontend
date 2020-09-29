@@ -17,6 +17,7 @@ import { greenRedRange, toDecimalPlaces, ninetyPercentLowerThan, weightedDamage 
 import { FeatureCollection } from '@turf/helpers';
 import { createKeyValueTableHtml, createTableHtml, createHeaderTableHtml, zeros, filledMatrix, sum } from 'src/app/helpers/others';
 import { Bardata, createBarchart } from 'src/app/helpers/d3charts';
+import { InfoTableComponentComponent, TableEntry } from 'src/app/components/dynamic/info-table-component/info-table-component.component';
 
 
 
@@ -277,7 +278,21 @@ export const laharUpdatedExposureProps: VectorLayerProperties = {
                         counts[damageClass] += nrBuildings;
                     }
                 }
-                return createHeaderTableHtml(Object.keys(counts), [Object.values(counts).map(c => toDecimalPlaces(c, 0))], 'small');
+
+                const data: TableEntry[][] = [[], []];
+                for (const dc in counts) {
+                    data[0].push({
+                        value: dc
+                    });
+                    data[1].push({
+                        value: toDecimalPlaces(counts[dc], 0)
+                    })
+                }
+
+                return {
+                    component: InfoTableComponentComponent,
+                    inputs: {data: data}
+                };
             }
         }
 
