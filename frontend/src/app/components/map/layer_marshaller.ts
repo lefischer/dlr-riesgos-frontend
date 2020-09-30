@@ -25,7 +25,7 @@ import olTileWMS from 'ol/source/TileWMS';
 import olLayerGroup from 'ol/layer/Group';
 import { SldParserService } from 'src/app/services/sld/sld-parser.service';
 import { laharContoursWms } from 'src/app/riesgos/scenarios/ecuador/laharWrapper';
-import { GroupSliderComponent } from '../group-slider/group-slider.component';
+import { GroupSliderComponent, SliderEntry } from '../dynamic/group-slider/group-slider.component';
 import { VectorLegendComponent } from '../dynamic/vector-legend/vector-legend.component';
 
 
@@ -123,19 +123,31 @@ export class LayerMarshaller  {
     createLaharContourLayers(laharProduct: Product): Observable<ProductCustomLayer[]> {
         const basicLayers$ = this.makeWmsLayers(laharProduct as WmsLayerProduct);
         const laharLayers$ = basicLayers$.pipe(
-            map(layers => {
+            map((layers: ProductRasterLayer[]) => {
                 const olLayers = layers.map(l => {
-                    return new olTileLayer({
+                    const layer = new olTileLayer({
                         source: new olTileWMS({
                           url: l.url,
                           params: l.params,
                           crossOrigin: 'anonymous'
                         })
                     });
+                    layer.set('id', l.id);
+                    return layer;
                 });
+
                 const layerGroup = new olLayerGroup({
                     layers: olLayers
                 });
+
+                const entries: SliderEntry[] = layers.map((l: ProductRasterLayer, index: number) => {
+                    return {
+                        id: l.id,
+                        tickValue: index,
+                        displayText: l.name.match(/(\d+)$/)[0] + 's'
+                    };
+                });
+
                 const laharLayer = new ProductCustomLayer({
                     hasFocus: false,
                     filtertype: 'Overlays',
@@ -145,14 +157,18 @@ export class LayerMarshaller  {
                     name: laharProduct.uid,
                     action: {
                         component: GroupSliderComponent,
-                        inputs: { group: layerGroup },
-                        // outputs: {
-                        //   valueChange: (groupVisibilities: number[]) => {
-                        //       layerGroup.forEach((l, i) => {
-                        //         l.setOpacity(groupVisibilities[i]);
-                        //       });
-                        //   }
-                        // }
+                        inputs: {
+                            entries: entries,
+                            selectionHandler: (selectedId: string) => {
+                                layerGroup.getLayers().forEach(l => {
+                                    if (l.get('id') === selectedId) {
+                                        l.setVisible(true);
+                                    } else {
+                                        l.setVisible(false);
+                                    }
+                                });
+                            },
+                        }
                       }
                 });
                 return [laharLayer];

@@ -335,6 +335,9 @@
     "Id": "Id",
     "Date": "Fecha",
 
-    "Catalog data": "Datos de catálogo" 
+    "Catalog data": "Datos de catálogo",
+    "Layer": "Capa",
+    "Drop your file here!": "¡Deje su archivo aquí!",
+    "LaharContourLines": "curvas de nivel lahar"
 
 }

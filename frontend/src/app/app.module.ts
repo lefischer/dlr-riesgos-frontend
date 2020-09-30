@@ -13,6 +13,7 @@ import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import { MapOlModule } from '@dlr-eoc/map-ol';
 import { LayersModule } from '@dlr-eoc/services-layers';
+import { Ng5SliderModule } from 'ng5-slider';
 
 import { GlobalAlertComponent } from './components/global-alert/global-alert.component';
 import { GlobalFooterComponent } from './components/global-footer/global-footer.component';
@@ -56,28 +57,27 @@ import { ThemePickerComponent } from './components/theme-picker/theme-picker.com
 import { PrintComponent } from './components/print/print.component';
 import { PrintMapComponent } from './components/print/print-map/print-map.component';
 import { ScalerComponent } from './components/scaler/scaler.component';
-import { GroupSliderComponent } from './components/group-slider/group-slider.component';
+import { GroupSliderComponent } from './components/dynamic/group-slider/group-slider.component';
 import { DynamicComponentComponent, ViewRefDirective } from './components/dynamic-component/dynamic-component.component';
+import { InfoTableComponentComponent } from './components/dynamic/info-table-component/info-table-component.component';
 
-import { ConfigService, Config } from './services/config/config.service';
+import { ConfigService } from './services/config/config.service';
 import { RiesgosService } from './riesgos/riesgos.service';
 import { ProgressService } from './components/global-progress/progress.service';
 import { FooterService } from './components/global-footer/footer.service';
 import { AlertService } from './components/global-alert/alert.service';
 
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import { Action } from '@ngrx/store';
 import { VarDirective } from './ng-var.directive';
 import { DndDirective } from './components/save-button/dnd/dnd.directive';
 import { RegexTranslatePipe } from './helpers/regex-translate.pipe';
 import { ReversePipe } from './components/ukis_layer_control/utils/array-reverse.pipe';
 import { WMTSLayerFactory } from './components/map/wmts';
-import { reducers, effects, State } from './ngrx_register';
+import { reducers, effects } from './ngrx_register';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
 import { environment } from '../environments/environment';
-import { InfoTableComponentComponent } from './components/dynamic/info-table-component/info-table-component.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -145,6 +145,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ClarityModule,
     BrowserAnimationsModule,
     PerfectScrollbarModule,
+    Ng5SliderModule,
     StoreModule.forRoot(reducers, {
       runtimeChecks: {
         strictStateImmutability: false,
