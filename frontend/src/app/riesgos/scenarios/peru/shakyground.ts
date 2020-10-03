@@ -20,8 +20,12 @@ export const shakemapWmsOutputPeru: WpsData & WmsLayerProduct = {
         format: 'application/WMS',
         styles: ['shakemap-pga', 'another style'],
         featureInfoRenderer: (fi: FeatureCollection) => {
-            return createKeyValueTableHtml('Terremoto', {'a': toDecimalPlaces(fi.features[0].properties['GRAY_INDEX'], 2) + ' m/s²'}, 'medium');
-        }
+            const html = `
+            <p>{{ Ground_acceleration }}:<p>
+            ${createKeyValueTableHtml('{{ Earthquake }}', {'a': toDecimalPlaces(fi.features[0].properties['GRAY_INDEX'], 2) + ' m/s²'}, 'medium')}
+            `;
+            return html;
+        },
     },
     value: null
 };

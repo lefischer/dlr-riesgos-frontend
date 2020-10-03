@@ -62,7 +62,7 @@ export const ashfall: WpsData & Product & VectorLayerProduct = {
             legendEntries: [{
                 feature: {
                     "type": "Feature",
-                    "properties": {'espesor': 0.05},
+                    "properties": {'thickness': 0.05},
                     "geometry": {
                       "type": "Polygon",
                       "coordinates": [ [
@@ -72,7 +72,7 @@ export const ashfall: WpsData & Product & VectorLayerProduct = {
                           [ 5.627918243408203, 50.963075942052164 ] ] ]
                     }
                 },
-                text: 'Espesor: 5 mm'
+                text: 'Thickness: 5 mm'
             }, {
                 feature: {
                     "type": "Feature",
@@ -86,7 +86,7 @@ export const ashfall: WpsData & Product & VectorLayerProduct = {
                           [ 5.627918243408203, 50.963075942052164 ] ] ]
                     }
                 },
-                text: 'Espesor: 50 mm'
+                text: 'Thickness: 50 mm'
             }, {
                 feature: {
                     "type": "Feature",
@@ -100,7 +100,7 @@ export const ashfall: WpsData & Product & VectorLayerProduct = {
                           [ 5.627918243408203, 50.963075942052164 ] ] ]
                     }
                 },
-                text: 'Espesor: 90 mm'
+                text: 'Thickness: 90 mm'
             }],
             text: (properties) => {
                 const thickness = properties['thickness'];
@@ -117,12 +117,12 @@ export const ashfall: WpsData & Product & VectorLayerProduct = {
                     const load = thickness * (1250 / 1250);
 
                     const selectedProperties = {
-                        Profundidad: thicknessText,
+                        '{{ Depth }}': thicknessText,
                         VEI: toDecimalPlaces(properties['vei'] as number, 1),
-                        'Carga esperada ': `${load} kPa`,
-                        Probabilidad: properties['prob'] + ' %'
+                        '{{ Expected_load }}': `${load} kPa`,
+                        '{{ Probability }}': properties['prob'] + ' %'
                     };
-                    return createKeyValueTableHtml('Ceniza', selectedProperties, 'medium');
+                    return createKeyValueTableHtml('{{ Ashfall }}', selectedProperties, 'medium');
                 }
             }
         }

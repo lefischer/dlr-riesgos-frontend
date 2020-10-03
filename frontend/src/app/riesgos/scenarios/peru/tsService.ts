@@ -122,7 +122,8 @@ export class TsServicePeru implements WizardableProcess, ExecutableProcess {
     wizardProperties = {
         providerName: 'Alfred Wegener Institute',
         providerUrl: 'https://www.awi.de/en/',
-        shape: 'tsunami' as 'tsunami'
+        shape: 'tsunami' as 'tsunami',
+        wikiLink: 'Tsunami'
     };
 
     private tsShakemapService: TsShakemapServicePeru;

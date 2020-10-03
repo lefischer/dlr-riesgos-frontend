@@ -110,8 +110,8 @@ export const damageManzanasGeojson: VectorLayerProduct & WpsData & Product = {
                 for (const damageClass in counts) {
                     data.push({label: damageClass, value: counts[damageClass]});
                 }
-                const anchorUpdated = createBarchart(anchor, data, 300, 200, 'Damage state', 'probabilidad');
-                return `<h4>Updated exposition</h4>${anchor.innerHTML}`;
+                const anchorUpdated = createBarchart(anchor, data, 300, 200, '{{ Damage_state }}', '{{ Probability }}');
+                return `<h4>{{ Updated_exposure }}</h4>${anchor.innerHTML}`;
               },
               legendEntries: [{
                   feature: {

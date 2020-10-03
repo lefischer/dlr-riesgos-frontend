@@ -27,6 +27,7 @@ import { SldParserService } from 'src/app/services/sld/sld-parser.service';
 import { laharContoursWms } from 'src/app/riesgos/scenarios/ecuador/laharWrapper';
 import { GroupSliderComponent, SliderEntry } from '../dynamic/group-slider/group-slider.component';
 import { VectorLegendComponent } from '../dynamic/vector-legend/vector-legend.component';
+import { CustomLayer } from '@dlr-eoc/services-layers/src/public-api';
 
 
 
@@ -304,7 +305,7 @@ export class LayerMarshaller  {
                     id: `${product.uid}_${product.description.id}_result_layer`,
                     name: `${product.description.name}`,
                     attribution: '',
-                    description: product.description.vectorLayerAttributes.summary(data),
+                    description: product.description.vectorLayerAttributes.summary ? product.description.vectorLayerAttributes.summary(data) : '',
                     opacity: 0.6,
                     removable: true,
                     type: 'geojson',
@@ -588,6 +589,8 @@ export class LayerMarshaller  {
             } else {
                 html = this.formatFeatureCollectionToTable(response);
             }
+            const dict = this.getDict();
+            html = this.translateParser.interpolate(html, dict);
             callback(html);
         });
     }
@@ -595,9 +598,11 @@ export class LayerMarshaller  {
     private formatFeatureCollectionToTable(collection: any): string {
         let html = '';
 
-        if(collection.id) html += `<h3>${collection.id}</h3>`;
+        if (collection.id) {
+            html += `<h3>${collection.id}</h3>`;
+        }
 
-        if(collection['features'].length > 0) {
+        if (collection['features'].length > 0) {
             html += '<table>';
             html += '<tr>';
             for (let key in collection['features'][0]['properties']) {

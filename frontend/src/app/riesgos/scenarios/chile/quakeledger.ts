@@ -33,7 +33,7 @@ export class InputBoundingbox implements BboxUconfProduct, BboxLayerProduct, Wps
             wizardProperties: {
                 name: 'AOI',
                 fieldtype: 'bbox',
-                description: 'Please select an area of interest'
+                description: 'Please select an area of interest',
             },
         },
         this.value = null;
@@ -207,15 +207,15 @@ export const selectedEqs: VectorLayerProduct & WpsData = {
                 });
             },
             text: (properties) => {
-                let text = `<h3>{{Available_earthquakes}}</h3>`;
+                let text = `<h3>{{ Available_earthquakes }}</h3>`;
                 const selectedProperties = {
-                    '{{Magnitude}}': toDecimalPlaces(properties['magnitude.mag.value'] as number, 1),
-                    '{{Depth}}': toDecimalPlaces(properties['origin.depth.value'] as number, 1) + ' km',
-                    '{{Id}}': properties['origin.publicID'],
+                    '{{ Magnitude }}': toDecimalPlaces(properties['magnitude.mag.value'] as number, 1),
+                    '{{ Depth }}': toDecimalPlaces(properties['origin.depth.value'] as number, 1) + ' km',
+                    Id: properties['origin.publicID'],
                 };
                 if (properties['origin.time.value'] && etype.value === 'observed') {
                     const date = new Date(Date.parse(properties['origin.time.value']));
-                    selectedProperties['{{Date}}'] = `${date.getDate() + 1}/${date.getMonth() + 1}/${date.getFullYear()}`;
+                    selectedProperties['{{ Date }}'] = `${date.getDate() + 1}/${date.getMonth() + 1}/${date.getFullYear()}`;
                 }
                 text += '<table class="table"><tbody>';
                 for (const property in selectedProperties) {
@@ -226,21 +226,6 @@ export const selectedEqs: VectorLayerProduct & WpsData = {
                 }
                 text += '</tbody></table>';
                 return text;
-            },
-            summary: (data) => {
-
-                const tableData: TableEntry[][] = [
-                    [{ value: 'V1', style: {'font-weight': 'bold'} }],
-                    [{ value: 'V2'}]
-                ];
-
-                return {
-                    component: InfoTableComponentComponent,
-                    inputs: {
-                        title: 'Available earthquakes',
-                        data: tableData
-                    }
-                };
             },
             legendEntries: [{
                 feature: {
@@ -254,7 +239,7 @@ export const selectedEqs: VectorLayerProduct & WpsData = {
                         "coordinates": [ 5.625, 50.958426723359935 ]
                       }
                   },
-                text: 'Terremoto<br/>Radius: magnitud<br/>color: profundidad'
+                text: 'Earthquake<br/>Radius: magnitude<br/>Color: depth'
             }]
         }
     },
@@ -289,4 +274,4 @@ export class QuakeLedger extends WpsProcess implements WizardableProcess {
         };
     }
 
-};
+}

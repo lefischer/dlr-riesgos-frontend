@@ -41,4 +41,4 @@ export class PhysicalImpactAssessment extends WpsProcess implements WizardablePr
             new ProcessStateAvailable()
         );
     }
-};
+}

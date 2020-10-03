@@ -48,15 +48,7 @@ export const parameter: StringSelectUconfProduct & WpsData = {
         wizardProperties: {
             fieldtype: 'stringselect',
             name: 'parameter',
-            signpost: `
-            <ol>
-                <li>MaxHeight [m]: Maximum flow height, that the lahar can reach during the event</li>
-                <li>MaxVelocity [m/s]: Maximum flow velocity, that the lahar can reach during the event</li>
-                <li>MaxPressure [kPa]: Maximum flow pressure, that the lahar can reach during the event</li>
-                <li>MaxErosion [m]: Maximum depth of erosion, that the lahar can entrain during the event</li>
-                <li>Deposition [m]: Height of deposited material after the lahar event</li>
-            </ol>
-            `
+            signpost: `lahar_parameter_signpost`,
         }
     },
     value: null
@@ -74,7 +66,7 @@ export const laharWms: WmsLayerProduct & WpsData = {
         format: 'application/WMS',
         featureInfoRenderer: (fi: FeatureCollection) => {
             if (fi.features && fi.features.length > 0) {
-                return createKeyValueTableHtml('', {'valor local': toDecimalPlaces(fi.features[0].properties['GRAY_INDEX'], 2)});
+                return createKeyValueTableHtml('', {'{{ local_value }}': toDecimalPlaces(fi.features[0].properties['GRAY_INDEX'], 2)});
             } else {
                 return '';
             }

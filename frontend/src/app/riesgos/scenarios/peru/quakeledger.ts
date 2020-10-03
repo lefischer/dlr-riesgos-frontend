@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { toDecimalPlaces, linInterpolateXY, redGreenRange } from 'src/app/helpers/colorhelpers';
 import { Style as olStyle, Fill as olFill, Stroke as olStroke, Circle as olCircle, Text as olText } from 'ol/style';
 import { Feature as olFeature } from 'ol/Feature';
+import { TableEntry, InfoTableComponentComponent } from 'src/app/components/dynamic/info-table-component/info-table-component.component';
 
 
 
@@ -171,19 +172,24 @@ export const selectedEqsPeru: VectorLayerProduct & WpsData = {
         id: 'selectedRows',
         icon: 'earthquake',
         name: 'available earthquakes',
+        description: 'Catalog data',
         format: 'application/vnd.geo+json',
         reference: false,
         type: 'complex',
         vectorLayerAttributes: {
-            style: (feature: olFeature, resolution: number) => {
+            style: (feature: olFeature, resolution: number, selected: boolean) => {
 
                 const props = feature.getProperties();
                 const magnitude = props['magnitude.mag.value'];
                 const depth = props['origin.depth.value'];
 
                 const text = depth + ' km';
-                const radius = linInterpolateXY(7, 5, 9, 20, magnitude);
+                let radius = linInterpolateXY(7, 5, 9, 20, magnitude);
                 const [r, g, b] = redGreenRange(5, 60, depth);
+
+                if (selected) {
+                    radius += 4;
+                }
 
                 return new olStyle({
                     image: new olCircle({
@@ -200,6 +206,27 @@ export const selectedEqsPeru: VectorLayerProduct & WpsData = {
                     })
                 });
             },
+            text: (properties) => {
+                let text = `<h3>{{ Available_earthquakes }}</h3>`;
+                const selectedProperties = {
+                    '{{ Magnitude }}': toDecimalPlaces(properties['e.mag.value'] as number, 1),
+                    '{{ Depth }}': toDecimalPlaces(properties['origin.depth.value'] as number, 1) + ' km',
+                    Id: properties['origin.publicID'],
+                };
+                if (properties['origin.time.value'] && etypePeru.value === 'observed') {
+                    const date = new Date(Date.parse(properties['origin.time.value']));
+                    selectedProperties['{{ Date }}'] = `${date.getDate() + 1}/${date.getMonth() + 1}/${date.getFullYear()}`;
+                }
+                text += '<table class="table"><tbody>';
+                for (const property in selectedProperties) {
+                    if (selectedProperties[property]) {
+                        const propertyValue = selectedProperties[property];
+                        text += `<tr><td>${property}</td> <td>${propertyValue}</td></tr>`;
+                    }
+                }
+                text += '</tbody></table>';
+                return text;
+            },
             legendEntries: [{
                 feature: {
                     "type": "Feature",
@@ -212,31 +239,8 @@ export const selectedEqsPeru: VectorLayerProduct & WpsData = {
                         "coordinates": [ 5.625, 50.958426723359935 ]
                       }
                   },
-                text: 'Terremoto<br/>Radius: magnitud<br/>color: profundidad'
-            }],
-            text: (properties) => {
-                let text = `<h3>Available earthquakes</h3>`;
-                const selectedProperties = {
-                    Magnitude: toDecimalPlaces(properties['e.mag.value'] as number, 1),
-                    Profundidad: toDecimalPlaces(properties['origin.depth.value'] as number, 1) + ' km',
-                    // Latitude: toDecimalPlaces(1, 1),
-                    // Longitude: toDecimalPlaces(2, 1),
-                    Id: properties['origin.publicID'],
-                };
-                if (properties['origin.time.value'] && etypePeru.value === 'observed') {
-                    const date = new Date(Date.parse(properties['origin.time.value']));
-                    selectedProperties['Fecha'] = `${date.getDate() + 1}/${date.getMonth() + 1}/${date.getFullYear()}`;
-                }
-                text += '<table class="table"><tbody>';
-                for (const property in selectedProperties) {
-                    if (selectedProperties[property]) {
-                        const propertyValue = selectedProperties[property];
-                        text += `<tr><td>${property}</td> <td>${propertyValue}</td></tr>`;
-                    }
-                }
-                text += '</tbody></table>';
-                return text;
-            }
+                text: 'Earthquake<br/>Radius: magnitude<br/>Color: depth'
+            }]
         }
     },
     value: null
@@ -244,7 +248,7 @@ export const selectedEqsPeru: VectorLayerProduct & WpsData = {
 
 export class QuakeLedgerPeru extends WpsProcess implements WizardableProcess {
 
-    wizardProperties: WizardProperties;
+    readonly wizardProperties: WizardProperties;
 
     constructor(http: HttpClient, cache: Cache) {
         super(
@@ -260,6 +264,7 @@ export class QuakeLedgerPeru extends WpsProcess implements WizardableProcess {
             new ProcessStateUnavailable(),
             cache
         );
+
         this.wizardProperties = {
             shape: 'earthquake',
             providerName: 'Helmholtz Centre Potsdam',

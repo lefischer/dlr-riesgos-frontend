@@ -17,6 +17,7 @@ import { switchMap } from 'rxjs/operators';
 import { FeatureCollection } from '@turf/helpers';
 import { createKeyValueTableHtml, createHeaderTableHtml, createTableHtml, zeros, filledMatrix } from 'src/app/helpers/others';
 import { Cache } from '@dlr-eoc/services-ogc';
+import { InfoTableComponentComponent } from 'src/app/components/dynamic/info-table-component/info-table-component.component';
 
 
 export const tsDamage: VectorLayerProduct & WpsData & Product = {
@@ -44,59 +45,66 @@ export const tsDamage: VectorLayerProduct & WpsData & Product = {
             },
             legendEntries: [{
                 feature: {
-                    "type": "Feature",
-                    "properties": {'loss_value': 100000},
-                    "geometry": {
-                      "type": "Polygon",
-                      "coordinates": [ [
+                    'type': 'Feature',
+                    'properties': {'loss_value': 100000},
+                    'geometry': {
+                      'type': 'Polygon',
+                      'coordinates': [ [
                           [ 5.627918243408203, 50.963075942052164 ],
                           [ 5.627875328063965, 50.958886259879264 ],
                           [ 5.635471343994141, 50.95634523633128 ],
                           [ 5.627918243408203, 50.963075942052164 ] ] ]
                     }
                 },
-                text: 'Perdida 100.000 USD'
+                text: 'Loss 100000 USD'
             }, {
                 feature: {
-                    "type": "Feature",
-                    "properties": {'loss_value': 500000},
-                    "geometry": {
-                      "type": "Polygon",
-                      "coordinates": [ [
+                    'type': 'Feature',
+                    'properties': {'loss_value': 500000},
+                    'geometry': {
+                      'type': 'Polygon',
+                      'coordinates': [ [
                           [ 5.627918243408203, 50.963075942052164 ],
                           [ 5.627875328063965, 50.958886259879264 ],
                           [ 5.635471343994141, 50.95634523633128 ],
                           [ 5.627918243408203, 50.963075942052164 ] ] ]
                     }
                 },
-                text: 'Perdida 500.000 USD'
+                text: 'Loss 500000 USD'
             }, {
                 feature: {
-                    "type": "Feature",
-                    "properties": {'loss_value': 1000000},
-                    "geometry": {
-                      "type": "Polygon",
-                      "coordinates": [ [
+                    'type': 'Feature',
+                    'properties': {'loss_value': 1000000},
+                    'geometry': {
+                      'type': 'Polygon',
+                      'coordinates': [ [
                           [ 5.627918243408203, 50.963075942052164 ],
                           [ 5.627875328063965, 50.958886259879264 ],
                           [ 5.635471343994141, 50.95634523633128 ],
                           [ 5.627918243408203, 50.963075942052164 ] ] ]
                     }
                 },
-                text: 'Perdida 1000.000 USD'
+                text: 'Loss 1000000 USD'
             }],
             text: (props: object) => {
-                return `<h4>Perdida </h4><p>${toDecimalPlaces(props['loss_value'] / 1000000, 2)} M${props['loss_unit']}</p>`;
+                return `<h4>{{ Loss }}</h4><p>${toDecimalPlaces(props['loss_value'] / 1000000, 2)} M${props['loss_unit']}</p>`;
             },
             summary: (value: [FeatureCollection]) => {
                 const features = value[0].features;
                 const damages = features.map(f => f.properties['loss_value']);
                 const totalDamage = damages.reduce((carry, current) => carry + current, 0);
                 const totalDamageFormatted = toDecimalPlaces(totalDamage / 1000000, 2) + ' MUSD';
-                return createKeyValueTableHtml('', {'Daño total': totalDamageFormatted}, 'medium');
+
+                return {
+                    component: InfoTableComponentComponent,
+                    inputs: {
+                        title: 'Total damage',
+                        data: [[{ value: 'Total damage'}, { value: totalDamageFormatted }]]
+                    }
+                };
             }
         },
-        description: 'Damage in USD.'
+        description: 'Damage in USD'
     },
     value: null
 };
@@ -159,7 +167,7 @@ export const tsTransition: VectorLayerProduct & WpsData & Product = {
                 for (let r = 0; r < labeledMatrix.length; r++) {
                     for (let c = 0; c < labeledMatrix[0].length; c++) {
                         if (r === 0 && c === 0) {
-                            labeledMatrix[r][c] = '<b>desde\\a</b>';
+                            labeledMatrix[r][c] = '<b>{{ from_to }}</b>';
                         } else if (r === 0) {
                             labeledMatrix[r][c] = `<b>${c - 1}</b>`;
                         } else if (c === 0) {
@@ -170,7 +178,7 @@ export const tsTransition: VectorLayerProduct & WpsData & Product = {
                     }
                 }
 
-                return `<h4>Transiciones </h4>${createTableHtml(labeledMatrix, 'medium')}`;
+                return `<h4>{{ Transitions }}</h4>${createTableHtml(labeledMatrix, 'medium')}`;
             },
             summary: (value: [FeatureCollection]) => {
                 const matrix = zeros(6, 7);
@@ -190,21 +198,27 @@ export const tsTransition: VectorLayerProduct & WpsData & Product = {
                 for (let r = 0; r < labeledMatrix.length; r++) {
                     for (let c = 0; c < labeledMatrix[0].length; c++) {
                         if (r === 0 && c === 0) {
-                            labeledMatrix[r][c] = '<b>desde\\a</b>';
+                            labeledMatrix[r][c] = { value: 'from_to', style: {'font-weight': 'bold'}};
                         } else if (r === 0) {
-                            labeledMatrix[r][c] = `<b>${c - 1}</b>`;
+                            labeledMatrix[r][c] =  { value: `${c - 1}`, style: {'font-weight': 'bold'}};
                         } else if (c === 0) {
-                            labeledMatrix[r][c] = `<b>${r - 1}</b>`;
+                            labeledMatrix[r][c] =  { value: `${r - 1}`, style: {'font-weight': 'bold'}};
                         } else if (r > 0 && c > 0) {
-                            labeledMatrix[r][c] = toDecimalPlaces(matrix[r-1][c-1], 0);
+                            labeledMatrix[r][c] =  { value: toDecimalPlaces(matrix[r-1][c-1], 0) };
                         }
                     }
                 }
 
-                return createTableHtml(labeledMatrix, 'medium');
+                return {
+                    component: InfoTableComponentComponent,
+                    inputs: {
+                        title: 'Transitions',
+                        data: labeledMatrix
+                    }
+                };
             }
         },
-        description: 'Cambio desde el estado anterior'
+        description: 'Change from previous state'
     },
     value: null
 };
@@ -263,11 +277,11 @@ export const tsUpdatedExposure: VectorLayerProduct & WpsData & Product = {
             },
             legendEntries: [{
                 feature: {
-                    "type": "Feature",
-                    "properties": {'expo': {'Damage': ['D0', 'D1', 'D2', 'D3', 'D4', 'D5'], 'Buildings': [90, 10, 0, 0, 0, 0]}},
-                    "geometry": {
-                      "type": "Polygon",
-                      "coordinates": [ [
+                    'type': 'Feature',
+                    'properties': {'expo': {'Damage': ['D0', 'D1', 'D2', 'D3', 'D4', 'D5'], 'Buildings': [90, 10, 0, 0, 0, 0]}},
+                    'geometry': {
+                      'type': 'Polygon',
+                      'coordinates': [ [
                           [ 5.627918243408203, 50.963075942052164 ],
                           [ 5.627875328063965, 50.958886259879264 ],
                           [ 5.635471343994141, 50.95634523633128 ],
@@ -277,11 +291,11 @@ export const tsUpdatedExposure: VectorLayerProduct & WpsData & Product = {
                 text: 'Damage states: 90/10/0/0/0/0'
             }, {
                 feature: {
-                    "type": "Feature",
-                    "properties": {'expo': {'Damage': ['D0', 'D1', 'D2', 'D3', 'D4', 'D5'], 'Buildings': [0, 10, 40, 40, 10, 0]}},
-                    "geometry": {
-                      "type": "Polygon",
-                      "coordinates": [ [
+                    'type': 'Feature',
+                    'properties': {'expo': {'Damage': ['D0', 'D1', 'D2', 'D3', 'D4', 'D5'], 'Buildings': [0, 10, 40, 40, 10, 0]}},
+                    'geometry': {
+                      'type': 'Polygon',
+                      'coordinates': [ [
                           [ 5.627918243408203, 50.963075942052164 ],
                           [ 5.627875328063965, 50.958886259879264 ],
                           [ 5.635471343994141, 50.95634523633128 ],
@@ -291,11 +305,11 @@ export const tsUpdatedExposure: VectorLayerProduct & WpsData & Product = {
                 text: 'Damage states: 0/10/40/40/10/0'
             }, {
                 feature: {
-                    "type": "Feature",
-                    "properties": {'expo': {'Damage': ['D0', 'D1', 'D2', 'D3', 'D4', 'D5'], 'Buildings': [0, 0, 0, 0, 20, 80]}},
-                    "geometry": {
-                      "type": "Polygon",
-                      "coordinates": [ [
+                    'type': 'Feature',
+                    'properties': {'expo': {'Damage': ['D0', 'D1', 'D2', 'D3', 'D4', 'D5'], 'Buildings': [0, 0, 0, 0, 20, 80]}},
+                    'geometry': {
+                      'type': 'Polygon',
+                      'coordinates': [ [
                           [ 5.627918243408203, 50.963075942052164 ],
                           [ 5.627875328063965, 50.958886259879264 ],
                           [ 5.635471343994141, 50.95634523633128 ],
@@ -326,21 +340,21 @@ export const tsUpdatedExposure: VectorLayerProduct & WpsData & Product = {
                 for (const damageClass in counts) {
                     data.push({label: damageClass, value: counts[damageClass]});
                 }
-                const anchorUpdated = createBarchart(anchor, data, 300, 200, 'Estado de daño', '# edeficios');
+                const anchorUpdated = createBarchart(anchor, data, 300, 200, '{{ Damage_states }}', '{{ Nr_buildings }}');
                 
                 const legend = `
                     <ul>
-                        <li> <b> D0: </b> sin daños </li>
-                         <li> <b> D1: </b> daños menores </li>
-                         <li> <b> D2: </b> daño moderado </li>
-                         <li> <b> D3: </b> daños mayores </li>
-                         <li> <b> D4: </b> daño completo </li>
-                         <li> <b> D5: </b> colapsado </li>
-                         <li> <b> D6: </b> lavado </li>
+                         <li> <b> D0: </b> {{ No_damage }} </li>
+                         <li> <b> D1: </b> {{ Minor_damage }} </li>
+                         <li> <b> D2: </b> {{ Moderate_damage }} </li>
+                         <li> <b> D3: </b> {{ Major_damage }} </li>
+                         <li> <b> D4: </b> {{ Complete_damage }} </li>
+                         <li> <b> D5: </b> {{ Collapsed }} </li>
+                         <li> <b> D6: </b> {{ Washed_away }} </li>
                     </ul>
                 `;
 
-                return `<h4>Exposición actualizada</h4>${anchor.innerHTML}<br/>${legend}`;
+                return `<h4>{{ Updated_exposure }}</h4>${anchor.innerHTML}<br/>${legend}`;
             },
             summary: (value: [FeatureCollection]) => {
                 const counts = {
@@ -362,7 +376,7 @@ export const tsUpdatedExposure: VectorLayerProduct & WpsData & Product = {
                 return createHeaderTableHtml(Object.keys(counts), [Object.values(counts).map(c => toDecimalPlaces(c, 0))]);
             }
         },
-        description: 'Cantidad de bienes que están expuestos a un peligro.'
+        description: 'Number of goods exposed to a threat'
     },
     value: null
 };

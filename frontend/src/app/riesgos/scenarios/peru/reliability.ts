@@ -86,9 +86,9 @@ export const damageConsumerAreasPeru: WpsData & Product & VectorLayerProduct = {
             text: (props: object) => {
                 const selectedProps = {
                     'Area': props['Area'],
-                    'Prob. of disruption': props['Prob_Disruption'],
+                    '{{ Prob_Interuption }}': props['Prob_Disruption'],
                 };
-                return createKeyValueTableHtml('Suministro eléctrico', selectedProps, 'medium');
+                return createKeyValueTableHtml('{{ PowerGrid }}', selectedProps, 'medium');
             }
         }
     },

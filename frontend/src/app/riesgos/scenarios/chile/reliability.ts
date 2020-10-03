@@ -83,11 +83,11 @@ export const damageConsumerAreas: WpsData & Product & VectorLayerProduct = {
             },
             text: (props: object) => {
                 const selectedProps = {
-                    'Nombre': props['Name'],
-                    'Población': props['population'],
-                    'Prob. de interrupción': props['Prob_Disruption'],
+                    '{{ Name }}': props['Name'],
+                    '{{ Population }}': props['population'],
+                    '{{ Prob_Interuption }}': props['Prob_Disruption'],
                 };
-                return createKeyValueTableHtml('Red eléctrica', selectedProps, 'medium');
+                return createKeyValueTableHtml('{{ PowerGrid }}', selectedProps, 'medium');
             }
         }
     },

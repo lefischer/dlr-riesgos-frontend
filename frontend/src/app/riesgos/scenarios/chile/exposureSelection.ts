@@ -36,7 +36,7 @@ export class ExposureSelection implements ExecutableProcess, WizardableProcess {
     description?: string = 'exposure_description';
     readonly wizardProperties: WizardProperties;
     private standardModel: ExposureModel;
-    private raqelsModel: RaquelsExposureModel;
+    private raquelsModel: RaquelsExposureModel;
 
     constructor(httpClient: HttpClient, cache: Cache) {
         this.wizardProperties = {
@@ -46,7 +46,7 @@ export class ExposureSelection implements ExecutableProcess, WizardableProcess {
             wikiLink: 'Vulnerability'
         };
         this.standardModel = new ExposureModel(httpClient, cache);
-        this.raqelsModel = new RaquelsExposureModel(httpClient, cache);
+        this.raquelsModel = new RaquelsExposureModel(httpClient, cache);
     }
 
     execute(inputs: Product[], outputs?: Product[],
@@ -57,7 +57,7 @@ export class ExposureSelection implements ExecutableProcess, WizardableProcess {
         if (modelChoicePara.value === 'GFZ 2019') {
             chosenModel = this.standardModel;
         } else if (modelChoicePara.value === 'GFZ 2020') {
-            chosenModel = this.raqelsModel;
+            chosenModel = this.raquelsModel;
         }
 
         const newInputs = inputs.filter(i => i.uid !== modelChoice.uid);

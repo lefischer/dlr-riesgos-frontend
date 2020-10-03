@@ -16,6 +16,7 @@ import { switchMap } from 'rxjs/operators';
 import { FeatureCollection, Feature } from '@turf/helpers';
 import { createKeyValueTableHtml, createHeaderTableHtml, createTableHtml, zeros, filledMatrix } from 'src/app/helpers/others';
 import { Cache } from '@dlr-eoc/services-ogc';
+import { InfoTableComponentComponent } from 'src/app/components/dynamic/info-table-component/info-table-component.component';
 
 
 
@@ -59,7 +60,7 @@ export const damageProps: VectorLayerProperties = {
                           [ 5.627918243408203, 50.963075942052164 ] ] ]
                     }
                 },
-                text: 'Loss 100.000 USD'
+                text: 'Loss 100000 USD'
             }, {
                 feature: {
                     "type": "Feature",
@@ -73,7 +74,7 @@ export const damageProps: VectorLayerProperties = {
                           [ 5.627918243408203, 50.963075942052164 ] ] ]
                     }
                 },
-                text: 'Loss 500.000 USD'
+                text: 'Loss 500000 USD'
             }, {
                 feature: {
                     "type": "Feature",
@@ -87,20 +88,27 @@ export const damageProps: VectorLayerProperties = {
                           [ 5.627918243408203, 50.963075942052164 ] ] ]
                     }
                 },
-                text: 'Loss 1.000.000 USD'
+                text: 'Loss 1000000 USD'
             }],
             text: (props: object) => {
-                return `<h4>Loss </h4><p>${toDecimalPlaces(props['loss_value'] / 1000000, 2)} M${props['loss_unit']}</p>`;
+                return `<h4>{{ Loss }}</h4><p>${toDecimalPlaces(props['loss_value'] / 1000000, 2)} M${props['loss_unit']}</p>`;
             },
             summary: (value: [FeatureCollection]) => {
                 const features = value[0].features;
                 const damages = features.map(f => f.properties['loss_value']);
                 const totalDamage = damages.reduce((carry, current) => carry + current, 0);
                 const totalDamageFormatted = toDecimalPlaces(totalDamage / 1000000, 0) + ' MUSD';
-                return createKeyValueTableHtml('', {'Total damage': totalDamageFormatted}, 'medium');
+
+                return {
+                    component: InfoTableComponentComponent, 
+                    inputs: {
+                        title: 'Total damage',
+                        data: [[{value: 'Total damage'}, {value: totalDamageFormatted}]]
+                    }
+                };
             }
         },
-        description: 'Damage in USD.',
+        description: 'Damage in USD',
         icon: 'dot-circle'
 
 };
@@ -153,7 +161,7 @@ export const transitionProps: VectorLayerProperties = {
                           [ 5.627918243408203, 50.963075942052164 ] ] ]
                     }
                 },
-                text: 'Transiciones'
+                text: 'Transitions'
             }],
             text: (props: object) => {
 
@@ -172,7 +180,7 @@ export const transitionProps: VectorLayerProperties = {
                 for (let r = 0; r < labeledMatrix.length; r++) {
                     for (let c = 0; c < labeledMatrix[0].length; c++) {
                         if (r === 0 && c === 0) {
-                            labeledMatrix[r][c] = '<b>desde\\a</b>';
+                            labeledMatrix[r][c] = '<b>{{ from_to }}</b>';
                         } else if (r === 0) {
                             labeledMatrix[r][c] = `<b>${c - 1}</b>`;
                         } else if (c === 0) {
@@ -183,7 +191,7 @@ export const transitionProps: VectorLayerProperties = {
                     }
                 }
 
-                return `<h4>Transiciones</h4>${createTableHtml(labeledMatrix, 'medium')}`;
+                return `<h4>{{ Transitions }}</h4>${createTableHtml(labeledMatrix, 'medium')}`;
             },
             summary: (value: [FeatureCollection]) => {
                 const matrix = zeros(1, 5);
@@ -203,22 +211,27 @@ export const transitionProps: VectorLayerProperties = {
                 for (let r = 0; r < labeledMatrix.length; r++) {
                     for (let c = 0; c < labeledMatrix[0].length; c++) {
                         if (r === 0 && c === 0) {
-                            labeledMatrix[r][c] = '<b>desde\\a</b>';
+                            labeledMatrix[r][c] = {value: 'from_to', style: {'font-weight': 'bold'} };
                         } else if (r === 0) {
-                            labeledMatrix[r][c] = `<b>${c - 1}</b>`;
+                            labeledMatrix[r][c] = {value: `${c - 1}`, style: {'font-weight': 'bold'} };
                         } else if (c === 0) {
-                            labeledMatrix[r][c] = `<b>${r - 1}</b>`;
+                            labeledMatrix[r][c] = {value: `${r - 1}`, style: {'font-weight': 'bold'} };
                         } else if (r > 0 && c > 0) {
-                            labeledMatrix[r][c] = toDecimalPlaces(matrix[r-1][c-1], 0);
+                            labeledMatrix[r][c] = {value: toDecimalPlaces(matrix[r-1][c-1], 0) };
                         }
                     }
                 }
 
-                return createTableHtml(labeledMatrix, 'medium');
+                return {
+                    component: InfoTableComponentComponent,
+                    inputs: {
+                        title: 'Transitions',
+                        data: labeledMatrix
+                    }
+                }
             }
         },
-        description: 'Cambio desde el estado anterior'
-
+        description: 'Change from previous state'
 };
 
 const updatedExposureProps: VectorLayerProperties = {
@@ -328,19 +341,19 @@ const updatedExposureProps: VectorLayerProperties = {
                 for (const damageClass in counts) {
                     data.push({label: damageClass, value: counts[damageClass]});
                 }
-                const anchorUpdated = createBarchart(anchor, data, 300, 200, 'Estatdo de daño', '# edeficios');
+                const anchorUpdated = createBarchart(anchor, data, 300, 200, '{{ Damage_states }}', '{{ Nr_buildings }}');
 
                 const legend = `
                     <ul>
-                        <li> <b> D0: </b> sin daños </li>
-                        <li> <b> D1: </b> daño leve </li>
-                        <li> <b> D2: </b> daño moderado </li>
-                        <li> <b> D3: </b> daño extenso </li>
-                        <li> <b> D4: </b> colapso </li>
+                        <li> <b> D0: </b> {{ No_damage }} </li>
+                        <li> <b> D1: </b> {{ Light_damage }} </li>
+                        <li> <b> D2: </b> {{ Moderate_damage }} </li>
+                        <li> <b> D3: </b> {{ Extensive_damage }} </li>
+                        <li> <b> D4: </b> {{ Collapsed }} </li>
                     </ul>
                 `;
 
-                return `<h4>Exposición actualizada</h4>${anchor.innerHTML}<br/>${legend}`;
+                return `<h4>{{ Updated_exposure }}</h4>${anchor.innerHTML}<br/>${legend}`;
             },
             summary: (value: [FeatureCollection]) => {
                 const counts = {
@@ -360,7 +373,7 @@ const updatedExposureProps: VectorLayerProperties = {
                 return createHeaderTableHtml(Object.keys(counts), [Object.values(counts).map(c => toDecimalPlaces(c, 0))]);
             }
         },
-        description: 'Cantidad de bienes que están expuestos a un peligro.'
+        description: 'Number of goods exposed to a threat'
 
 };
 
@@ -385,7 +398,7 @@ export const eqUpdatedExposureRef: WpsData & Product = {
         reference: true,
         type: 'complex',
         format: 'application/json',
-        description: 'Cantidad de bienes que están expuestos a un peligro.'
+        description: 'Number of goods exposed to a threat'
     },
     value: null
 };

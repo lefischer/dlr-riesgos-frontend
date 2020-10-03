@@ -1,5 +1,4 @@
 import { WpsProcess, ProcessStateUnavailable } from 'src/app/riesgos/riesgos.datatypes';
-import { WizardableProcess, WizardProperties } from 'src/app/components/config_wizard/wizardable_processes';
 import { latmax, initialExposure, lonmin, lonmax, latmin, querymode, schema, assettype } from './exposure';
 import { HttpClient } from '@angular/common/http';
 import { Cache } from '@dlr-eoc/services-ogc';
