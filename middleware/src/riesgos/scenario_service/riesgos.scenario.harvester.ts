@@ -1,6 +1,5 @@
 import { HttpClient } from "../../http_client/http_client";
-import { WpsClient } from "../../wps/wpsclient";
-import { WpsVersion, WpsProcessDescription, WpsServerDescription } from "../../wps/wps_datatypes";
+import { WpsVersion, WpsProcessDescription, WpsServerDescription, WpsClient } from "@dlr-eoc/utils-ogc";
 const fs = require('fs');
 
 export class Harvester {

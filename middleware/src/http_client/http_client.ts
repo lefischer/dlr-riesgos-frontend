@@ -1,9 +1,8 @@
 import * as https from 'https';
 import * as http from 'http';
-import * as querystring from 'querystring';
 import { Observable } from 'rxjs';
 import { URL } from 'url';
-import { WpsHttpClient, WpsHttpClientRequestParameters } from '../wps/wpsclient';
+import { WpsHttpClient, WpsHttpClientRequestParameters } from '@dlr-eoc/utils-ogc';
 
 
 export class HttpClient implements WpsHttpClient {
