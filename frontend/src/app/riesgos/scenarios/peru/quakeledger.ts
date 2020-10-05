@@ -231,7 +231,7 @@ export const selectedEqsPeru: VectorLayerProduct & WpsData = {
                 feature: {
                     "type": "Feature",
                     "properties": {
-                        'magnitude.mag.value': 6.0,
+                        'magnitude.mag.value': 3.0,
                         'origin.depth.value': 40.0
                     },
                     "geometry": {
@@ -239,7 +239,46 @@ export const selectedEqsPeru: VectorLayerProduct & WpsData = {
                         "coordinates": [ 5.625, 50.958426723359935 ]
                       }
                   },
-                text: 'Earthquake<br/>Radius: magnitude<br/>Color: depth'
+                text: 'Magnitude 3, depth 40'
+            }, {
+                feature: {
+                    "type": "Feature",
+                    "properties": {
+                        'magnitude.mag.value': 8.0,
+                        'origin.depth.value': 40.0
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [ 5.625, 50.958426723359935 ]
+                      }
+                  },
+                text: 'Magnitude 8, depth 40'
+            }, {
+                feature: {
+                    "type": "Feature",
+                    "properties": {
+                        'magnitude.mag.value': 3.0,
+                        'origin.depth.value': 20.0
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [ 5.625, 50.958426723359935 ]
+                      }
+                  },
+                text: 'Magnitude 3, depth 20'
+            }, {
+                feature: {
+                    "type": "Feature",
+                    "properties": {
+                        'magnitude.mag.value': 8.0,
+                        'origin.depth.value': 20.0
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [ 5.625, 50.958426723359935 ]
+                      }
+                  },
+                text: 'Magnitude 8, depth 20'
             }]
         }
     },

@@ -387,5 +387,10 @@
     "Earthquake": "Terremoto",
     "Earthquake<br/>Radius: magnitude<br/>Color: depth": "Terremoto<br/>Radius: magnitud<br/>Color: profundidad",
     "Selected_earthquake": "Terremoto seleccionado",
-    "Damage in USD": "Daño en USD"
+    "Damage in USD": "Daño en USD",
+
+    "Magnitude 3, depth 20": "Mag. 3, profundidad 20",
+    "Magnitude 8, depth 20": "Mag. 8, profundidad 20",
+    "Magnitude 3, depth 40": "Mag. 3, profundidad 40",
+    "Magnitude 8, depth 40": "Mag. 8, profundidad 40"
 }

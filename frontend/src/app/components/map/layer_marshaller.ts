@@ -485,12 +485,16 @@ export class LayerMarshaller  {
                      || layername.match(/LaharArrival_(N|S)_VEI\d_wgs_s\d/)) {
                         layer.visible = false;
                     }
+                    // special wish: legend for shakemap:
+                    if (layername.match(/N52:primary/)) {
+                        layer.legendImg = 'assets/images/eq_legend_small.png';
+                    }
 
                     layers.push(layer);
                 }
             }
             layers.reverse();
-            
+
             return layers;
         }));
     }
