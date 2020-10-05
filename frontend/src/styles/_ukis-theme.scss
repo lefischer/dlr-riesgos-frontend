@@ -48,3 +48,7 @@
     @import "./ukis-core-ui-layout";
     @import "./riesgos";
 }
+
+.light .sidenav .nav-group .nav-list, .light .sidenav .nav-group label {
+  padding: 0 0 0 0.3rem;
+}

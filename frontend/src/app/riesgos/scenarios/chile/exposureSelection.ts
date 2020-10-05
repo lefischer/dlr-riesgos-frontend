@@ -33,7 +33,7 @@ export class ExposureSelection implements ExecutableProcess, WizardableProcess {
     name = 'EQ Exposure Model Selection';
     requiredProducts: string[] = [modelChoice, lonmin, lonmax, latmin, latmax, querymode, schema, assettype].map(p => p.uid);
     providedProducts: string[] = [initialExposure.uid];
-    description?: string = 'exposure_description';
+    description = 'exposure_description';
     readonly wizardProperties: WizardProperties;
     private standardModel: ExposureModel;
     private raquelsModel: RaquelsExposureModel;
