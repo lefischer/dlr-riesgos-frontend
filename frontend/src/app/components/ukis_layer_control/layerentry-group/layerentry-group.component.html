@@ -62,7 +62,7 @@
         <ukis-layerentry [expanded]="openAllLayersProperties" [layersSvc]="layersSvc" [mapState]="mapState"
           [layer]="layer" [group]="group" (update)="layerUpdate($event, group)">
           <span class="move-item" cdkDragHandle>
-            {{layer.displayName || layer.name}}
+            {{layer.displayName || layer.name | regexTranslate | translate }}
           </span>
         </ukis-layerentry>
       </div>

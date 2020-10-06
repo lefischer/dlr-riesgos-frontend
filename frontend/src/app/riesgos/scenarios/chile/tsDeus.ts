@@ -89,8 +89,8 @@ export const tsDamage: VectorLayerProduct & WpsData & Product = {
             text: (props: object) => {
                 return `<h4>{{ Loss }}</h4><p>${toDecimalPlaces(props['loss_value'] / 1000000, 2)} M${props['loss_unit']}</p>`;
             },
-            summary: (value: [FeatureCollection]) => {
-                const features = value[0].features;
+            summary: (value: FeatureCollection) => {
+                const features = value.features;
                 const damages = features.map(f => f.properties['loss_value']);
                 const totalDamage = damages.reduce((carry, current) => carry + current, 0);
                 const totalDamageFormatted = toDecimalPlaces(totalDamage / 1000000, 2) + ' MUSD';
