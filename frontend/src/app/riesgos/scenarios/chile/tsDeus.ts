@@ -89,8 +89,13 @@ export const tsDamage: VectorLayerProduct & WpsData & Product = {
             text: (props: object) => {
                 return `<h4>{{ Loss }}</h4><p>${toDecimalPlaces(props['loss_value'] / 1000000, 2)} M${props['loss_unit']}</p>`;
             },
-            summary: (value: FeatureCollection) => {
-                const features = value.features;
+            summary: (value: FeatureCollection | FeatureCollection[]) => {
+                let features;
+                if (Array.isArray(value)) {
+                    features = value[0].features;
+                } else {
+                    features = value.features;
+                }
                 const damages = features.map(f => f.properties['loss_value']);
                 const totalDamage = damages.reduce((carry, current) => carry + current, 0);
                 const totalDamageFormatted = toDecimalPlaces(totalDamage / 1000000, 2) + ' MUSD';
@@ -180,9 +185,15 @@ export const tsTransition: VectorLayerProduct & WpsData & Product = {
 
                 return `<h4>{{ Transitions }}</h4>${createTableHtml(labeledMatrix, 'medium')}`;
             },
-            summary: (value: [FeatureCollection]) => {
+            summary: (value: FeatureCollection | FeatureCollection[]) => {
+                let features;
+                if (Array.isArray(value)) {
+                    features = value[0].features;
+                } else {
+                    features = value.features;
+                }
                 const matrix = zeros(6, 7);
-                for (const feature of value[0].features) {
+                for (const feature of features) {
                     const fromDamageState = feature.properties['transitions']['from_damage_state'];
                     const nrBuildings = feature.properties['transitions']['n_buildings'];
                     const toDamageState = feature.properties['transitions']['to_damage_state'];
@@ -356,7 +367,13 @@ export const tsUpdatedExposure: VectorLayerProduct & WpsData & Product = {
 
                 return `<h4>{{ Updated_exposure }}</h4>${anchor.innerHTML}<br/>${legend}`;
             },
-            summary: (value: [FeatureCollection]) => {
+            summary: (value: FeatureCollection | FeatureCollection[]) => {
+                let features;
+                if (Array.isArray(value)) {
+                    features = value[0].features;
+                } else {
+                    features = value.features;
+                }
                 const counts = {
                     'D0': 0,
                     'D1': 0,
@@ -366,7 +383,7 @@ export const tsUpdatedExposure: VectorLayerProduct & WpsData & Product = {
                     'D5': 0,
                     'D6': 0
                 };
-                for (const feature of value[0].features) {
+                for (const feature of features) {
                     for (let i = 0; i < feature.properties.expo.Damage.length; i++) {
                         const damageClass = feature.properties.expo.Damage[i];
                         const nrBuildings = feature.properties.expo.Buildings[i];

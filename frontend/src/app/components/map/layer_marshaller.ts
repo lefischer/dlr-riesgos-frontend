@@ -73,9 +73,15 @@ export class LayerMarshaller  {
         switch (this.currentLang) {
             case 'EN':
                 return this.dictEn;
-            default:
             case 'ES':
                 return this.dictEs;
+            default:
+                const defaultLang = this.translator.getDefaultLang();
+                if (defaultLang === 'EN') {
+                    return this.dictEn;
+                } else {
+                    return this.dictEs;
+                }
         }
     }
 

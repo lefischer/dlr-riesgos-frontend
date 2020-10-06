@@ -47,6 +47,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private store: Store<State>,
     private themeSvc: ThemeService,
   ) {
+
     const meta = this.getHtmlMeta(['title', 'version', 'description', 'short-title']);
     // if (meta.title) {
     //   this.title = meta.title;

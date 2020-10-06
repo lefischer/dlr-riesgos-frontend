@@ -41,8 +41,8 @@ export class PrintComponent {
     private translator: TranslateService
   ) {
     this.pdfParametersForm = new FormGroup({
-      title: new FormControl(this.translator.instant('Titulo')),
-      description: new FormControl(this.translator.instant('Descripción')),
+      title: new FormControl(this.translator.instant('Title')),
+      description: new FormControl(this.translator.instant('Description')),
       format: new FormControl(this.formatOptions[0]),
       orientation: new FormControl(this.orientationOptions[0]),
       resolution: new FormControl(this.resolutionOptions[0])

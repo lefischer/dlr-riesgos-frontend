@@ -376,9 +376,11 @@
     "Damage states: 0/10/40/40/10/0": "Estados de daño: 0/10/40/40/10/0",
     "Damage states: 0/0/0/0/20/80": "Estados de daño: 0/0/0/0/20/80",
     "No_damage": "Sin daños",
+    "Light_damage": "Daños menores",
     "Minor_damage": "Daños menores",
     "Moderate_damage": "Daño moderado",
     "Major_damage": "Daños mayores",
+    "Extensive_damage": "Daño extenso",
     "Complete_damage": "Daño completo",
     "Collapsed": "Colapsado",
     "Washed_away": "Lavado",
@@ -392,5 +394,7 @@
     "Magnitude 3, depth 20": "Mag. 3, profundidad 20",
     "Magnitude 8, depth 20": "Mag. 8, profundidad 20",
     "Magnitude 3, depth 40": "Mag. 3, profundidad 40",
-    "Magnitude 8, depth 40": "Mag. 8, profundidad 40"
+    "Magnitude 8, depth 40": "Mag. 8, profundidad 40",
+
+    "Catalogue type": "Tipo de catalogo"
 }

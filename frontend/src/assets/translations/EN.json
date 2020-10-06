@@ -170,12 +170,19 @@
     "Ashfall": "Ashfall",
     "Nr_buildings": "Number of buildings",
     "No_damage": "No damage",
+    "Light_damage": "Minor damage",
     "Minor_damage": "Minor damage",
     "Moderate_damage": "Moderate damage",
     "Major_damage": "Major damage",
+    "Extensive_damage": "Extensive damage",
     "Complete_damage": "Complete damage",
     "Collapsed": "Collapsed",
     "Washed_away": "Washed away",
     "Gound_acceleration": "Ground acceleration",
-    "Selected_earthquake": "Selected earthquake"
+    "Selected_earthquake": "Selected earthquake",
+
+    "Quickstart": "Quickstart",
+    "RIESGOS Demonstrator": "RIESGOS Demonstrator",
+    "Ground_acceleration": "Ground acceleration",
+    "Earthquake": "Earthquake"
 }
