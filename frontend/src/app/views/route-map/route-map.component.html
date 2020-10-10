@@ -5,7 +5,7 @@
 
 
 <clr-vertical-nav [clrVerticalNavCollapsible]="true" [(clrVerticalNavCollapsed)]="collapsedLayerControl" [clr-nav-level]="2" class="right" id="layerControl" #layerControl>
-    <perfect-scrollbar>
+    <!-- <perfect-scrollbar> -->
 
         <!-- <app-changedetector></app-changedetector> -->
 
@@ -20,16 +20,16 @@
             </clr-vertical-nav-group-children>
         </clr-vertical-nav-group>
 
-    </perfect-scrollbar>
+    <!-- </perfect-scrollbar> -->
 </clr-vertical-nav>
 
 <clr-vertical-nav [clrVerticalNavCollapsible]="true" [(clrVerticalNavCollapsed)]="collapsedConfigurationWizard" class="sidenav" id="serviceControl" #serviceControl>
-    <perfect-scrollbar>
+    <!-- <perfect-scrollbar> -->
 
         <h3 class="clr-vertical-nav-header is-highlight">{{'Configuration Wizard' | translate}}</h3>
         <ukis-configuration-wizard [navExpanded]="!collapsedConfigurationWizard"></ukis-configuration-wizard>
 
-    </perfect-scrollbar>
+    <!-- </perfect-scrollbar> -->
 </clr-vertical-nav>
 
 

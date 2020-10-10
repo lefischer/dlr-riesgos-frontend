@@ -87,8 +87,8 @@
     "DisclaimerText": "This is the prototype of a multi-risk exploration tool and still under development. IMPORTANT: the results shown here are not yet consolidated and therefore not suitable for planning or other practical applications.",
     "Understood and accept": "Understood and accepted",
 
-    "System reliability after Lahar": "Infrastructure - power supply",
-    "System reliability after EQ": "Infrastructure - power supply",
+    "System reliability after Lahar": "Power supply",
+    "System reliability after EQ": "Power supply",
 
     "etype": "subcategory",
 
@@ -184,5 +184,8 @@
     "Quickstart": "Quickstart",
     "RIESGOS Demonstrator": "RIESGOS Demonstrator",
     "Ground_acceleration": "Ground acceleration",
-    "Earthquake": "Earthquake"
+    "Earthquake": "Earthquake",
+    "EQ Exposure Model Selection": "Exposure model",
+    "Groundmotion Simulation": "Groundmotion"
+
 }
