@@ -27,7 +27,7 @@ export class VectorLegendComponent implements OnInit {
 
   @Input() legendTitle: string;
   @Input() resolution: number;
-  @Input() styleFunction: (feature: Feature, resolution: number) => Style;
+  @Input() styleFunction: (feature: olFeature, resolution: number) => Style;
   @Input() elementList: LegendElement[];
   public entries: Entry[] = [];
 

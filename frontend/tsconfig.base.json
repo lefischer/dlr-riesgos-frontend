@@ -12,7 +12,8 @@
     "target": "es2015",
     "module": "es2020",
     "lib": [
-      "es2018",
+      "es2019",
+      "es6",
       "dom"
     ],
     "paths": {

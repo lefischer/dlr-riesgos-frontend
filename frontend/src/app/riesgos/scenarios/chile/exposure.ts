@@ -152,7 +152,7 @@ export const initialExposure: VectorLayerProduct & WpsData & Product = {
           }),
           stroke: new olStroke({
             color: [r, g, b, 1],
-            witdh: 2
+            width: 2
           })
         });
       },

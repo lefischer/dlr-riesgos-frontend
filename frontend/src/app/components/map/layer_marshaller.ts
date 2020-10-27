@@ -4,11 +4,11 @@ import { Product } from 'src/app/riesgos/riesgos.datatypes';
 import { isWmsProduct, isVectorLayerProduct, isBboxLayerProduct, BboxLayerProduct,
     VectorLayerProduct, WmsLayerProduct, WmsLayerDescription, isMultiVectorLayerProduct,
     MultiVectorLayerProduct } from '../../riesgos/riesgos.datatypes.mappable';
-import { featureCollection, FeatureCollection } from '@turf/helpers';
+import { Feature, featureCollection, FeatureCollection } from '@turf/helpers';
+import { Feature as olFeature } from 'ol/Feature';
 import { bboxPolygon } from '@turf/turf';
 import { MapOlService } from '@dlr-eoc/map-ol';
 import { WMSCapabilities } from 'ol/format';
-import Feature from 'ol/Feature';
 import { map } from 'rxjs/operators';
 import { Observable, of, forkJoin } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -23,11 +23,12 @@ import { GeoJSON } from 'ol/format';
 import olTileLayer from 'ol/layer/Tile';
 import olTileWMS from 'ol/source/TileWMS';
 import olLayerGroup from 'ol/layer/Group';
+import Polygon from 'ol/geom/Polygon';
 import { SldParserService } from 'src/app/services/sld/sld-parser.service';
 import { laharContoursWms } from 'src/app/riesgos/scenarios/ecuador/laharWrapper';
 import { GroupSliderComponent, SliderEntry } from '../dynamic/group-slider/group-slider.component';
 import { VectorLegendComponent } from '../dynamic/vector-legend/vector-legend.component';
-import { CustomLayer } from '@dlr-eoc/services-layers/src/public-api';
+import { WebGlPolygonLayer } from '../../helpers/custom_renderers/renderers/polygon.renderer';
 
 
 
@@ -113,6 +114,9 @@ export class LayerMarshaller  {
         if (product.uid === laharContoursWms.uid) {
             return this.createLaharContourLayers(product);
         }
+        if (['ashfall_damage_output_values', 'lahar_damage_output_values', 'lahar_ashfall_damage_output_values'].includes(product.uid)) {
+            return this.createWebglLayers(product as MultiVectorLayerProduct);
+        }
 
         if (isWmsProduct(product)) {
             return this.makeWmsLayers(product);
@@ -125,6 +129,83 @@ export class LayerMarshaller  {
         } else {
             throw new Error(`this product cannot be converted into a layer: ${product}`);
         }
+    }
+
+    createWebglLayers(product: MultiVectorLayerProduct): Observable<ProductCustomLayer[]> {
+        const data = product.value[0];
+        const layers: ProductCustomLayer[] = [];
+        for (const vectorLayerProps of product.description.vectorLayers) {
+            const vl = new WebGlPolygonLayer({
+                source: new olVectorSource({
+                    features: new GeoJSON().readFeatures(data)
+                }),
+                colorFunc: (f: olFeature<Polygon>) => {
+                    const style = vectorLayerProps.vectorLayerAttributes.style(f, null, false);
+                    const color = style.fill_.color_;
+                    return [color[0] / 255, color[1] / 255, color[2] / 255];
+                }
+            });
+            const ukisLayer = new ProductCustomLayer({
+                custom_layer: vl,
+                productId: product.uid,
+                id: product.uid + '_' + vectorLayerProps.name,
+                name: vectorLayerProps.name,
+                opacity: 0.6,
+                visible: true,
+                attribution: '',
+                type: 'custom',
+                description: vectorLayerProps.vectorLayerAttributes.summary(product.value),
+                removable: true,
+                continuousWorld: true,
+                time: null,
+                filtertype: 'Overlays',
+                popup: {
+                    pupupFunktion: (obj) => {
+                        let html = vectorLayerProps.vectorLayerAttributes.text(obj);
+                        const dict = this.getDict();
+                        html = this.translateParser.interpolate(html, dict);
+                        return html;
+                    }
+                },
+                icon: vectorLayerProps.icon,
+                hasFocus: false,
+                actions: [{
+                    icon: 'download',
+                    title: 'download',
+                    action: (theLayer: any) => {
+                        const geojsonParser = new GeoJSON();
+                        const olFeatures = theLayer.custom_layer.getSource().getFeatures();
+                        const data = geojsonParser.writeFeatures(olFeatures);
+                        if (data) {
+                            downloadJson(data, `data_${theLayer.name}.json`);
+                        }
+                    }
+                }]
+            });
+
+            // Ugly hack: a custom layer is not supposed to have an 'options' property.
+            // We set it here anyway, because we need options.style to be able to create a custom legend.
+            ukisLayer['options'] = {
+                style: (feature: olFeature, resolution: number) => {
+                    const props = feature.getProperties();
+                    return vectorLayerProps.vectorLayerAttributes.style(feature, resolution, props.selected);
+                }
+            };
+
+            if (vectorLayerProps.vectorLayerAttributes.legendEntries) {
+                ukisLayer.legendImg = {
+                    component: VectorLegendComponent,
+                    inputs: {
+                        legendTitle: vectorLayerProps.description,
+                        resolution: 0.00005,
+                        styleFunction: vectorLayerProps.vectorLayerAttributes.style,
+                        elementList: vectorLayerProps.vectorLayerAttributes.legendEntries}
+                };
+            }
+
+            layers.push(ukisLayer);
+        }
+        return of(layers);
     }
 
     createLaharContourLayers(laharProduct: Product): Observable<ProductCustomLayer[]> {
@@ -222,7 +303,7 @@ export class LayerMarshaller  {
 
             const layer: olVectorLayer = new olVectorLayer({
                 source: source,
-                style: (feature: Feature, resolution: number) => {
+                style: (feature: olFeature, resolution: number) => {
                     const props = feature.getProperties();
                     return vectorLayerProps.vectorLayerAttributes.style(feature, resolution, props.selected);
                 }
@@ -585,7 +666,6 @@ export class LayerMarshaller  {
         const evt = obj.evt;
 
         const viewResolution = this.mapSvc.map.getView().getResolution();
-        console.log(`resolution: ${viewResolution}`)
         const properties: any = {};
         const url = source.getFeatureInfoUrl(
             evt.coordinate, viewResolution, this.mapSvc.EPSG,
