@@ -3,14 +3,14 @@ import { bindFramebuffer, bindTextureToFramebuffer, createEmptyTexture, createFr
 import earcut from 'earcut';
 
 import { Feature } from 'ol';
-import { Vector as VectorLayer } from 'ol/layer';
+import { Layer, Vector as VectorLayer } from 'ol/layer';
 import 'ol/ol.css';
 import LayerRenderer from 'ol/renderer/Layer';
 import { FrameState } from 'ol/PluggableMap';
 import Polygon from 'ol/geom/Polygon';
 import { Options } from 'ol/layer/BaseVector';
 import { Pixel } from 'ol/pixel';
-
+import { Coordinate } from 'ol/coordinate';
 
 
 export interface PolygonRendererData {
@@ -21,22 +21,53 @@ export interface PolygonRendererData {
     lineIndex: Index;
 }
 
+
+
+
+function encodeNInBase(n: number, base: number, slots: number): number[] {
+    const bases = Array(slots-1);
+    for (let i = 0; i < slots; i++) {
+        bases[i] = Math.pow(base, i);
+    }
+    const encoded = Array(slots-1);
+    for (let i = slots-1; i >= 0; i--) {
+        const b = bases[i];
+        const divsr = Math.floor(n / b);
+        const rest = n % b;
+        encoded[i] = divsr;
+        n = rest;
+    }
+    return encoded.reverse();
+}
+
+function decodeNFromBase(encoded: number[], base: number): number {
+    const encodedR = encoded.reverse();
+    const slots = encodedR.length;
+    let n = 0;
+    for (let i = 0; i < slots; i++) {
+        const b = Math.pow(base, i);
+        n += b * encodedR[i];
+    }
+    return n;
+}
+
+
 export function parseFeaturesToRendererData(
     features: Feature<Polygon>[], colorFunction: (f: Feature<Polygon>) => number[]): PolygonRendererData {
 
-        /**
-         * Path: Coords[]
-         * Polygon: Path[] <-- first path: outline, all other paths: holes
-         * MultiPolygon: Polygon[]
-         */
+    /**
+     * Path: Coords[]
+     * Polygon: Path[] <-- first path: outline, all other paths: holes
+     * MultiPolygon: Polygon[]
+     */
 
     const polygonIndices: number[][] = [];
     const lineIndices: number[][] = [];
     let coords: number[][] = [];
     let colors: number[][] = [];
-    let nrs: number[] = [];
+    let nrs: number[][] = [];
 
-    let nr = 0;
+    let nr = 1;
     let prevIndx = 0;
     for (const feature of features) {
         const type = feature.getGeometry().getType();
@@ -57,7 +88,8 @@ export function parseFeaturesToRendererData(
             lineIndices.push(lIndices);
             const color = colorFunction(feature);
             colors = colors.concat(Array(nrPoints).fill(color));
-            nrs = nrs.concat(Array(nrPoints).fill(nr));
+            const nrEncoded = encodeNInBase(nr, 256, 4).map(n => n / 255);
+            nrs = nrs.concat(Array(nrPoints).fill(nrEncoded));
 
             prevIndx += nrPoints;
             nr += 1;
@@ -79,7 +111,8 @@ export function parseFeaturesToRendererData(
                 lineIndices.push(lIndices);
                 const color = colorFunction(feature);
                 colors = colors.concat(Array(nrPoints).fill(color));
-                nrs = nrs.concat(Array(nrPoints).fill(nr));
+                const nrEncoded = encodeNInBase(nr, 256, 4).map(n => n / 255);
+                nrs = nrs.concat(Array(nrPoints).fill(nrEncoded));
 
                 prevIndx += nrPoints;
             }
@@ -89,7 +122,7 @@ export function parseFeaturesToRendererData(
 
     const coordAttr = new AttributeData(coords.flat(), 'vec2', false);
     const colorsAttr = new AttributeData(colors.flat(), 'vec3', false);
-    const nrsAttr = new AttributeData(nrs.flat(), 'float', false);
+    const nrsAttr = new AttributeData(nrs.flat(), 'vec4', false);
     const polyIndex = new Index(polygonIndices.flat());
     const lineIndex = new Index(lineIndices.flat());
 
@@ -111,6 +144,10 @@ export class WebGlPolygonRenderer extends LayerRenderer<VectorLayer> {
     lineShader: ElementsBundle;
     context: Context;
     canvas: HTMLCanvasElement;
+    pickingShader: ElementsBundle;
+    pickingFb: FramebufferObject;
+    cachedBbox: [number, number, number, number];
+    cachedPickingTextureData: Uint8Array;
 
     constructor(layer: VectorLayer, colorFunc: (f: Feature<Polygon>) => number[], data?: PolygonRendererData) {
         super(layer);
@@ -150,11 +187,11 @@ export class WebGlPolygonRenderer extends LayerRenderer<VectorLayer> {
         void main() {
             vertexColor = vec4(v_color.xyz, 0.8);
         }`), {
-                a_coord: data.coords,
-                a_color: data.colors
-            }, {
-                u_bbox: new UniformData('vec4', [0, 0, 360, 180])
-            }, {}, 'triangles', data.polyIndex);
+            a_coord: data.coords,
+            a_color: data.colors
+        }, {
+            u_bbox: new UniformData('vec4', [0, 0, 360, 180])
+        }, {}, 'triangles', data.polyIndex);
 
         const lineShader = new ElementsBundle(new Program(`#version 300 es
         precision lowp float;
@@ -176,9 +213,34 @@ export class WebGlPolygonRenderer extends LayerRenderer<VectorLayer> {
         }`), {
             a_coord: data.coords,
             a_color: data.colors
-            }, {
-                u_bbox: new UniformData('vec4', [0, 0, 360, 180])
-            }, {}, 'lines', data.lineIndex);
+        }, {
+            u_bbox: new UniformData('vec4', [0, 0, 360, 180])
+        }, {}, 'lines', data.lineIndex);
+
+
+        const pickingShader = new ElementsBundle(new Program(`#version 300 es
+        precision lowp float;
+        in vec2 a_coord;
+        in vec4 a_id;
+        flat out vec4 v_id;
+        uniform vec4 u_bbox;
+
+        void main() {
+            gl_Position = vec4( -1.0 + 2.0 * (a_coord.x - u_bbox.x) / (u_bbox.z - u_bbox.x),  -1.0 + 2.0 * (a_coord.y - u_bbox.y) / (u_bbox.w - u_bbox.y), 0, 1);
+            v_id = a_id;
+        }`, `#version 300 es
+        precision lowp float;
+        flat in vec4 v_id;
+        out vec4 vertexColor;
+
+        void main() {
+            vertexColor = v_id;
+        }`), {
+            a_coord: data.coords,
+            a_id: data.nrs
+        }, {
+            u_bbox: new UniformData('vec4', [0, 0, 360, 180])
+        }, {}, 'triangles', data.polyIndex);
 
 
         setup3dScene(context.gl);
@@ -186,9 +248,17 @@ export class WebGlPolygonRenderer extends LayerRenderer<VectorLayer> {
         polyShader.initVertexArray(context);
         lineShader.upload(context);
         lineShader.initVertexArray(context);
+        pickingShader.upload(context);
+        pickingShader.initVertexArray(context);
+
+        const fb = createFramebuffer(context.gl);
+        const fbTexture = createEmptyTexture(context.gl, canvas.width, canvas.height, 'ubyte4');
+        const fbo = bindTextureToFramebuffer(context.gl, fbTexture, fb);
 
         this.polyShader = polyShader;
         this.lineShader = lineShader;
+        this.pickingShader = pickingShader;
+        this.pickingFb = fbo;
         this.context = context;
         this.canvas = canvas;
     }
@@ -198,6 +268,8 @@ export class WebGlPolygonRenderer extends LayerRenderer<VectorLayer> {
     }
 
     renderFrame(frameState: FrameState, target: HTMLElement): HTMLElement {
+        const layerState = frameState.layerStatesArray[frameState.layerIndex];
+        this.canvas.style.opacity = `${layerState.opacity}`;
         const bbox = frameState.extent;
         this.polyShader.bind(this.context);
         this.polyShader.updateUniformData(this.context, 'u_bbox', bbox);
@@ -209,17 +281,61 @@ export class WebGlPolygonRenderer extends LayerRenderer<VectorLayer> {
     }
 
 
-  /**
-   * @param pixel Pixel.
-   * @param frameState FrameState.
-   * @param hitTolerance Hit tolerance in pixels.
-   * @return {Uint8ClampedArray|Uint8Array} The result.  If there is no data at the pixel
-   *    location, null will be returned.  If there is data, but pixel values cannot be
-   *    returned, and empty array will be returned.
-   */
-  getDataAtPixel(pixel: Pixel, frameState: FrameState, hitTolerance: number) {
-    return new Uint8Array([Math.random(), Math.random(), Math.random(), Math.random()]);
-  }
+    /**
+     * @param pixel Pixel.
+     * @param frameState FrameState.
+     * @param hitTolerance Hit tolerance in pixels.
+     * @return {Uint8ClampedArray|Uint8Array} The result.  If there is no data at the pixel
+     *    location, null will be returned.  If there is data, but pixel values cannot be
+     *    returned, and empty array will be returned.
+     *
+     * @TODO: We're not storing color-values anywhere. Atm. we're only keeping feature-ids in the picking-framebuffer.
+     */
+    getDataAtPixel(pixel: Pixel, frameState: FrameState, hitTolerance: number) {
+        return new Uint8Array([Math.random(), Math.random(), Math.random(), Math.random()]);
+    }
+
+    /**
+     * @param coordinate Coordinate.
+     * @param frameState Frame state.
+     * @param hitTolerance Hit tolerance in pixels.
+     * @param callback Feature callback.
+     * @param declutteredFeatures Decluttered features.
+     * @return Callback result.
+     * @template T
+     */
+    forEachFeatureAtCoordinate(coordinate: Coordinate, frameState: FrameState, hitTolerance: number, callback: (f: Feature, l: Layer) => any, declutteredFeatures: Feature[]) {
+        const bbox = frameState.extent;
+        if (bbox !== this.cachedBbox) {
+            this.cachedBbox = bbox;
+            this.pickingShader.bind(this.context);
+            this.pickingShader.updateUniformData(this.context, 'u_bbox', bbox);
+            this.pickingShader.draw(this.context, [0, 0, 0, 0], this.pickingFb);
+            const textureData = new Uint8Array(getCurrentFramebuffersPixels(this.canvas));
+            this.cachedPickingTextureData = textureData;
+        }
+
+        const percW = (coordinate[0] - bbox[0]) / (bbox[2] - bbox[0]);
+        const percH = (coordinate[1] - bbox[1]) / (bbox[3] - bbox[1]);
+        const row = Math.round(this.canvas.height * percH);
+        const col = Math.round(this.canvas.width * percW);
+        const index = 4 * row * this.canvas.width + 4 * col;
+        const featureNrEncoded = [
+            this.cachedPickingTextureData[index],
+            this.cachedPickingTextureData[index + 1],
+            this.cachedPickingTextureData[index + 2],
+            this.cachedPickingTextureData[index + 3]
+        ];
+        const featureNr = decodeNFromBase(featureNrEncoded, 256) - 1;
+
+        if (featureNr >= 0) {
+            const layer = this.getLayer();
+            const features = layer.getSource().getFeatures();
+            const feature = features[featureNr];
+
+            return callback(feature, layer);
+        }
+    }
 }
 
 export interface WebGlPolygonLayerOptions extends Options {

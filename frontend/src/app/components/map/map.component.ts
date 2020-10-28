@@ -399,6 +399,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
                             source: new olVectorSource({
                                 url: 'assets/data/kml/citsu_valparaiso_vinna.kml',
                                 format: new KML(),
+                                // @ts-ignore
                                 crossOrigin: 'anonymous'
                             })
                         }),
@@ -586,6 +587,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
                             source: new olVectorSource({
                                 url: 'assets/data/geojson/linea_transmision_ecuador.geojson',
                                 format: new GeoJSON(),
+                                // @ts-ignore
                                 crossOrigin: 'anonymous'
                             })
                         }),
@@ -602,6 +604,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
                             source: new olVectorSource({
                                 url: 'assets/data/geojson/linea_subtransmision_ecuador.geojson',
                                 format: new GeoJSON(),
+                                // @ts-ignore
                                 crossOrigin: 'anonymous'
                             })
                         }),
