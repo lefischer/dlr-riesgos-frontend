@@ -5,7 +5,7 @@ import { isWmsProduct, isVectorLayerProduct, isBboxLayerProduct, BboxLayerProduc
     VectorLayerProduct, WmsLayerProduct, WmsLayerDescription, isMultiVectorLayerProduct,
     MultiVectorLayerProduct } from '../../riesgos/riesgos.datatypes.mappable';
 import { Feature, featureCollection, FeatureCollection } from '@turf/helpers';
-import { Feature as olFeature } from 'ol/Feature';
+import { Feature as olFeature } from 'ol';
 import { bboxPolygon } from '@turf/turf';
 import { MapOlService } from '@dlr-eoc/map-ol';
 import { WMSCapabilities } from 'ol/format';
@@ -367,7 +367,7 @@ export class LayerMarshaller  {
             // Ugly hack: a custom layer is not supposed to have an 'options' property.
             // We set it here anyway, because we need options.style to be able to create a custom legend.
             productLayer['options'] = {
-                style: (feature: Feature, resolution: number) => {
+                style: (feature: olFeature, resolution: number) => {
                     const props = feature.getProperties();
                     return vectorLayerProps.vectorLayerAttributes.style(feature, resolution, props.selected);
                 }
@@ -460,7 +460,7 @@ export class LayerMarshaller  {
     private getSelectionAwareStyle(product: VectorLayerProduct): Observable<CallableFunction | null> {
         return this.getStyle(product).pipe(map(style => {
             if (style) {
-                return (feature: Feature, resolution: number) => {
+                return (feature: olFeature, resolution: number) => {
                     const props = feature.getProperties();
                     return style(feature, resolution, props.selected);
                 }

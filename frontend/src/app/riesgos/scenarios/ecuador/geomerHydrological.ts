@@ -8,7 +8,7 @@ import { laharHeightWms } from './laharWrapper';
 import { FeatureSelectUconfProduct, StringUconfProduct, StringSelectUconfProduct } from 'src/app/components/config_wizard/userconfigurable_wpsdata';
 import { toDecimalPlaces } from 'src/app/helpers/colorhelpers';
 import { Style as olStyle, Fill as olFill, Stroke as olStroke, Circle as olCircle, Text as olText } from 'ol/style';
-import { Feature as olFeature } from 'ol/Feature';
+import { Feature as olFeature } from 'ol';
 
 
 export const hydrologicalSimulation: WmsLayerProduct & WpsData = {

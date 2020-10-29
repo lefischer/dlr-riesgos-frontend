@@ -2,7 +2,7 @@ import { WpsProcess, ProcessStateUnavailable, Product } from 'src/app/riesgos/ri
 import { WpsData } from '@dlr-eoc/services-ogc';
 import { VectorLayerProduct } from 'src/app/riesgos/riesgos.datatypes.mappable';
 import { Style as olStyle, Fill as olFill, Stroke as olStroke, Circle as olCircle, Text as olText } from 'ol/style';
-import { Feature as olFeature } from 'ol/Feature';
+import { Feature as olFeature } from 'ol';
 import { HttpClient } from '@angular/common/http';
 import { Bardata, createBigBarchart } from 'src/app/helpers/d3charts';
 import { weightedDamage, greenRedRange } from 'src/app/helpers/colorhelpers';

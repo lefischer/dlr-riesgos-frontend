@@ -33,7 +33,7 @@ export const userinputSelectedEq: FeatureSelectUconfProduct & VectorLayerProduct
                         }),
                         stroke: new olStroke({
                             color: 'white',
-                            witdh: 1
+                            width: 1
                         })
                     })
                 });

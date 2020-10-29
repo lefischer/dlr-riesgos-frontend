@@ -199,9 +199,6 @@ export const selectedEqs: VectorLayerProduct & WpsData = {
                         }),
                         stroke: new olStroke({
                             color: [r, g, b, 1]
-                        }),
-                        text: new olText({
-                            text: text
                         })
                     })
                 });

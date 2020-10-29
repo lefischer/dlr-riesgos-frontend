@@ -167,12 +167,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
                     value: box
                 };
                 this.store.dispatch(new InteractionCompleted({ product }));
-            },
-            style: new Style({
-                stroke: new Stroke({
-                    color: [0, 0, 255, 1]
-                })
-            })
+            }
         });
         this.mapSvc.map.addInteraction(dragBox);
 
@@ -181,8 +176,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         const clickInteraction = new Select({
             condition: (mapBrowserEvent) => {
                 return click(mapBrowserEvent) && noModifierKeys(mapBrowserEvent);
-            },
-            style: false
+            }
         });
         clickInteraction.on('select', (e) => {
                 const features = e.target.getFeatures().getArray();
@@ -272,17 +266,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         this.translator.onLangChange.subscribe(lce => {
             this.mapSvc.removeAllPopups();
         });
-    }
-
-    private printAllLayers(message: string): void {
-        const layergroups = this.mapSvc.map.getLayers().getArray();
-        console.log(message);
-        console.log('1st level: ', layergroups);
-        for (const layergroup of layergroups) {
-            const title = layergroup.get('title');
-            const layers = layergroup.getLayers().getArray();
-            console.log(`2nd level: ${title}:`, layers, layers.map(l => l.get('id')));
-        }
     }
 
     ngAfterViewInit() {

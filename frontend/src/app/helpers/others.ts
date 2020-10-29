@@ -132,14 +132,6 @@ export function downloadBlob(blob: Blob, fileName: string) {
     document.body.removeChild(a);
 }
 
-export function createOlFeature(geojson: object): Feature[] {
-    const geoJsonReader = new GeoJSON({
-        defaultDataProjection: 'EPSG:4326',
-        featureProjection: 'EPSG:4326'
-      });
-      return geoJsonReader.readFeature(geojson);
-}
-
 
 export function parseFile(file: File): Observable<string> {
 
