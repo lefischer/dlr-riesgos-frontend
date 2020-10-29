@@ -30,14 +30,14 @@ function encodeNInBase(n: number, base: number, slots: number): number[] {
         bases[i] = Math.pow(base, i);
     }
     const encoded = Array(slots - 1);
-    for (let i = slots - 1; i >= 0; i--) {
-        const b = bases[i];
+    for (let i = 0; i < slots; i++) {
+        const b = bases[slots - 1 - i];
         const divsr = Math.floor(n / b);
         const rest = n % b;
         encoded[i] = divsr;
         n = rest;
     }
-    return encoded.reverse();
+    return encoded;
 }
 
 function decodeNFromBase(encoded: number[], base: number): number {
@@ -63,9 +63,9 @@ export function parseFeaturesToRendererData(
 
     const polygonIndices: number[][] = [];
     const lineIndices: number[][] = [];
-    let coords: number[][] = [];
-    let colors: number[][] = [];
-    let nrs: number[][] = [];
+    const coords: number[][] = [];
+    const colors: number[][] = [];
+    const nrs: number[][] = [];
 
     let nr = 1;
     let prevIndx = 0;
@@ -74,7 +74,7 @@ export function parseFeaturesToRendererData(
         const coordinates = feature.getGeometry().getCoordinates();
         if (type === 'Polygon') {
 
-            coords = coords.concat(coordinates[0]);
+            coords.push(...coordinates[0]);
             const pIndices = earcut(coordinates[0].flat()).map(i => i + prevIndx);
             polygonIndices.push(pIndices);
             const lIndices = [];
@@ -87,9 +87,9 @@ export function parseFeaturesToRendererData(
             lIndices.push(prevIndx);
             lineIndices.push(lIndices);
             const color = colorFunction(feature);
-            colors = colors.concat(Array(nrPoints).fill(color));
+            colors.push(... Array(nrPoints).fill(color));
             const nrEncoded = encodeNInBase(nr, 256, 4).map(n => n / 255);
-            nrs = nrs.concat(Array(nrPoints).fill(nrEncoded));
+            nrs.push(... Array(nrPoints).fill(nrEncoded));
 
             prevIndx += nrPoints;
             nr += 1;
@@ -97,7 +97,7 @@ export function parseFeaturesToRendererData(
         } else if (type === 'MultiPolygon') {
             for (const polygonCoords of coordinates) {
 
-                coords = coords.concat(polygonCoords[0]);
+                coords.push(... polygonCoords[0]);
                 const pIndices = earcut(polygonCoords[0].flat()).map(i => i + prevIndx);
                 polygonIndices.push(pIndices);
                 const lIndices = [];
@@ -110,9 +110,9 @@ export function parseFeaturesToRendererData(
                 lIndices.push(prevIndx);
                 lineIndices.push(lIndices);
                 const color = colorFunction(feature);
-                colors = colors.concat(Array(nrPoints).fill(color));
+                colors.push(... Array(nrPoints).fill(color));
                 const nrEncoded = encodeNInBase(nr, 256, 4).map(n => n / 255);
-                nrs = nrs.concat(Array(nrPoints).fill(nrEncoded));
+                nrs.push(... Array(nrPoints).fill(nrEncoded));
 
                 prevIndx += nrPoints;
             }
