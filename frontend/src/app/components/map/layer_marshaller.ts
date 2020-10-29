@@ -9,7 +9,7 @@ import { Feature as olFeature } from 'ol';
 import { bboxPolygon } from '@turf/turf';
 import { MapOlService } from '@dlr-eoc/map-ol';
 import { WMSCapabilities } from 'ol/format';
-import { map, withLatestFrom } from 'rxjs/operators';
+import { map, tap, withLatestFrom } from 'rxjs/operators';
 import { Observable, of, forkJoin } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/ngrx_register';
@@ -52,6 +52,7 @@ export class LayerMarshaller  {
     private dictEn: Object;
     private dictEs: Object;
     private currentLang: string;
+    private cache: {[k: string]: ProductLayer[]} = {};
 
     constructor(
         private httpClient: HttpClient,
@@ -86,17 +87,25 @@ export class LayerMarshaller  {
         }
     }
 
-
     productsToLayers(products: Product[]): Observable<ProductLayer[]> {
         if (products.length === 0) {
             return of([]);
         }
 
-        const obsables$ = [];
+        const observables$ = [];
         for (const product of products) {
-            obsables$.push(this.toLayers(product));
+            // before marshalling a product, checking if it's already in cache
+            if (this.cache[product.uid]) {
+                observables$.push(of(this.cache[product.uid]));
+            } else {
+                observables$.push(this.toLayers(product).pipe(
+                    // after marshalling a product, adding it to the cache
+                    tap((result: ProductLayer[]) => {
+                        this.cache[product.uid] = result;
+                    })));
+            }
         }
-        return forkJoin(obsables$).pipe(
+        return forkJoin(observables$).pipe(
             map((results: ProductLayer[][]) => {
                 const newLayers: ProductLayer[] = [];
                 for (const result of results) {
