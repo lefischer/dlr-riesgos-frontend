@@ -25,12 +25,12 @@ export interface PolygonRendererData {
 
 
 function encodeNInBase(n: number, base: number, slots: number): number[] {
-    const bases = Array(slots-1);
+    const bases = Array(slots - 1);
     for (let i = 0; i < slots; i++) {
         bases[i] = Math.pow(base, i);
     }
-    const encoded = Array(slots-1);
-    for (let i = slots-1; i >= 0; i--) {
+    const encoded = Array(slots - 1);
+    for (let i = slots - 1; i >= 0; i--) {
         const b = bases[i];
         const divsr = Math.floor(n / b);
         const rest = n % b;
@@ -273,7 +273,7 @@ export class WebGlPolygonRenderer extends LayerRenderer<VectorLayer> {
         const bbox = frameState.extent;
         this.polyShader.bind(this.context);
         this.polyShader.updateUniformData(this.context, 'u_bbox', bbox);
-        this.polyShader.draw(this.context);
+        this.polyShader.draw(this.context, [0, 0, 0, 0]);
         this.lineShader.bind(this.context);
         this.lineShader.updateUniformData(this.context, 'u_bbox', bbox);
         this.lineShader.draw(this.context);

@@ -9,7 +9,7 @@ import { Feature as olFeature } from 'ol/Feature';
 import { bboxPolygon } from '@turf/turf';
 import { MapOlService } from '@dlr-eoc/map-ol';
 import { WMSCapabilities } from 'ol/format';
-import { map } from 'rxjs/operators';
+import { map, withLatestFrom } from 'rxjs/operators';
 import { Observable, of, forkJoin } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/ngrx_register';
@@ -117,6 +117,9 @@ export class LayerMarshaller  {
         if (['ashfall_damage_output_values', 'lahar_damage_output_values', 'lahar_ashfall_damage_output_values'].includes(product.uid)) {
             return this.createWebglLayers(product as MultiVectorLayerProduct);
         }
+        if (['initial_Exposure', 'initial_Exposure_Lahar'].includes(product.uid)) {
+            return this.createWebglLayer(product as VectorLayerProduct).pipe(map(layer => [layer]));
+        }
 
         if (isWmsProduct(product)) {
             return this.makeWmsLayers(product);
@@ -132,80 +135,93 @@ export class LayerMarshaller  {
     }
 
     createWebglLayers(product: MultiVectorLayerProduct): Observable<ProductCustomLayer[]> {
-        const data = product.value[0];
-        const layers: ProductCustomLayer[] = [];
+        const layers$: Observable<ProductCustomLayer>[] = [];
         for (const vectorLayerProps of product.description.vectorLayers) {
-            const vl = new WebGlPolygonLayer({
-                source: new olVectorSource({
-                    features: new GeoJSON().readFeatures(data)
-                }),
-                colorFunc: (f: olFeature<Polygon>) => {
-                    const style = vectorLayerProps.vectorLayerAttributes.style(f, null, false);
-                    const color = style.fill_.color_;
-                    return [color[0] / 255, color[1] / 255, color[2] / 255];
-                }
-            });
-            const ukisLayer = new ProductCustomLayer({
-                custom_layer: vl,
-                productId: product.uid,
-                id: product.uid + '_' + vectorLayerProps.name,
-                name: vectorLayerProps.name,
-                opacity: 0.6,
-                visible: true,
-                attribution: '',
-                type: 'custom',
-                description: vectorLayerProps.vectorLayerAttributes.summary(product.value),
-                removable: true,
-                continuousWorld: true,
-                time: null,
-                filtertype: 'Overlays',
-                popup: {
-                    pupupFunktion: (obj) => {
-                        let html = vectorLayerProps.vectorLayerAttributes.text(obj);
-                        const dict = this.getDict();
-                        html = this.translateParser.interpolate(html, dict);
-                        return html;
-                    }
-                },
-                icon: vectorLayerProps.icon,
-                hasFocus: false,
-                actions: [{
-                    icon: 'download',
-                    title: 'download',
-                    action: (theLayer: any) => {
-                        const geojsonParser = new GeoJSON();
-                        const olFeatures = theLayer.custom_layer.getSource().getFeatures();
-                        const data = geojsonParser.writeFeatures(olFeatures);
-                        if (data) {
-                            downloadJson(data, `data_${theLayer.name}.json`);
-                        }
-                    }
-                }]
-            });
-
-            // Ugly hack: a custom layer is not supposed to have an 'options' property.
-            // We set it here anyway, because we need options.style to be able to create a custom legend.
-            ukisLayer['options'] = {
-                style: (feature: olFeature, resolution: number) => {
-                    const props = feature.getProperties();
-                    return vectorLayerProps.vectorLayerAttributes.style(feature, resolution, props.selected);
+            const vectorLayerProduct: VectorLayerProduct = {
+                ... product,
+                description: {
+                    id: product.uid + '_' + vectorLayerProps.name,
+                    ... vectorLayerProps,
+                    ... product.description,
                 }
             };
-
-            if (vectorLayerProps.vectorLayerAttributes.legendEntries) {
-                ukisLayer.legendImg = {
-                    component: VectorLegendComponent,
-                    inputs: {
-                        legendTitle: vectorLayerProps.description,
-                        resolution: 0.00005,
-                        styleFunction: vectorLayerProps.vectorLayerAttributes.style,
-                        elementList: vectorLayerProps.vectorLayerAttributes.legendEntries}
-                };
-            }
-
-            layers.push(ukisLayer);
+            const pcl$ = this.createWebglLayer(vectorLayerProduct);
+            layers$.push(pcl$);
         }
-        return of(layers);
+        return forkJoin(layers$);
+    }
+
+    createWebglLayer(product: VectorLayerProduct): Observable<ProductCustomLayer> {
+        const data = product.value[0];
+        const vl = new WebGlPolygonLayer({
+            source: new olVectorSource({
+                features: new GeoJSON().readFeatures(data)
+            }),
+            colorFunc: (f: olFeature<Polygon>) => {
+                const style = product.description.vectorLayerAttributes.style(f, null, false);
+                const color = style.fill_.color_;
+                return [color[0] / 255, color[1] / 255, color[2] / 255];
+            }
+        });
+        const ukisLayer = new ProductCustomLayer({
+            custom_layer: vl,
+            productId: product.uid,
+            id: product.uid + '_' + product.description.name,
+            name: product.description.name,
+            opacity: 0.6,
+            visible: true,
+            attribution: '',
+            type: 'custom',
+            description: product.description.vectorLayerAttributes.summary ? product.description.vectorLayerAttributes.summary(product.value) : undefined,
+            removable: true,
+            continuousWorld: true,
+            time: null,
+            filtertype: 'Overlays',
+            popup: {
+                pupupFunktion: (obj) => {
+                    let html = product.description.vectorLayerAttributes.text(obj);
+                    const dict = this.getDict();
+                    html = this.translateParser.interpolate(html, dict);
+                    return html;
+                }
+            },
+            icon: product.description.icon,
+            hasFocus: false,
+            actions: [{
+                icon: 'download',
+                title: 'download',
+                action: (theLayer: any) => {
+                    const geojsonParser = new GeoJSON();
+                    const olFeatures = theLayer.custom_layer.getSource().getFeatures();
+                    const data = JSON.parse(geojsonParser.writeFeatures(olFeatures));
+                    if (data) {
+                        downloadJson(data, `data_${theLayer.name}.json`);
+                    }
+                }
+            }]
+        });
+
+        // Ugly hack: a custom layer is not supposed to have an 'options' property.
+        // We set it here anyway, because we need options.style to be able to create a custom legend.
+        ukisLayer['options'] = {
+            style: (feature: olFeature, resolution: number) => {
+                const props = feature.getProperties();
+                return product.description.vectorLayerAttributes.style(feature, resolution, props.selected);
+            }
+        };
+
+        if (product.description.vectorLayerAttributes.legendEntries) {
+            ukisLayer.legendImg = {
+                component: VectorLegendComponent,
+                inputs: {
+                    legendTitle: product.description.description,
+                    resolution: 0.00005,
+                    styleFunction: product.description.vectorLayerAttributes.style,
+                    elementList: product.description.vectorLayerAttributes.legendEntries}
+            };
+        }
+
+        return of(ukisLayer);
     }
 
     createLaharContourLayers(laharProduct: Product): Observable<ProductCustomLayer[]> {
@@ -339,7 +355,7 @@ export class LayerMarshaller  {
                     action: (theLayer: any) => {
                         const geojsonParser = new GeoJSON();
                         const olFeatures = theLayer.custom_layer.getSource().getFeatures();
-                        const data = geojsonParser.writeFeatures(olFeatures);
+                        const data = JSON.parse(geojsonParser.writeFeatures(olFeatures));
                         if (data) {
                             downloadJson(data, `data_${theLayer.name}.json`);
                         }
