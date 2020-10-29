@@ -165,7 +165,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         deps: [HttpClient]
       }
     }),
-    !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 2 }) : []
+    // !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 2 }) : []
   ],
   providers: [
     AlertService,

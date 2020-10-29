@@ -250,9 +250,14 @@ export class WebGlPolygonRenderer extends LayerRenderer<VectorLayer> {
         lineShader.initVertexArray(context);
         pickingShader.upload(context);
         pickingShader.initVertexArray(context);
+
+        // for saving memory: deleting local copies of GPU data.
         delete(polyShader.attributes);
+        delete(polyShader.index.data);
         delete(lineShader.attributes);
+        delete(lineShader.index.data);
         delete(pickingShader.attributes);
+        delete(pickingShader.index.data);
 
         const fb = createFramebuffer(context.gl);
         const fbTexture = createEmptyTexture(context.gl, canvas.width, canvas.height, 'ubyte4');
@@ -362,5 +367,6 @@ export class WebGlPolygonLayer extends VectorLayer {
 
     createRenderer(): LayerRenderer<VectorLayer> {
         return new WebGlPolygonRenderer(this, this.colorFunc, this.webGlData);
+        delete(this.webGlData);
     }
 }
