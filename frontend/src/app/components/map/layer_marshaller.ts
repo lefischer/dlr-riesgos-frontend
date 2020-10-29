@@ -136,6 +136,10 @@ export class LayerMarshaller  {
 
     createWebglLayers(product: MultiVectorLayerProduct): Observable<ProductCustomLayer[]> {
         const layers$: Observable<ProductCustomLayer>[] = [];
+        const data = product.value[0];
+        const source = new olVectorSource({
+            features: new GeoJSON().readFeatures(data)
+        });
         for (const vectorLayerProps of product.description.vectorLayers) {
             const vectorLayerProduct: VectorLayerProduct = {
                 ... product,
@@ -145,18 +149,23 @@ export class LayerMarshaller  {
                     ... product.description,
                 }
             };
-            const pcl$ = this.createWebglLayer(vectorLayerProduct);
+            const pcl$ = this.createWebglLayer(vectorLayerProduct, source);
             layers$.push(pcl$);
         }
         return forkJoin(layers$);
     }
 
-    createWebglLayer(product: VectorLayerProduct): Observable<ProductCustomLayer> {
+    createWebglLayer(product: VectorLayerProduct, source?: olVectorSource): Observable<ProductCustomLayer> {
+        if (!source) {
+            const data = product.value[0];
+            source = new olVectorSource({
+                features: new GeoJSON().readFeatures(data)
+            });
+        }
         const data = product.value[0];
         const vl = new WebGlPolygonLayer({
-            source: new olVectorSource({
-                features: new GeoJSON().readFeatures(data)
-            }),
+            // @ts-ignore
+            source: source,
             colorFunc: (f: olFeature<Polygon>) => {
                 const style = product.description.vectorLayerAttributes.style(f, null, false);
                 const color = style.fill_.color_;

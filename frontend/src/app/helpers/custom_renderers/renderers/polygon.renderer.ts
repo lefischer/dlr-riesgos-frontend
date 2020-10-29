@@ -250,6 +250,9 @@ export class WebGlPolygonRenderer extends LayerRenderer<VectorLayer> {
         lineShader.initVertexArray(context);
         pickingShader.upload(context);
         pickingShader.initVertexArray(context);
+        delete(polyShader.attributes);
+        delete(lineShader.attributes);
+        delete(pickingShader.attributes);
 
         const fb = createFramebuffer(context.gl);
         const fbTexture = createEmptyTexture(context.gl, canvas.width, canvas.height, 'ubyte4');
@@ -329,6 +332,7 @@ export class WebGlPolygonRenderer extends LayerRenderer<VectorLayer> {
         const featureNr = decodeNFromBase(featureNrEncoded, 256) - 1;
 
         if (featureNr >= 0) {
+            // @ts-ignore
             const layer = this.getLayer();
             const features = layer.getSource().getFeatures();
             const feature = features[featureNr];
