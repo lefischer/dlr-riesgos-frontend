@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy } from '@angular/core';
 import { DragBox } from 'ol/interaction';
-import { Style, Stroke } from 'ol/style';
 import { Vector as olVectorLayer, Tile as TileLayer } from 'ol/layer';
 import { Vector as olVectorSource, TileWMS } from 'ol/source';
 import { GeoJSON, KML } from 'ol/format';

@@ -29,7 +29,7 @@ import { laharContoursWms } from 'src/app/riesgos/scenarios/ecuador/laharWrapper
 import { GroupSliderComponent, SliderEntry } from '../dynamic/group-slider/group-slider.component';
 import { VectorLegendComponent } from '../dynamic/vector-legend/vector-legend.component';
 import { WebGlPolygonLayer } from '../../helpers/custom_renderers/renderers/polygon.renderer';
-
+import * as hashfunction from 'imurmurhash';
 
 
 
@@ -45,6 +45,11 @@ interface WmsParameters {
     srs: string;
 }
 
+interface CacheEntry {
+    hash: number;
+    value: ProductLayer[];
+}
+
 
 @Injectable()
 export class LayerMarshaller  {
@@ -52,7 +57,7 @@ export class LayerMarshaller  {
     private dictEn: Object;
     private dictEs: Object;
     private currentLang: string;
-    private cache: {[k: string]: ProductLayer[]} = {};
+    private cache: {[uid: string]: CacheEntry} = {};
 
     constructor(
         private httpClient: HttpClient,
@@ -94,15 +99,21 @@ export class LayerMarshaller  {
 
         const observables$ = [];
         for (const product of products) {
+            // observables$.push(this.toLayers(product));
             // before marshalling a product, checking if it's already in cache
-            if (this.cache[product.uid]) {
-                observables$.push(of(this.cache[product.uid]));
+            const hash = hashfunction(JSON.stringify(product)).result();
+            if (this.cache[product.uid] && this.cache[product.uid].hash === hash) {
+                observables$.push(of(this.cache[product.uid].value));
             } else {
                 observables$.push(this.toLayers(product).pipe(
                     // after marshalling a product, adding it to the cache
                     tap((result: ProductLayer[]) => {
-                        this.cache[product.uid] = result;
-                    })));
+                        this.cache[product.uid] = {
+                            hash: hash,
+                            value: result
+                        };
+                    }))
+                );
             }
         }
         return forkJoin(observables$).pipe(
