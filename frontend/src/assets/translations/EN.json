@@ -82,9 +82,9 @@
     "instructions bbox": "You can now draw a  bounding box on the map.",
     "instructions featureselection": "You can now select a point of interest on the map.",
 
-    "This is a demonstrator!": "This is a prototype. The information presented here is not suitable for planning or other practical applications.",
+    "This is a demonstrator!": "This is a demonstrator. The information presented here is not suitable for planning or other practical applications.",
     "Disclaimer": "Disclaimer",
-    "DisclaimerText": "This is the prototype of a multi-risk exploration tool and still under development. IMPORTANT: the results shown here are not yet consolidated and therefore not suitable for planning or other practical applications.",
+    "DisclaimerText": "This is the demonstrator of a multi-risk exploration tool and still under development. IMPORTANT: the results shown here are not yet consolidated and therefore not suitable for planning or other practical applications.",
     "Understood and accept": "Understood and accepted",
 
     "System reliability after Lahar": "Power supply",
