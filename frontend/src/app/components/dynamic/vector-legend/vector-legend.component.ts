@@ -36,7 +36,13 @@ export class VectorLegendComponent implements OnInit {
   ngOnInit() {
     const legend = new Legend({
       title: this.legendTitle,
-      style: (feature: olFeature) => this.styleFunction(feature, this.resolution),
+      style: (feature: olFeature) => {
+        const style = this.styleFunction(feature, this.resolution);
+        if (style.text_) {
+          delete(style.text_);
+        }
+        return style;
+      },
       collapsible: false,
       margin: 0,
       size: [20, 20],

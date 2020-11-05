@@ -186,6 +186,11 @@
     "Ground_acceleration": "Ground acceleration",
     "Earthquake": "Earthquake",
     "EQ Exposure Model Selection": "Exposure model",
-    "Groundmotion Simulation": "Groundmotion"
+    "Groundmotion Simulation": "Groundmotion",
+
+    "VEI1": "VEI 1 - 2",
+    "VEI2": "VEI 2 - 3",
+    "VEI3": "VEI 3 - 4",
+    "VEI4": "VEI > 4"
 
 }
