@@ -21,8 +21,8 @@ import { InfoTableComponentComponent, TableEntry } from 'src/app/components/dyna
 
 
 
-export const laharDamageProps: VectorLayerProperties = {
-        name: 'laharDamage',
+export const laharLossProps: VectorLayerProperties = {
+        name: 'laharLoss',
         icon: 'avalance',
         vectorLayerAttributes: {
             style: (feature: olFeature, resolution: number) => {
@@ -41,6 +41,20 @@ export const laharDamageProps: VectorLayerProperties = {
             legendEntries: [{
                 feature: {
                     "type": "Feature",
+                    "properties": {'loss_value': 100000},
+                    "geometry": {
+                      "type": "Polygon",
+                      "coordinates": [ [
+                          [ 5.627918243408203, 50.963075942052164 ],
+                          [ 5.627875328063965, 50.958886259879264 ],
+                          [ 5.635471343994141, 50.95634523633128 ],
+                          [ 5.627918243408203, 50.963075942052164 ] ] ]
+                    }
+                },
+                text: 'Loss 100000 USD'
+            }, {
+                feature: {
+                    "type": "Feature",
                     "properties": {'loss_value': 500000},
                     "geometry": {
                       "type": "Polygon",
@@ -52,6 +66,20 @@ export const laharDamageProps: VectorLayerProperties = {
                     }
                 },
                 text: 'Loss 500000 USD'
+            }, {
+                feature: {
+                    "type": "Feature",
+                    "properties": {'loss_value': 1000000},
+                    "geometry": {
+                      "type": "Polygon",
+                      "coordinates": [ [
+                          [ 5.627918243408203, 50.963075942052164 ],
+                          [ 5.627875328063965, 50.958886259879264 ],
+                          [ 5.635471343994141, 50.95634523633128 ],
+                          [ 5.627918243408203, 50.963075942052164 ] ] ]
+                    }
+                },
+                text: 'Loss 1000000 USD'
             }],
             text: (props: object) => {
                 return `<h4>{{ Loss }}</h4><p>${toDecimalPlaces(props['loss_value'] / 1000000, 2)} M${props['loss_unit']}</p>`;
@@ -65,8 +93,8 @@ export const laharDamageProps: VectorLayerProperties = {
                 return {
                     component: InfoTableComponentComponent,
                     inputs: {
-                        title: 'Total damage',
-                        data: [[{value: 'Total damage'}, {value: totalDamageFormatted}]],
+                        title: 'Total_loss',
+                        data: [[{value: 'Total_loss'}, {value: totalDamageFormatted}]],
                     }
                 };
             }
@@ -241,6 +269,20 @@ export const laharUpdatedExposureProps: VectorLayerProperties = {
             legendEntries: [{
                 feature: {
                     "type": "Feature",
+                    "properties": {'expo': {'Damage': ['D0', 'D1', 'D2', 'D3'], 'Buildings': [80, 10, 0, 0]}},
+                    "geometry": {
+                      "type": "Polygon",
+                      "coordinates": [ [
+                          [ 5.627918243408203, 50.963075942052164 ],
+                          [ 5.627875328063965, 50.958886259879264 ],
+                          [ 5.635471343994141, 50.95634523633128 ],
+                          [ 5.627918243408203, 50.963075942052164 ] ] ]
+                    }
+                },
+                text: 'Damage 80/10/0/0'
+            }, {
+                feature: {
+                    "type": "Feature",
                     "properties": {'expo': {'Damage': ['D0', 'D1', 'D2', 'D3'], 'Buildings': [10, 80, 80, 10]}},
                     "geometry": {
                       "type": "Polygon",
@@ -251,7 +293,21 @@ export const laharUpdatedExposureProps: VectorLayerProperties = {
                           [ 5.627918243408203, 50.963075942052164 ] ] ]
                     }
                 },
-                text: 'Damage states'
+                text: 'Damage 10/80/80/10'
+            }, {
+                feature: {
+                    "type": "Feature",
+                    "properties": {'expo': {'Damage': ['D0', 'D1', 'D2', 'D3'], 'Buildings': [0, 0, 10, 80]}},
+                    "geometry": {
+                      "type": "Polygon",
+                      "coordinates": [ [
+                          [ 5.627918243408203, 50.963075942052164 ],
+                          [ 5.627875328063965, 50.958886259879264 ],
+                          [ 5.635471343994141, 50.95634523633128 ],
+                          [ 5.627918243408203, 50.963075942052164 ] ] ]
+                    }
+                },
+                text: 'Damage 0/0/10/80'
             }],
             text: (props: object) => {
                 const anchor = document.createElement('div');
@@ -320,7 +376,7 @@ export const laharDamageM: WpsData & MultiVectorLayerProduct = {
         format: 'application/json',
         type: 'complex',
         description: '',
-        vectorLayers: [laharDamageProps, laharUpdatedExposureProps]
+        vectorLayers: [laharLossProps, laharUpdatedExposureProps]
     },
     value: null
 }

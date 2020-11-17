@@ -21,8 +21,8 @@ import { InfoTableComponentComponent } from 'src/app/components/dynamic/info-tab
 
 
 
-const ashfallDamageProps: VectorLayerProperties = {
-        name: 'ashfallDamage',
+const ashfallLossProps: VectorLayerProperties = {
+        name: 'ashfallLoss',
         icon: 'volcanoe',
         vectorLayerAttributes: {
             style: (feature: olFeature, resolution: number) => {
@@ -93,9 +93,9 @@ const ashfallDamageProps: VectorLayerProperties = {
                 return {
                     component: InfoTableComponentComponent,
                     inputs: {
-                        title: 'Total damage',
+                        title: 'Total_loss',
                         data: [[ {
-                            value: 'Total damage'
+                            value: 'Total_loss'
                         }, {
                             value: totalDamageFormatted
                         }]]
@@ -362,7 +362,7 @@ export const ashfallDamageM: WpsData & MultiVectorLayerProduct = {
         format: 'application/json',
         type: 'complex',
         description: '',
-        vectorLayers: [ashfallUpdatedExposureProps, ashfallDamageProps]
+        vectorLayers: [ashfallUpdatedExposureProps, ashfallLossProps]
     },
     value: null
 };

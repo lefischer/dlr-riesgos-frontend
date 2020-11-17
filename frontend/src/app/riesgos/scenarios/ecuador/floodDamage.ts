@@ -24,7 +24,7 @@ export const damageManzanas: WpsData & Product = {
         reference: false,
         type: 'complex',
         format: 'application/json',
-        description: 'geojson with the damage of the manzanas',
+        description: 'Geojson with damage to manzanas',
     },
     value: null
 };
@@ -36,7 +36,7 @@ export const damageBuildings: WpsData & Product = {
         reference: false,
         type: 'complex',
         format: 'application/json',
-        description: 'geojson with the damage on the buildings'
+        description: 'Geojson with damage to buildings'
     },
     value: null
 };
@@ -54,7 +54,7 @@ export class FlooddamageProcess extends WpsProcess implements WizardableProcess 
             // [damageManzanas, damageBuildings].map(p => p.uid), // <-- damageBuildings is way too big to fit in browser memory!
             [damageManzanas].map(p => p.uid),
             'org.n52.gfz.riesgos.algorithm.impl.FlooddamageProcess',
-            'Process to compute the damage of a flood in ecuador.',
+            'Process to compute the damage caused by a flood.',
             'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService',
             '1.0.0',
             http,
@@ -79,7 +79,7 @@ export const damageManzanasGeojson: VectorLayerProduct & WpsData & Product = {
         reference: false,
         type: 'complex',
         format: 'application/vnd.geo+json',
-        description: 'geojson with the damage of the manzanas',
+        description: 'geojson with damage to manzanas',
         name: 'Flood damage',
         vectorLayerAttributes: {
             style: (feature: olFeature, resolution: number) => {
@@ -116,7 +116,7 @@ export const damageManzanasGeojson: VectorLayerProduct & WpsData & Product = {
               legendEntries: [{
                   feature: {
                       "type": "Feature",
-                      "properties": {'inundation': 26},
+                      "properties": {'inundation': 10},
                       "geometry": {
                         "type": "Polygon",
                         "coordinates": [ [
@@ -126,8 +126,36 @@ export const damageManzanasGeojson: VectorLayerProduct & WpsData & Product = {
                             [ 5.627918243408203, 50.963075942052164 ] ] ]
                       }
                   },
-                  text: 'color: depth of inundation'
-              }]
+                  text: 'Inundation 10 cm'
+              }, {
+                feature: {
+                    "type": "Feature",
+                    "properties": {'inundation': 30},
+                    "geometry": {
+                      "type": "Polygon",
+                      "coordinates": [ [
+                          [ 5.627918243408203, 50.963075942052164 ],
+                          [ 5.627875328063965, 50.958886259879264 ],
+                          [ 5.635471343994141, 50.95634523633128 ],
+                          [ 5.627918243408203, 50.963075942052164 ] ] ]
+                    }
+                },
+                text: 'Inundation 30 cm'
+            }, {
+                feature: {
+                    "type": "Feature",
+                    "properties": {'inundation': 50},
+                    "geometry": {
+                      "type": "Polygon",
+                      "coordinates": [ [
+                          [ 5.627918243408203, 50.963075942052164 ],
+                          [ 5.627875328063965, 50.958886259879264 ],
+                          [ 5.635471343994141, 50.95634523633128 ],
+                          [ 5.627918243408203, 50.963075942052164 ] ] ]
+                    }
+                },
+                text: 'Inundation 50 cm'
+            }]
         }
     },
     value: null

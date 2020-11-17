@@ -4,7 +4,7 @@ import { Product, ProcessStateUnavailable, ExecutableProcess, ProcessState } fro
 import { redGreenRange, ninetyPercentLowerThan, toDecimalPlaces, greenRedRange, weightedDamage } from 'src/app/helpers/colorhelpers';
 import { Bardata, createBarchart } from 'src/app/helpers/d3charts';
 import { WizardableProcess, WizardProperties } from 'src/app/components/config_wizard/wizardable_processes';
-import { eqUpdatedExposureRef } from './eqDeus';
+import { eqDamageM, eqUpdatedExposureRef } from './eqDeus';
 import { schema } from './exposure';
 import { tsShakemap } from './tsService';
 import { Style as olStyle, Fill as olFill, Stroke as olStroke, Circle as olCircle, Text as olText } from 'ol/style';
@@ -13,9 +13,9 @@ import { HttpClient } from '@angular/common/http';
 import { fragilityRef, VulnerabilityModel, assetcategory, losscategory, taxonomies } from './modelProp';
 import { Observable } from 'rxjs';
 import { Deus } from './deus';
-import { switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { FeatureCollection } from '@turf/helpers';
-import { createKeyValueTableHtml, createHeaderTableHtml, createTableHtml, zeros, filledMatrix } from 'src/app/helpers/others';
+import { createHeaderTableHtml, createTableHtml, zeros, filledMatrix } from 'src/app/helpers/others';
 import { Cache } from '@dlr-eoc/services-ogc';
 import { InfoTableComponentComponent } from 'src/app/components/dynamic/info-table-component/info-table-component.component';
 
@@ -419,7 +419,7 @@ export class TsDeus implements ExecutableProcess, WizardableProcess {
         this.state = new ProcessStateUnavailable();
         this.uid = 'TS-Deus';
         this.name = 'Multihazard damage estimation / TS';
-        this.requiredProducts = [tsShakemap, eqUpdatedExposureRef].map(p => p.uid);
+        this.requiredProducts = [eqDamageM, tsShakemap, eqUpdatedExposureRef].map(p => p.uid);
         this.providedProducts = [tsDamage, tsTransition, tsUpdatedExposure].map(p => p.uid);
         this.description = 'This service returns damage caused by the selected tsunami.';
         this.wizardProperties = {
@@ -438,6 +438,7 @@ export class TsDeus implements ExecutableProcess, WizardableProcess {
         outputProducts?: Product[],
         doWhileExecuting?: (response: any, counter: number) => void): Observable<Product[]> {
 
+        // Step 1.1: preparing vulnerability-service inputs
         const vulnerabilityInputs = [
             assetcategory,
             losscategory,
@@ -449,10 +450,12 @@ export class TsDeus implements ExecutableProcess, WizardableProcess {
         ];
         const vulnerabilityOutputs = [fragilityRef];
 
+        // Step 1.2: executing vulnerability-service
         return this.vulnerabilityProcess.execute(vulnerabilityInputs, vulnerabilityOutputs, doWhileExecuting)
             .pipe(
                 switchMap((resultProducts: Product[]) => {
 
+                    // Step 2.1: preparing deus inputs
                     const fragility = resultProducts.find(prd => prd.uid === fragilityRef.uid);
                     const shakemap = inputProducts.find(prd => prd.uid === tsShakemap.uid);
                     const exposure = inputProducts.find(prd => prd.uid === eqUpdatedExposureRef.uid);
@@ -482,7 +485,18 @@ export class TsDeus implements ExecutableProcess, WizardableProcess {
                         }
                     ];
                     const deusOutputs = outputProducts;
+
+                    // Step 2.2: executing deus
                     return this.deusProcess.execute(deusInputs, deusOutputs, doWhileExecuting);
+                }),
+                map((results: Product[]) => {
+                    // Step 3: adding losses-by-eq to losses-from-eq-to-tsunami
+                    const lossesByEq = inputProducts.find(ip => ip.uid === eqDamageM.uid).value[0];
+                    const lossesFromEqToTsunami = results[0].value[0];
+                    for (let i = 0; i < lossesFromEqToTsunami.features.length; i++) {
+                        lossesFromEqToTsunami.features[i].properties['loss_value'] += lossesByEq.features[i].properties['loss_value'];
+                    }
+                    return results;
                 })
             );
     }

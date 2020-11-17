@@ -108,7 +108,7 @@ export const damageProps: VectorLayerProperties = {
                 };
             }
         },
-        description: 'Damage in USD',
+        description: 'Loss in USD',
         icon: 'dot-circle'
 
 };

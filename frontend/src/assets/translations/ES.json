@@ -14,7 +14,7 @@
     "assets/images/lahar_en.jpg": "assets/images/lahar_es.jpg",
     "assets/images/tsunami_en.jpg": "assets/images/tsunami_es.jpg",
 
-    "Showcase Chile": "Región de Valparaíso",
+    "Showcase Chile": "Zona costera del Gran Valparaíso",
     "Showcase Ecuador": "Quito / Región Cotopaxi",
     "Showcase Peru": "Lima Metropolitana y Callao",
 
@@ -51,7 +51,7 @@
     "Groundmotion": "Movimiento de tierra",
     "Simulates the ground motion caused by the selected earthquake": "Simula el movimiento del suelo causado por un terremoto dado",
     "Vulnerability after EQ": "Vulnerabilidad post-terremoto",
-    "Damage after EQ": "Daño post-terremoto",
+    "Damage after EQ": "Daños post-terremoto",
     "This service returns damage caused by the selected earthquake.": "Este servicio genera información sobre los daños causados por un terremoto determinado.",
     "Earthquake/tsunami interaction": "Interacción terremoto / tsunami",
     "Relates a tsunami to the selected earthquake": "Relaciona un tsunami con un terremoto dado",
@@ -90,8 +90,8 @@
     "Flood": "Inundación",
     "Flood damage": "Daños por inundación",
     "Exposure (extended)": "Exposición",
-    "Multihazard damage estimation / EQ": "Daño post-terremoto",
-    "Multihazard damage estimation / TS": "Daño post-tsunami",
+    "Multihazard damage estimation / EQ": "Daños post-terremoto",
+    "Multihazard damage estimation / TS": "Daños post-tsunami",
 
     "Current state": "Estado actual",
 
@@ -107,14 +107,14 @@
     "TS-Service": "Simulación de tsunami",
     
     "Exposure": "Exposición",
-    "eq-exposure": "Exposición y daño por terremoto",
-    "eq-transition": "Transiciones de daño por terremoto",
+    "eq-exposure": "Exposición y daños por terremoto",
+    "eq-transition": "Transiciones de daños por terremoto",
     "eq-damage": "Pérdida por terremoto",
-    "ts-exposure": "Exposición y daño por tsunami",
+    "ts-exposure": "Exposición y daños por tsunami",
     "ts-transition": "Transiciones de daño por tsunami",
     "ts-damage": "Pérdida por tsunami",
-    "lahar-exposure": "Exposición y daño por lahar",
-    "lahar-transitions": "Transiciones de daño por lahar",
+    "lahar-exposure": "Exposición y daños por lahar",
+    "lahar-transitions": "Transiciones de daños por lahar",
     "lahar-damage": "Pérdida por lahar",
     "Catalogue of earthquakes. Enter here the parameters that determine which earthquakes would be appropriate for your simulation.": "Catálogo de terremotos. Ingrese aquí los parámetros que determinan qué terremotos serían apropiados para su simulación.",
     "exposure_description": "La situación de las personas, la infraestructura, la vivienda, la capacidad de producción y otros activos humanos tangibles ubicados en áreas propensas a los peligros.",
@@ -125,7 +125,7 @@
     "Simulates a tsunami based on the earlier selected earthquake-parameters.": "Simula un tsunami basado en los parámetros de terremoto seleccionados anteriormente.",
 
 
-    "Concrete damage in USD.": "Daño en USD.",
+    "Concrete damage in USD.": "Daños en USD.",
     "Change from previous state to current one": "Transición del estado anterior al actual",
     "Amount of goods that are exposed to a hazard.": "Cantidad de bienes en estado de daño",
 
@@ -241,7 +241,7 @@
     "Lahar_maxpressure": "presión máxima",
     "Lahar_maxvelocity": "velocidad máxima",
     "ashfall-depth": "Espesor y carga de ceniza",
-    "Damage to consumer areas": "Daño a zonas de consumo",
+    "Damage to consumer areas": "Daños a zonas de consumo",
     "outburstSite": "sitio de ruptura",
     "This service provides the option to simulate a break of a lake created by a lahar.": "Este servicio ofrece la opción de simular una ruptura de un lago creado por un lahar.",
     "You can choose here from two lake locations. The process will create the flood scenario for the selected lake.": "Puede elegir aquí entre dos ubicaciones del lago. El proceso creará el escenario de inundación para el lago seleccionado.",
@@ -255,12 +255,12 @@
     "LaharArrival_N_VEI3_wgs_s18000": "Alcance 300 min",
     "laharDamage": "Pérdida por lahar",
     "laharTransition": "Transiciones de daño por lahar",
-    "laharExposure": "Exposición y daño por lahar",
-    "Ashfall Damage": "Daño por ceniza",
+    "laharExposure": "Exposición y daños por lahar",
+    "Ashfall Damage": "Daños por ceniza",
     "Ashfall exposure model": "Exposición para caída de ceniza",
     "Exposure Ashfall": "Exposición para ceniza",
     "Exposure Lahar": "Exposición para lahar",
-    "Lahar and Ashfall Damage": "Daño por ceniza y lahar",
+    "Lahar and Ashfall Damage": "Daños por ceniza y lahar",
     "South": "Sur",
     "North": "Norte",
     "VEI Selection": "Selección del VEI",
@@ -301,8 +301,7 @@
     "Deus Lahar description": "Este servicio calcula el daño causado por un determinado evento de lahar.",
     "Deus Lahar + Ashfall description": "Este servicio calcula el daño combinado causado por la caída de ceniza y un lahar.",
     "Ashfall Service description": "Este servicio devuelve una simulación de una nube de cenizas y la deposición resultante",
-    "This is a process to compute the damage of a flood in Ecuador.": "Este es un proceso para calcular el daño de una inundación en Ecuador.",
-    "Process to compute the damage of a flood in ecuador.": "Este es un proceso para calcular el daño de una inundación en Ecuador.",
+    "Process to compute the damage caused by a flood.": "Este es un proceso para calcular el daño de una inundación en Ecuador.",
 
     "Tools": "Herramientas",
     "Print": "Imprimir",
@@ -353,8 +352,8 @@
     "Loss 500000 USD": "Pérdida 500000 USD",
     "Loss 1000000 USD": "Pérdida 1000000 USD",
     "Loss": "Pérdida",
-    "Total_damage": "Daño total",
-    "Total damage": "Daño total",
+    "Total_damage": "Daños total",
+    "Total damage": "Daños total",
     "Transitions": "Transiciones",
     "from_to": "desde\\a",
     "Damage states": "Estados de daño",
@@ -390,12 +389,27 @@
     "Earthquake": "Terremoto",
     "Earthquake<br/>Radius: magnitude<br/>Color: depth": "Terremoto<br/>Radius: magnitud<br/>Color: profundidad",
     "Selected_earthquake": "Terremoto seleccionado",
-    "Damage in USD": "Daño en USD",
+    "Damage in USD": "Daños en USD",
 
     "Magnitude 3, depth 20": "Mag. 3, profundidad 20",
     "Magnitude 8, depth 20": "Mag. 8, profundidad 20",
     "Magnitude 3, depth 40": "Mag. 3, profundidad 40",
     "Magnitude 8, depth 40": "Mag. 8, profundidad 40",
 
-    "Catalogue type": "Tipo de catalogo"
+    "Catalogue type": "Tipo de catalogo", 
+
+    "inundation 10 cm": "Inundación 10 cm",
+    "inundation 30 cm": "Inundación 30 cm",
+    "inundation 50 cm": "Inundación 50 cm",
+
+    "ashfallLoss": "Pérdida por ceniza",
+    "Total_loss": "Pérdida total",
+    "laharLoss": "Pérdida por lahar",
+    "Lahar_and_Ashfall_Loss": "Pérdida por lahar y ceniza",
+
+    "Damage 80/10/0/0": "Daños 80/10/0/0",
+    "Damage 10/80/80/10": "Daños 10/80/80/10",
+    "Damage 0/0/10/80": "Daño s0/0/10/80",
+
+    "Loss in USD": "Pérdida en USD"
 }

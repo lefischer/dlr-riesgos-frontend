@@ -5,7 +5,7 @@
     "e1": "Ecuador",
 
 
-    "Showcase Chile": "Valparaíso region",
+    "Showcase Chile": "Greater Valparaíso coastal region",
     "Showcase Ecuador": "Quito / Cotopaxi region",
     "Showcase Peru": "Metropolitan Lima and Callao",
 
@@ -93,7 +93,7 @@
     "etype": "subcategory",
 
     "Process for evaluating the reliability of infrastructure networks": "This is a process for evaluating the reliability of infrastructure networks.",
-    "Process to compute the damage of a flood in ecuador.": "This is a process to compute the damage of a flood in Ecuador.",
+    "Process to compute the damage caused by a flood.": "This is a process to compute the damage  caused by a flood.",
     "Enter here the parameters that determine which earthquakes would be appropriate for your simulation.": "Enter here the parameters to narrow down your selection of earthquakes from the catalogue. You may also select an area with possible earthquake-epicenters by drawing a box on the map.",
 
     "AvailableEarthquakes": "Available earthquakes",
@@ -191,6 +191,11 @@
     "VEI1": "VEI 1 - 2",
     "VEI2": "VEI 2 - 3",
     "VEI3": "VEI 3 - 4",
-    "VEI4": "VEI > 4"
+    "VEI4": "VEI > 4",
+
+    "ashfallLoss": "Ashfall loss",
+    "Total_loss": "Total loss",
+    "laharLoss": "Lahar loss",
+    "Lahar_and_Ashfall_Loss": "Lahar & ashfall loss"
 
 }

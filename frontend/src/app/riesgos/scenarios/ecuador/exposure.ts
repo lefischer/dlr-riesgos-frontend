@@ -173,7 +173,7 @@ export const initialExposureAshfall: VectorLayerProduct & WpsData & Product = {
           "properties": {
             'expo': {
               Damage: ['D0', 'D1', 'D2', 'D3'],
-              Buildings: [100, 0, 0, 0]
+              Buildings: [0, 0, 0, 0]
             }
           },
           "geometry": {

@@ -162,7 +162,27 @@ export const initialExposurePeru: VectorLayerProduct & WpsData & Product = {
         const anchor = document.createElement('div');
         const anchorUpdated = createBigBarchart(anchor, barchartData, 400, 300, '{{ Taxonomy }}', '{{ Buildings }}');
         return `<h4>{{ Exposure }}</h4>${anchor.innerHTML}`;
-      }
+      },
+      legendEntries: [{
+        feature: {
+          "type": "Feature",
+          "properties": {
+            'expo': {
+              Damage: ['D0', 'D1', 'D2', 'D3', 'D4'],
+              Buildings: [0, 0, 0, 0]
+            }
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [ [
+                [ 5.627918243408203, 50.963075942052164 ],
+                [ 5.627875328063965, 50.958886259879264 ],
+                [ 5.635471343994141, 50.95634523633128 ],
+                [ 5.627918243408203, 50.963075942052164 ] ] ]
+          }
+        },
+        text: 'Exposure'
+      }],
     }
   },
   value: null
