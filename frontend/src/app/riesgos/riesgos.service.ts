@@ -10,6 +10,7 @@ import { TsDeus, tsDamage, tsTransition, tsUpdatedExposure } from './scenarios/c
 import { EqReliability, countryChile, hazardEq, damageConsumerAreas } from './scenarios/chile/reliability';
 import { lonmin, lonmax, latmin, latmax, assettype, schema, querymode, initialExposure } from './scenarios/chile/exposure';
 import { assetcategory, losscategory, taxonomies, fragilityRef } from './scenarios/chile/modelProp';
+import { PhysicalImpactAssessment, physicalImpact } from './scenarios/chile/pia';
 import { ExposureModelPeru, lonminPeru, lonmaxPeru, latminPeru,
   latmaxPeru, assettypePeru, schemaPeru, querymodePeru, initialExposurePeru } from './scenarios/peru/exposure';
 import { QuakeLedgerPeru, InputBoundingboxPeru, mminPeru, mmaxPeru,
@@ -120,7 +121,7 @@ export class RiesgosService {
           new TsService(this.httpClient, cache),
           new TsDeus(this.httpClient, cache),
           new EqReliability(this.httpClient, cache),
-          // PhysicalImpactAssessment
+          // new PhysicalImpactAssessment(this.httpClient)
         ];
         products = [
           modelChoice,

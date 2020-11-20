@@ -6,11 +6,10 @@ import {
 import { VectorLayerProduct, BboxLayerProduct, BboxLayerDescription } from 'src/app/riesgos/riesgos.datatypes.mappable';
 import { WizardableProcess, WizardProperties } from 'src/app/components/config_wizard/wizardable_processes';
 import { WpsData, WpsDataDescription, WpsBboxValue, Cache } from '@dlr-eoc/services-ogc';
-import { toDecimalPlaces, redGreenRange, linInterpolate, linInterpolateXY } from 'src/app/helpers/colorhelpers';
+import { toDecimalPlaces, redGreenRange, linInterpolateXY } from 'src/app/helpers/colorhelpers';
 import { HttpClient } from '@angular/common/http';
-import { Style as olStyle, Fill as olFill, Stroke as olStroke, Circle as olCircle, Text as olText } from 'ol/style';
+import { Style as olStyle, Fill as olFill, Stroke as olStroke, Circle as olCircle } from 'ol/style';
 import { Feature as olFeature } from 'ol/Feature';
-import { InfoTableComponentComponent, TableEntry } from 'src/app/components/dynamic/info-table-component/info-table-component.component';
 
 
 export class InputBoundingbox implements BboxUconfProduct, BboxLayerProduct, WpsData {

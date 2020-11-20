@@ -183,6 +183,8 @@ export class WpsProcess implements ExecutableProcess {
                     ...equivalentWpsData,
                     uid: prod.uid
                 });
+            } else {
+                console.warn(`Warning: could not find a WPS-process output for ProductDescription ${prod.uid} / ${prod.description.id}`);
             }
 
         }

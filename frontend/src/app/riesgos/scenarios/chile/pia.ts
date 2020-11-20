@@ -3,9 +3,11 @@ import { ProcessStateAvailable, WpsProcess } from 'src/app/riesgos/riesgos.datat
 import { VectorLayerProduct } from 'src/app/riesgos/riesgos.datatypes.mappable';
 import { eqShakemapRef } from './shakyground';
 import { HttpClient } from '@angular/common/http';
+import { WpsData } from '@dlr-eoc/services-ogc/src/public-api';
+import { Style as OlStye, Fill as OlFill } from 'ol/style';
 
 
-export const physicalImpact: VectorLayerProduct = {
+export const physicalImpact: VectorLayerProduct & WpsData = {
     uid: 'pia_physicalImpact',
     description: {
         id: 'physicalImpact',
@@ -13,7 +15,16 @@ export const physicalImpact: VectorLayerProduct = {
         name: 'Physical Impact',
         type: 'complex',
         icon: 'dot-circle',
-        vectorLayerAttributes: {}
+        reference: false,
+        vectorLayerAttributes: {
+            style: (f) => {
+                return new OlStye({
+                    fill: new OlFill({
+                        color: 'rgb(255, 0, 0)'
+                    })
+                });
+            }
+        }
     },
     value: null
 };

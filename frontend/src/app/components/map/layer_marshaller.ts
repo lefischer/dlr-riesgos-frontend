@@ -30,6 +30,7 @@ import { GroupSliderComponent, SliderEntry } from '../dynamic/group-slider/group
 import { VectorLegendComponent } from '../dynamic/vector-legend/vector-legend.component';
 import { WebGlPolygonLayer } from '../../helpers/custom_renderers/renderers/polygon.renderer';
 import * as hashfunction from 'imurmurhash';
+import { bbox as tBbox, buffer as tBuffer } from '@turf/turf';
 
 
 
@@ -425,12 +426,12 @@ export class LayerMarshaller  {
 
                 const data = product.value[0];
                 let bx = null;
-                // switched of for performance reasons.
-                // try {
-                //     bx = tBbox(tBuffer(data, 70, {units: 'kilometers'}));
-                // } catch (error) {
-                //     console.log('could not do buffer with ', data, error);
-                // }
+                // switched off for performance reasons.
+                try {
+                    bx = tBbox(tBuffer(data, 70, {units: 'kilometers'}));
+                } catch (error) {
+                    console.log('could not do buffer with ', data, error);
+                }
 
                 const layer: ProductVectorLayer = new ProductVectorLayer({
                     productId: product.uid,
