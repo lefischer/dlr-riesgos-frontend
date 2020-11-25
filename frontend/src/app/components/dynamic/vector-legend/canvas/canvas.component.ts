@@ -6,6 +6,7 @@ import 'ol-ext/control/Legend.css';
 
 @Component({
   selector: 'ukis-canvas',
+  styleUrls: ['./canvas.component.scss'],
   templateUrl: './canvas.component.html',
 })
 export class CanvasComponent implements OnInit {
