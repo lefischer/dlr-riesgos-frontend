@@ -1,34 +1,46 @@
 import { WizardableProcess } from 'src/app/components/config_wizard/wizardable_processes';
 import { ProcessStateAvailable, WpsProcess } from 'src/app/riesgos/riesgos.datatypes';
-import { VectorLayerProduct } from 'src/app/riesgos/riesgos.datatypes.mappable';
+import { VectorLayerProduct, WmsLayerProduct } from 'src/app/riesgos/riesgos.datatypes.mappable';
 import { eqShakemapRef } from './shakyground';
 import { HttpClient } from '@angular/common/http';
 import { WpsData } from '@dlr-eoc/services-ogc/src/public-api';
 import { Style as OlStye, Fill as OlFill } from 'ol/style';
 
 
-export const physicalImpact: VectorLayerProduct & WpsData = {
+// export const physicalImpact: VectorLayerProduct & WpsData = {
+//     uid: 'pia_physicalImpact',
+//     description: {
+//         id: 'physicalImpact',
+//         format: 'application/vnd.geo+json',
+//         name: 'Physical Impact',
+//         type: 'complex',
+//         icon: 'dot-circle',
+//         reference: false,
+//         vectorLayerAttributes: {
+//             style: (f) => {
+//                 return new OlStye({
+//                     fill: new OlFill({
+//                         color: 'rgb(255, 0, 0)'
+//                     })
+//                 });
+//             }
+//         }
+//     },
+//     value: null
+// };
+
+export const physicalImpact: WmsLayerProduct & WpsData = {
     uid: 'pia_physicalImpact',
     description: {
         id: 'physicalImpact',
-        format: 'application/vnd.geo+json',
         name: 'Physical Impact',
         type: 'complex',
         icon: 'dot-circle',
         reference: false,
-        vectorLayerAttributes: {
-            style: (f) => {
-                return new OlStye({
-                    fill: new OlFill({
-                        color: 'rgb(255, 0, 0)'
-                    })
-                });
-            }
-        }
+        format: 'application/WMS',
     },
     value: null
 };
-
 
 export class PhysicalImpactAssessment extends WpsProcess implements WizardableProcess {
 

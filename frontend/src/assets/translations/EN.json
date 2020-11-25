@@ -196,6 +196,12 @@
     "ashfallLoss": "Ashfall loss",
     "Total_loss": "Total loss",
     "laharLoss": "Lahar loss",
-    "Lahar_and_Ashfall_Loss": "Lahar & ashfall loss"
+    "Lahar_and_Ashfall_Loss": "Lahar & ashfall loss",
+
+    "taxonomy_DX": "Taxonomy/damage class",
+    "nr_buildings": "# buildings",
+    "damage_classification": "Damage classification",
+
+    "geomerFloodDescription": "This service provides the option to simulate a break of a lake created by a lahar. <b>Note</b>: Only works with lahars moving north of Cotopaxi."
 
 }

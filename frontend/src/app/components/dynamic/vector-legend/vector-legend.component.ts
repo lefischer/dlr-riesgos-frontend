@@ -49,7 +49,7 @@ export class VectorLegendComponent implements OnInit {
     });
 
     for (const element of this.elementList) {
-      const canvas = legend.getStyleImage({
+      const canvas: HTMLCanvasElement = legend.getStyleImage({
         properties: element.feature.properties,
         typeGeom: element.feature.geometry.type
       }, null, null);

@@ -128,7 +128,7 @@ export const geomerFlood: WizardableProcess & ExecutableProcess = {
         providerUrl: 'https://www.geomer.de/en/index.html',
         shape: 'tsunami',
     },
-    description: 'This service provides the option to simulate a break of a lake created by a lahar.',
+    description: 'geomerFloodDescription',
     execute: (inputs: Product[]): Observable<Product[]> => {
         const veiVal = inputs.find(prd => prd.uid === vei.uid).value.toLowerCase();
         const outburstVal = inputs.find(prd => prd.uid === userinputSelectedOutburst.uid);

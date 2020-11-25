@@ -2,11 +2,11 @@ import { WizardableProcess, WizardProperties } from 'src/app/components/config_w
 import { WpsProcess, Product, ProcessStateUnavailable } from 'src/app/riesgos/riesgos.datatypes';
 import { WpsData, Cache } from '@dlr-eoc/services-ogc';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { createBigBarchart, Bardata, createBarchart } from 'src/app/helpers/d3charts';
+import { Observable } from 'rxjs';
+import { BarData, createBarchart } from 'src/app/helpers/d3charts';
 import { VectorLayerProduct } from 'src/app/riesgos/riesgos.datatypes.mappable';
 import { weightedDamage, greenRedRange } from 'src/app/helpers/colorhelpers';
-import { Style as olStyle, Fill as olFill, Stroke as olStroke, Circle as olCircle, Text as olText } from 'ol/style';
+import { Style as olStyle, Fill as olFill, Stroke as olStroke } from 'ol/style';
 import { Feature as olFeature } from 'ol/Feature';
 
 
@@ -155,7 +155,7 @@ export const initialExposureAshfall: VectorLayerProduct & WpsData & Product = {
         const taxonomies = props['expo']['Taxonomy'];
         const buildings = props['expo']['Buildings'];
         const keys = Object.keys(taxonomies);
-        const barchartData: Bardata[] = [];
+        const barchartData: BarData[] = [];
         for (const key of keys) {
           barchartData.push({
             label: taxonomies[key],

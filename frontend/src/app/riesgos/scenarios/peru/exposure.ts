@@ -5,7 +5,7 @@ import { WmsLayerProduct, VectorLayerProduct } from 'src/app/riesgos/riesgos.dat
 import { Style as olStyle, Fill as olFill, Stroke as olStroke, Circle as olCircle, Text as olText } from 'ol/style';
 import { Feature as olFeature } from 'ol/Feature';
 import { HttpClient } from '@angular/common/http';
-import { Bardata, createBarchart, createBigBarchart } from 'src/app/helpers/d3charts';
+import { BarData, createBarchart, createBigBarchart } from 'src/app/helpers/d3charts';
 import { weightedDamage, redGreenRange, greenRedRange } from 'src/app/helpers/colorhelpers';
 
 
@@ -151,7 +151,7 @@ export const initialExposurePeru: VectorLayerProduct & WpsData & Product = {
         const taxonomies = props['expo']['Taxonomy'];
         const buildings = props['expo']['Buildings'];
         const keys = Object.keys(taxonomies);
-        const barchartData: Bardata[] = [];
+        const barchartData: BarData[] = [];
         for (const key of keys) {
           barchartData.push({
             label: taxonomies[key],

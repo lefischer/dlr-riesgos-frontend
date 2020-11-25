@@ -275,7 +275,7 @@
     "VEI4": "VEI > 4",
     "Lahar and Ashfall Exposure": "Daños por ceniza y lahar",
     "Lahar and Ashfall Transition": "Transiciones ceniza - lahar",
-    "ashfallExposure": "Exposición por ceniza",
+    "ashfallExposure": "Exposición post-ceniza",
     "ashfallDamage": "Pérdida por ceniza",
     "ashfallTransition": "Transiciones por ceniza",
     
@@ -411,5 +411,9 @@
     "Damage 10/80/80/10": "Daños 10/80/80/10",
     "Damage 0/0/10/80": "Daño s0/0/10/80",
 
-    "Loss in USD": "Pérdida en USD"
+    "Loss in USD": "Pérdida en USD",
+
+    "taxonomy_DX": "Taxonomía/clase de daño",
+    "nr_buildings": "# edificios",
+    "damage_classification": "Clasificación de daños"
 }

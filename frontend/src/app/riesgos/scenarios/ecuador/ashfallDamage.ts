@@ -7,14 +7,14 @@ import { Volcanus } from './volcanus';
 import { switchMap } from 'rxjs/operators';
 import { ashfallPoint } from './ashfallService';
 import { WpsData, WpsDataDescription } from '@dlr-eoc/services-ogc';
-import { VectorLayerProduct, MultiVectorLayerProduct, VectorLayerProperties } from 'src/app/riesgos/riesgos.datatypes.mappable';
+import { MultiVectorLayerProduct, VectorLayerProperties } from 'src/app/riesgos/riesgos.datatypes.mappable';
 import { schemaEcuador, initialExposureAshfallRef } from './exposure';
 import { FeatureCollection } from '@turf/helpers';
 import { fragilityRef } from '../chile/modelProp';
-import { Bardata, createBarchart } from 'src/app/helpers/d3charts';
+import { BarData, createBarchart, createGroupedBarchart } from 'src/app/helpers/d3charts';
 import { weightedDamage, greenRedRange, toDecimalPlaces, ninetyPercentLowerThan } from 'src/app/helpers/colorhelpers';
-import { createHeaderTableHtml, createTableHtml, createKeyValueTableHtml, zeros, filledMatrix, sum } from 'src/app/helpers/others';
-import { Style as olStyle, Fill as olFill, Stroke as olStroke, Circle as olCircle, Text as olText } from 'ol/style';
+import { createHeaderTableHtml, createTableHtml, zeros, filledMatrix } from 'src/app/helpers/others';
+import { Style as olStyle, Fill as olFill, Stroke as olStroke } from 'ol/style';
 import { Feature as olFeature } from 'ol/Feature';
 import { InfoTableComponentComponent } from 'src/app/components/dynamic/info-table-component/info-table-component.component';
 
@@ -314,25 +314,30 @@ const ashfallUpdatedExposureProps: VectorLayerProperties = {
             }],
             text: (props: object) => {
                 const anchor = document.createElement('div');
-
                 const expo = props['expo'];
-                const counts = {
-                    'D0': 0,
-                    'D1': 0,
-                    'D2': 0,
-                    'D3': 0
-                };
-                for (let i = 0; i < expo.Damage.length; i++) {
-                    const damageClass = expo.Damage[i];
-                    const nrBuildings = expo.Buildings[i];
-                    counts[damageClass] += nrBuildings;
+
+                const data: {[groupName: string]: BarData[]} = {};
+                for (let i = 0; i < expo['Taxonomy'].length; i++) {
+                    const dmg = expo['Damage'][i];
+                    const tax = expo['Taxonomy'][i];
+                    const bld = expo['Buildings'][i];
+                    if (!data[tax]) {
+                        data[tax] = [];
+                    }
+                    data[tax].push({
+                        label: dmg,
+                        value: bld
+                    });
                 }
-                const data: Bardata[] = [];
-                for (const damageClass in counts) {
-                    data.push({label: damageClass, value: counts[damageClass]});
+
+                for (const label in data) {
+                    if (data[label]) {
+                        data[label].sort((dp1, dp2) => dp1.label > dp2.label ? 1 : -1);
+                    }
                 }
-                const anchorUpdated = createBarchart(anchor, data, 300, 200, '{{ Damage_state }}', '{{ Nr_buildings }}');
-                return `<h4 style="color: var(--clr-p1-color, #666666);">{{ Updated_exposure }}</h4>${anchor.innerHTML}`;
+
+                const anchorUpdated = createGroupedBarchart(anchor, data, 300, 200, '{{ taxonomy_DX }}', '{{ nr_buildings }}');
+                return `<h4 style="color: var(--clr-p1-color, #666666);">{{ Ashfall }}: {{ damage_classification }}</h4>${anchor.innerHTML}`;
             },
             summary: (value: [FeatureCollection]) => {
                 const counts = {
