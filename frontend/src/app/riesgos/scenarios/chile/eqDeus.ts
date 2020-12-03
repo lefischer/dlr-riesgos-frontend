@@ -328,7 +328,7 @@ const updatedExposureProps: VectorLayerProperties = {
                 const data: {[groupName: string]: BarData[]} = {};
                 for (let i = 0; i < expo['Taxonomy'].length; i++) {
                     const dmg = expo['Damage'][i];
-                    const tax = expo['Taxonomy'][i];
+                    const tax = expo['Taxonomy'][i].match(/^[a-zA-Z]*/)[0];
                     const bld = expo['Buildings'][i];
                     if (!data[tax]) {
                         data[tax] = [];
@@ -345,7 +345,7 @@ const updatedExposureProps: VectorLayerProperties = {
                     }
                 }
 
-                const anchorUpdated = createGroupedBarchart(anchor, data, 300, 200, '{{ taxonomy_DX }}', '{{ nr_buildings }}');
+                const anchorUpdated = createGroupedBarchart(anchor, data, 400, 300,  '{{ taxonomy_DX }}', '{{ nr_buildings }}');
 
                 const legend = `
                     <ul>
@@ -357,7 +357,7 @@ const updatedExposureProps: VectorLayerProperties = {
                     </ul>
                 `;
 
-                return `<h4 style="color: var(--clr-p1-color, #666666);">{{ Earthquake }}: {{ damage_classification }}</h4>${anchor.innerHTML}<br/>${legend}`;
+                return `<h4 style="color: var(--clr-p1-color, #666666);">{{ Earthquake }}: {{ damage_classification }}</h4>${anchor.innerHTML}<br/>${legend}<br/>{{GroupsSimplified}}`;
             },
             summary: (value: [FeatureCollection]) => {
                 const counts = {
@@ -378,7 +378,6 @@ const updatedExposureProps: VectorLayerProperties = {
             }
         },
         description: 'Number of goods exposed to a threat'
-
 };
 
 export const eqDamageM: WpsData & MultiVectorLayerProduct = {
@@ -417,7 +416,7 @@ export class EqDeus implements ExecutableProcess, WizardableProcess {
     readonly providedProducts = [eqDamageM, eqUpdatedExposureRef].map(p => p.uid);
     readonly description = 'This service returns damage caused by the selected earthquake.';
     readonly wizardProperties: WizardProperties = {
-        providerName: 'Helmholtz Centre Potsdam',
+        providerName: 'GFZ',
         providerUrl: 'https://www.gfz-potsdam.de/en/',
         shape: 'dot-circle',
         wikiLink: 'Vulnerability'

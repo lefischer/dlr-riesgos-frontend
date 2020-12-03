@@ -4,6 +4,16 @@
     "p1": "Peru", 
     "e1": "Ecuador",
 
+    "GFZ": "GFZ: German Research Center for Geosciences",
+    "AWI": "AWI: Alfred Wegener Institute",
+    "DLR": "DLR: German Aerospace Center",
+    "TUM": "TUM: Technical University of Munich",
+    "geomer": "geomer",
+    "IGN": "Instituto Geofísico EPN",
+
+
+    "GroundmotionService": "Seismic acceleration",
+
 
     "Showcase Chile": "Coastal area of Greater Valparaíso",
     "Showcase Ecuador": "Cotopaxi volcano and surroundings",
@@ -119,6 +129,8 @@
 
     "Amount of goods that are exposed to a hazard.": "Goods in a damage state",
 
+    "depth_cm": "Depth (cm)",
+
     "wd_max": "flood depth",
     "v_atwdmax": "velocity at max. depth",
     "duration": "duration",
@@ -127,7 +139,7 @@
     "Lahar_maxerosion": "max. erosion",
     "Lahar_maxpressure": "max. pressure",
     "Lahar_maxvelocity": "max. velocity",
-    "outburstSite": "outburst site",
+    "outburstSite": "Outburst site",
     "LaharArrival_S_VEI3_wgs_s1200": "Reach 2 min",
     "LaharArrival_S_VEI3_wgs_s7200": "Reach 120 min",
     "LaharArrival_S_VEI3_wgs_s18000": "Reach 300 min",
@@ -192,6 +204,9 @@
     "VEI2": "VEI 2 - 3",
     "VEI3": "VEI 3 - 4",
     "VEI4": "VEI > 4",
+
+    "SelectedEQ": "Selected EQ",
+    "GroupsSimplified": "Note: groups have been simplified for graph.",
 
     "ashfallLoss": "Ashfall loss",
     "Total_loss": "Total loss",

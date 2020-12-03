@@ -51,7 +51,7 @@ export const etypePeru = {
             name: 'Catalogue type',
             fieldtype: 'stringselect'
         },
-        options: ['observed', 'stochastic', 'expert']
+        options: ['observed', 'expert'] // 'stochastic' <-- currently not included due to errors in data
     },
     value: null
 };
@@ -306,7 +306,7 @@ export class QuakeLedgerPeru extends WpsProcess implements WizardableProcess {
 
         this.wizardProperties = {
             shape: 'earthquake',
-            providerName: 'Helmholtz Centre Potsdam',
+            providerName: 'GFZ',
             providerUrl: 'https://www.gfz-potsdam.de/en/'
         };
     }

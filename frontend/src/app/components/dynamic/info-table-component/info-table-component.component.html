@@ -1,7 +1,7 @@
 <h5 *ngIf="title">{{ title | translate }}</h5>
 <p *ngIf="topText">{{ topText | translate }}</p>
 
-<table *ngIf="data">
+<table class="table table-small" *ngIf="data">
     <tr *ngFor="let row of data">
         <td *ngFor="let col of row" [ngStyle]="col.style">
             {{ col.value | translate }}

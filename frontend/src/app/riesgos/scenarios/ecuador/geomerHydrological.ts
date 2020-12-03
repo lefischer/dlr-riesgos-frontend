@@ -20,6 +20,7 @@ export const hydrologicalSimulation: WmsLayerProduct & WpsData = {
         format: 'application/WMS',
         reference: false,
         type: 'complex',
+        legendImg: 'assets/images/inundation_legend.png',
     },
     value: null
 };

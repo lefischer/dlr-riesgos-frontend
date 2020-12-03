@@ -575,7 +575,7 @@ export class LayerMarshaller  {
                             TRANSPARENT: true,
                             STYLES: description.styles ? description.styles[0] : '',
                         },
-                        legendImg: `${paras.origin}${paras.path}?REQUEST=GetLegendGraphic&SERVICE=WMS` +
+                        legendImg: description.legendImg ? description.legendImg :  `${paras.origin}${paras.path}?REQUEST=GetLegendGraphic&SERVICE=WMS` +
                             `&VERSION=${paras.version}&STYLES=default&FORMAT=${paras.format}&BGCOLOR=0xFFFFFF` +
                             `&TRANSPARENT=TRUE&LAYER=${layername}`,
                         popup: {

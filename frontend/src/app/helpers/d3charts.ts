@@ -46,7 +46,7 @@ export function createGroupedBarchart(
             const groupData = data[groupName];
             const transformedGroupData = {
                 type: 'bar',
-                name: groupName,
+                name: groupName.substr(0, 13),
                 x: groupData.map(dp => dp.label),
                 y: groupData.map(dp => dp.value)
             };
@@ -54,7 +54,13 @@ export function createGroupedBarchart(
         }
     }
 
+    const yMax = newData.map(dp => dp.y).flat().reduce((last, curr) => curr > last ? curr : last, 0);
+
     const layout = {
+        showlegend: true, // newData.length > 8 ? false : true,
+        legend: {
+            orientation: 'h'
+        },
         xaxis: {
             title: {
                 text: xLabel
@@ -63,7 +69,8 @@ export function createGroupedBarchart(
         yaxis: {
             title: {
                 text: yLabel
-            }
+            },
+            range: [0, yMax + 1]
         },
         width: width,
         height: height,
@@ -96,6 +103,8 @@ export function createBarchart(
             y: data.map(dp => dp.value)
         }];
 
+        const yMax = newData[0].y.reduce((last, curr) => curr > last ? curr : last, 0);
+
         const layout = {
             xaxis: {
                 title: {
@@ -105,7 +114,8 @@ export function createBarchart(
             yaxis: {
                 title: {
                     text: yLabel
-                }
+                },
+                range: [0, yMax + 1]
             },
             width: width,
             height: height,
@@ -130,6 +140,8 @@ export function createBigBarchart(
             y: data.map(dp => dp.value)
         }];
 
+        const yMax = newData[0].y.reduce((last, curr) => curr > last ? curr : last, 0);
+
         const layout = {
             xaxis: {
                 title: {
@@ -139,7 +151,8 @@ export function createBigBarchart(
             yaxis: {
                 title: {
                     text: yLabel
-                }
+                },
+                range: [0, yMax + 1]
             },
             autosize: false,
             width: width,

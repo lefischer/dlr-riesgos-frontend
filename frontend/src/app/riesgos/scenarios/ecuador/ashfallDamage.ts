@@ -396,7 +396,7 @@ export class DeusAshfall implements ExecutableProcess, WizardableProcess {
     readonly description?: string = 'Deus Ashfall description';
     readonly wizardProperties: WizardProperties = {
         shape: 'dot-circle',
-        providerName: 'Helmholtz Centre Potsdam',
+        providerName: 'GFZ',
         providerUrl: 'https://www.gfz-potsdam.de/en/'
     };
 

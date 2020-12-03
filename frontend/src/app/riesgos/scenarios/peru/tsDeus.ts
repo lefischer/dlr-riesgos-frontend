@@ -353,19 +353,9 @@ export const tsUpdatedExposurePeru: VectorLayerProduct & WpsData & Product = {
                     }
                 }
 
-                const anchorUpdated = createGroupedBarchart(anchor, data, 300, 200, '{{ taxonomy_DX }}', '{{ nr_buildings }}');
+                const anchorUpdated = createGroupedBarchart(anchor, data, 400, 400, '{{ taxonomy_DX }}', '{{ nr_buildings }}');
 
-                const legend = `
-                    <ul>
-                        <li> <b> D0: </b> {{ No_damage }} </li>
-                         <li> <b> D1: </b> {{ Minor_damage }} </li>
-                         <li> <b> D2: </b> {{ Moderate_damage }} </li>
-                         <li> <b> D3: </b> {{ Major_damage }} </li>
-                         <li> <b> D4: </b> {{ Complete_damage }} </li>
-                         <li> <b> D5: </b> {{ Collapsed }} </li>
-                         <li> <b> D6: </b> {{ Washed_away }} </li>
-                    </ul>
-                `;
+                const legend = `<ul><li><b>D0:</b> {{No_damage}}</li><li><b>D1:</b> {{Minor_damage}}</li><li><b>D2:</b> {{Moderate_damage}}</li><li><b>D3:</b> {{Major_damage}}</li><li><b>D4:</b> {{ Complete_damage }}</li><li><b>D5:</b> {{ Collapsed }}</li><li><b>D6:</b> {{ Washed_away }}</li></ul>`;
 
                 return `<h4 style="color: var(--clr-p1-color, #666666);">Tsunami: {{ damage_classification }}</h4>${anchor.innerHTML}<br/>${legend}`;
             },
@@ -425,7 +415,7 @@ export class TsDeusPeru implements ExecutableProcess, WizardableProcess {
         this.providedProducts = [tsDamagePeru, tsTransitionPeru, tsUpdatedExposurePeru].map(p => p.uid);
         this.description = 'This service returns damage caused by the selected tsunami.';
         this.wizardProperties = {
-            providerName: 'Helmholtz Centre Potsdam',
+            providerName: 'GFZ',
             providerUrl: 'https://www.gfz-potsdam.de/en/',
             shape: 'dot-circle',
             wikiLink: 'Vulnerability'

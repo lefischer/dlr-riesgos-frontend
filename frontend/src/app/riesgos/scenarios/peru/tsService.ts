@@ -120,7 +120,7 @@ export class TsServicePeru implements WizardableProcess, ExecutableProcess {
     description = 'Simulates a tsunami based on the earlier selected earthquake-parameters.';
 
     wizardProperties = {
-        providerName: 'Alfred Wegener Institute',
+        providerName: 'AWI',
         providerUrl: 'https://www.awi.de/en/',
         shape: 'tsunami' as 'tsunami',
         wikiLink: 'Tsunami'

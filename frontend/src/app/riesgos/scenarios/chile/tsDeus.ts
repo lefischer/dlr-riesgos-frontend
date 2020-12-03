@@ -336,7 +336,7 @@ export const tsUpdatedExposure: VectorLayerProduct & WpsData & Product = {
                 const data: {[groupName: string]: BarData[]} = {};
                 for (let i = 0; i < expo['Taxonomy'].length; i++) {
                     const dmg = expo['Damage'][i];
-                    const tax = expo['Taxonomy'][i];
+                    const tax = expo['Taxonomy'][i]; // .match(/^[a-zA-Z]*/)[0];
                     const bld = expo['Buildings'][i];
                     if (!data[tax]) {
                         data[tax] = [];
@@ -353,21 +353,11 @@ export const tsUpdatedExposure: VectorLayerProduct & WpsData & Product = {
                     }
                 }
 
-                const anchorUpdated = createGroupedBarchart(anchor, data, 300, 200, '{{ taxonomy_DX }}', '{{ nr_buildings }}');
+                const anchorUpdated = createGroupedBarchart(anchor, data, 400, 400, '{{ taxonomy_DX }}', '{{ nr_buildings }}');
 
-                const legend = `
-                    <ul>
-                         <li> <b> D0: </b> {{ No_damage }} </li>
-                         <li> <b> D1: </b> {{ Minor_damage }} </li>
-                         <li> <b> D2: </b> {{ Moderate_damage }} </li>
-                         <li> <b> D3: </b> {{ Major_damage }} </li>
-                         <li> <b> D4: </b> {{ Complete_damage }} </li>
-                         <li> <b> D5: </b> {{ Collapsed }} </li>
-                         <li> <b> D6: </b> {{ Washed_away }} </li>
-                    </ul>
-                `;
+                const legend = `<ul><li><b>D0:</b> {{No_damage}}</li><li><b>D1:</b> {{Minor_damage}}</li><li><b>D2:</b> {{Moderate_damage}}</li><li><b>D3:</b> {{Major_damage}}</li><li><b>D4:</b> {{ Complete_damage }}</li><li><b>D5:</b> {{ Collapsed }}</li><li><b>D6:</b> {{ Washed_away }}</li></ul>`;
 
-                return `<h4 style="color: var(--clr-p1-color, #666666);">Tsunami: {{ damage_classification }}</h4>${anchor.innerHTML}<br/>${legend}`;
+                return `<h4 style="color: var(--clr-p1-color, #666666);">Tsunami: {{ damage_classification }}</h4>${anchor.innerHTML}<br/>${legend}`; // <br/>{{GroupsSimplified}}`;
             },
             summary: (value: FeatureCollection | FeatureCollection[]) => {
                 let features;
@@ -425,7 +415,7 @@ export class TsDeus implements ExecutableProcess, WizardableProcess {
         this.providedProducts = [tsDamage, tsTransition, tsUpdatedExposure].map(p => p.uid);
         this.description = 'This service returns damage caused by the selected tsunami.';
         this.wizardProperties = {
-            providerName: 'Helmholtz Centre Potsdam',
+            providerName: 'GFZ',
             providerUrl: 'https://www.gfz-potsdam.de/en/',
             shape: 'dot-circle',
             wikiLink: 'Vulnerability'

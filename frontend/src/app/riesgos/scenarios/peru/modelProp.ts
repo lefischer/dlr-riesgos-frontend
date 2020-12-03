@@ -73,7 +73,7 @@ export class VulnerabilityModelPeru extends WpsProcess implements WizardableProc
 
         this.wizardProperties = {
             shape: 'dot-circle',
-            providerName: 'Helmholtz Centre Potsdam',
+            providerName: 'GFZ',
             providerUrl: 'https://www.gfz-potsdam.de/en/'
         };
     }

@@ -31,7 +31,6 @@ export const lossPeru: WpsData & Product = {
 };
 
 const eqDamagePeruProps: VectorLayerProperties = {
-        icon: 'dot-circle',
         name: 'eq-damage',
         vectorLayerAttributes: {
             style: (feature: olFeature, resolution: number) => {
@@ -98,7 +97,7 @@ const eqDamagePeruProps: VectorLayerProperties = {
                 const damages = features.map(f => f.properties['loss_value']);
                 const totalDamage = damages.reduce((carry, current) => carry + current, 0);
                 const totalDamageFormatted = toDecimalPlaces(totalDamage / 1000000, 0) + ' MUSD';
-                
+
                 return {
                     component: InfoTableComponentComponent,
                     inputs: {
@@ -108,12 +107,13 @@ const eqDamagePeruProps: VectorLayerProperties = {
                 };
             }
         },
-        description: 'Damage in USD'
+        description: 'Loss in USD',
+        icon: 'dot-circle',
 };
 
 const eqTransitionPeruProps: VectorLayerProperties = {
-        icon: 'dot-circle',
         name: 'eq-transition',
+        icon: 'dot-circle',
         vectorLayerAttributes: {
             style: (feature: olFeature, resolution: number) => {
                 const props = feature.getProperties();
@@ -326,7 +326,7 @@ const eqUpdatedExposurePeruProps: VectorLayerProperties = {
                 const data: {[groupName: string]: BarData[]} = {};
                 for (let i = 0; i < expo['Taxonomy'].length; i++) {
                     const dmg = expo['Damage'][i];
-                    const tax = expo['Taxonomy'][i];
+                    const tax = expo['Taxonomy'][i].match(/^[a-zA-Z]*/)[0];
                     const bld = expo['Buildings'][i];
                     if (!data[tax]) {
                         data[tax] = [];
@@ -343,7 +343,7 @@ const eqUpdatedExposurePeruProps: VectorLayerProperties = {
                     }
                 }
 
-                const anchorUpdated = createGroupedBarchart(anchor, data, 300, 200, '{{ taxonomy_DX }}', '{{ nr_buildings }}');
+                const anchorUpdated = createGroupedBarchart(anchor, data, 400, 300, '{{ taxonomy_DX }}', '{{ nr_buildings }}');
 
                 const legend = `
                     <ul>
@@ -355,7 +355,7 @@ const eqUpdatedExposurePeruProps: VectorLayerProperties = {
                     </ul>
                 `;
 
-                return `<h4 style="color: var(--clr-p1-color, #666666);">{{ Earthquake }}: {{ damage_classification }}</h4>${anchor.innerHTML}<br/>${legend}`;
+                return `<h4 style="color: var(--clr-p1-color, #666666);">{{ Earthquake }}: {{ damage_classification }}</h4>${anchor.innerHTML}<br/>${legend}<br/>{{GroupsSimplified}}`;
             },
             summary: (value: [FeatureCollection]) => {
                 const counts = {
@@ -426,7 +426,7 @@ export class EqDeusPeru implements ExecutableProcess, WizardableProcess {
         this.providedProducts = [eqDamagePeruM, eqUpdatedExposureRefPeru].map(p => p.uid);
         this.description = 'This service returns damage caused by the selected earthquake.';
         this.wizardProperties = {
-            providerName: 'Helmholtz Centre Potsdam',
+            providerName: 'GFZ',
             providerUrl: 'https://www.gfz-potsdam.de/en/',
             shape: 'dot-circle' as 'dot-circle',
             wikiLink: 'Vulnerability'

@@ -11,6 +11,15 @@
     "p1": "Peru", 
     "e1": "Ecuador",
 
+    "DLR": "DLR - Centro Aeroespacial Alemán",
+    "GFZ": "GFZ - Centro Alemán de Geoinvestigaciones",
+    "AWI": "AWI - Instituto Alfred Wegener",
+    "TUM": "TUM - Universidad Técnica de Múnich  ",
+    "geomer": "geomer",
+    "IGN": "Instituto Geofísico EPN",
+
+    "GroundmotionService": "Aceleración sísmica",
+
     "assets/images/lahar_en.jpg": "assets/images/lahar_es.jpg",
     "assets/images/tsunami_en.jpg": "assets/images/tsunami_es.jpg",
 
@@ -231,6 +240,8 @@
     "ESRI Imagery": "imágenes satelitales",
     "The Volcanic Explosivity Index (VEI) is a relative measure of the explosiveness of volcanic eruptions. Volume of products, eruption cloud height, and qualitative observations are used to determine the explosivity value.": "El índice de explosividad volcánica (VEI) es una medida relativa de la explosividad de las erupciones volcánicas. El volumen de productos, la altura de la nube de erupción y las observaciones cualitativas se utilizan para determinar el valor de la explosividad.",
 
+    "SelectedEQ": "Sismo elegido",
+    "GroupsSimplified": "Nota: los grupos han sido simplificado para el gráfico.",
 
     "wd_max": "profundidad de inundación",
     "v_atwdmax": "velocidad en sitio de máxima profundidad",
@@ -242,8 +253,8 @@
     "Lahar_maxvelocity": "velocidad máxima",
     "ashfall-depth": "Espesor y carga de ceniza",
     "Damage to consumer areas": "Daños a zonas de consumo",
-    "outburstSite": "sitio de ruptura",
-    "This service provides the option to simulate a break of a lake created by a lahar.": "Este servicio ofrece la opción de simular una ruptura de un lago creado por un lahar.",
+    "outburstSite": "Sitio de ruptura",
+    "geomerFloodDescription": "Este servicio ofrece la opción de simular la ruptura de un lago creado por un lahar. <b> Nota </b>: Solo funciona con lahares que se mueven al norte de Cotopaxi.",
     "You can choose here from two lake locations. The process will create the flood scenario for the selected lake.": "Puede elegir aquí entre dos ubicaciones del lago. El proceso creará el escenario de inundación para el lago seleccionado.",
     "LaharArrival_S_VEI3_wgs_s1200": "Alcance 20 min",
     "LaharArrival_S_VEI3_wgs_s3600": "Alcance 60 min",
@@ -334,6 +345,8 @@
     "Id": "Id",
     "Date": "Fecha",
 
+    "depth_cm": "Profundidád (cm)",
+
     "Catalog data": "Datos de catálogo",
     "Layer": "Capa",
     "Drop your file here!": "¡Deje su archivo aquí!",
@@ -369,12 +382,12 @@
     "Ashfall": "Ceniza",
     "Nr_buildings": "Numero de edificios",
     "Change from previous state": "Cambio desde el estado anterior",
-    "Damage states: 90/10/0/0": "Estados de daño: 90/10/0/0",
-    "Damage states: 0/50/50/0": "Estados de daño: 0/50/50/0",
-    "Damage states: 0/0/20/80": "Estados de daño: 0/0/20/80",
-    "Damage states: 90/10/0/0/0/0": "Estados de daño: 90/10/0/0/0/0",
-    "Damage states: 0/10/40/40/10/0": "Estados de daño: 0/10/40/40/10/0",
-    "Damage states: 0/0/0/0/20/80": "Estados de daño: 0/0/0/0/20/80",
+    "Damage states: 90/10/0/0": "Daño: 90/10/0/0",
+    "Damage states: 0/50/50/0": "Daño: 0/50/50/0",
+    "Damage states: 0/0/20/80": "Daño: 0/0/20/80",
+    "Damage states: 90/10/0/0/0/0": "Daño: 90/10/0/0/0/0",
+    "Damage states: 0/10/40/40/10/0": "Daño: 0/10/40/40/10/0",
+    "Damage states: 0/0/0/0/20/80": "Daño: 0/0/0/0/20/80",
     "No_damage": "Sin daños",
     "Light_damage": "Daños menores",
     "Minor_damage": "Daños menores",

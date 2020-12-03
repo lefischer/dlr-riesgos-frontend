@@ -45,7 +45,7 @@ export const physicalImpact: WmsLayerProduct & WpsData = {
 export class PhysicalImpactAssessment extends WpsProcess implements WizardableProcess {
 
     readonly wizardProperties = {
-        providerName: 'German Aerospace Center (DLR)',
+        providerName: 'DLR',
         providerUrl: 'https://www.dlr.de',
         shape: 'dot-circle' as 'dot-circle'
     };

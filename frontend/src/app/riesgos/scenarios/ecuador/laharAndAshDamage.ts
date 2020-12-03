@@ -55,7 +55,7 @@ export class DeusLaharAndAshfall implements ExecutableProcess, WizardableProcess
     readonly description?: string = 'Deus Lahar + Ashfall description';
     readonly wizardProperties: WizardProperties = {
         shape: 'dot-circle',
-        providerName: 'Helmholtz Centre Potsdam',
+        providerName: 'GFZ',
         providerUrl: 'https://www.gfz-potsdam.de/en/'
     };
 

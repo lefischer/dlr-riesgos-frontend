@@ -304,7 +304,7 @@ export class QuakeLedger extends WpsProcess implements WizardableProcess {
 
         this.wizardProperties = {
             shape: 'earthquake',
-            providerName: 'Helmholtz Centre Potsdam',
+            providerName: 'GFZ',
             providerUrl: 'https://www.gfz-potsdam.de/en/'
         };
     }

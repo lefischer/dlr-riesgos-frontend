@@ -121,7 +121,7 @@ export class RiesgosService {
           new TsService(this.httpClient, cache),
           new TsDeus(this.httpClient, cache),
           new EqReliability(this.httpClient, cache),
-          new PhysicalImpactAssessment(this.httpClient)
+          // new PhysicalImpactAssessment(this.httpClient)
         ];
         products = [
           modelChoice,
@@ -136,7 +136,7 @@ export class RiesgosService {
           countryChile, hazardEq,
           damageConsumerAreas,
           tsDamage, tsTransition, tsUpdatedExposure,
-          physicalImpact
+          // physicalImpact
         ];
         break;
       case 'p1':

@@ -41,7 +41,7 @@ export class ExposureSelection implements ExecutableProcess, WizardableProcess {
     constructor(httpClient: HttpClient, cache: Cache) {
         this.wizardProperties = {
             shape: 'building',
-            providerName: 'Helmholtz Centre Potsdam',
+            providerName: 'GFZ',
             providerUrl: 'https://www.gfz-potsdam.de/en/',
             wikiLink: 'Vulnerability'
         };

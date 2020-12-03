@@ -88,6 +88,7 @@ export const isMultiVectorLayerProduct = (product: Product): product is MultiVec
 
 
 export interface WmsLayerDescription extends ProductDescription {
+    legendImg?: string | IDynamicComponent;
     format: 'application/WMS';
     name: string;
     type: 'complex' | 'literal';

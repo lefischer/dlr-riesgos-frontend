@@ -228,7 +228,7 @@ export class AshfallExposureModel extends WpsProcess implements WizardableProces
     );
     this.wizardProperties = {
         shape: 'building',
-        providerName: 'Helmholtz Centre Potsdam',
+        providerName: 'GFZ',
         providerUrl: 'https://www.gfz-potsdam.de/en/'
     };
   }
@@ -270,7 +270,7 @@ export class LaharExposureModel  extends WpsProcess implements WizardableProcess
     );
     this.wizardProperties = {
         shape: 'building',
-        providerName: 'Helmholtz Centre Potsdam',
+        providerName: 'GFZ',
         providerUrl: 'https://www.gfz-potsdam.de/en/'
     };
   }

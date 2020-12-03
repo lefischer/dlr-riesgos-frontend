@@ -49,7 +49,7 @@ export class ShakygroundPeru extends WpsProcess implements WizardableProcess {
     constructor(http: HttpClient, cache: Cache) {
         super(
             'ShakygroundPeru',
-            'Groundmotion Simulation',
+            'GroundmotionService',
             [selectedEqPeru].map(p => p.uid),
             [shakemapWmsOutputPeru, eqShakemapRefPeru].map(p => p.uid),
             'org.n52.gfz.riesgos.algorithm.impl.ShakygroundProcess',
@@ -62,7 +62,7 @@ export class ShakygroundPeru extends WpsProcess implements WizardableProcess {
         );
         this.wizardProperties = {
             shape: 'earthquake',
-            providerName: 'Helmholtz Centre Potsdam',
+            providerName: 'GFZ',
             providerUrl: 'https://www.gfz-potsdam.de/en/',
             wikiLink: 'Groundmotion'
         };

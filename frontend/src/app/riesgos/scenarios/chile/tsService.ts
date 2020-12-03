@@ -121,7 +121,7 @@ export class TsService implements WizardableProcess, ExecutableProcess {
     state: ProcessState;
 
     wizardProperties = {
-        providerName: 'Alfred Wegener Institute',
+        providerName: 'AWI',
         providerUrl: 'https://www.awi.de/en/',
         shape: 'tsunami' as 'tsunami',
         wikiLink: 'Tsunami'

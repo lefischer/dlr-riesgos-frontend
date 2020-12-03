@@ -179,7 +179,7 @@ export class AshfallService extends WpsProcess implements WizardableProcess {
             cache
         );
         this.wizardProperties = {
-            providerName: 'Instituto Geofísico EPN',
+            providerName: 'IGN',
             providerUrl: 'https://www.igepn.edu.ec',
             shape: 'volcanoe'
         };

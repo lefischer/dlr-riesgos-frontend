@@ -62,7 +62,7 @@ export class FlooddamageProcess extends WpsProcess implements WizardableProcess 
             cache
         );
         this.wizardProperties = {
-            providerName: 'Helmholtz Centre Potsdam',
+            providerName: 'GFZ',
             providerUrl: 'https://www.gfz-potsdam.de/en/',
             shape: 'dot-circle',
             wikiLink: 'Flood'
