@@ -1,9 +1,5 @@
 import { Observable, of } from "rxjs";
-import { HttpClient } from "../http_client/http_client";
 import { Process, ProcessState, ProcessStateUnavailable, Product } from "../riesgos/datatypes/riesgos.datatypes";
-import { CWpsProcess, WpsProcess, WpsProduct } from "../riesgos/datatypes/riesgos.wps.datatypes";
-import { WpsHttpClient } from "../wps/wpsclient";
-import { WpsData, WpsProcessDescription, WpsServerDescription, WpsVersion } from "../wps/wps_datatypes";
 
 
 /**
@@ -42,7 +38,7 @@ export class Renamer implements Process {
 /**
  * Process that selects one element of a product containing a list.
  */
-export class Selecter implements Process {
+export class Selector implements Process {
 
     readonly requiredProducts: string[];
     readonly providedProducts: string[];
@@ -76,20 +72,4 @@ export class Selecter implements Process {
 }
 
 
-export const registerWpsProduct = (uid: string, wpsData: WpsData): WpsProduct => {
-    return {
-        uid, value: wpsData
-    };
-};
 
-export const registerWpsProcess = (
-    uid: string, 
-    inputUids: string[], outputUids: string[], 
-    autoRunning: boolean, httpClient: WpsHttpClient,
-    wpsProcessD: any, serverD: any): WpsProcess => {
-
-        return new CWpsProcess(
-            uid, wpsProcessD.title || '', inputUids, outputUids, wpsProcessD.id, 
-            wpsProcessD.description || '', serverD.serverUrl, serverD.serverVersion, wpsProcessD.processVersion, 
-            autoRunning, httpClient, new ProcessStateUnavailable());
-};

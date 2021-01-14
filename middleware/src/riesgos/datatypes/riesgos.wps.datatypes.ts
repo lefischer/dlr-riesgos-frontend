@@ -1,9 +1,9 @@
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { HttpClient } from '../../http_client/http_client';
-import { Cache, FakeCache } from '../../wps/cache';
-import { WpsClient } from '../../wps/wpsclient';
-import { WpsData, WpsVersion } from '../../wps/wps_datatypes';
+import { Cache, FakeCache } from '../../wps/lib/cache';
+import { WpsClient } from '../../wps/lib/wpsclient';
+import { WpsData, WpsVersion } from '../../wps/lib/wps_datatypes';
 import { Product, ProcessStateUnavailable, Process, ProcessState } from './riesgos.datatypes';
 
 

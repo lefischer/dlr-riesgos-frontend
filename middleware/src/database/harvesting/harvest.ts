@@ -1,14 +1,12 @@
 import { HttpClient } from "../../http_client/http_client";
-import { Harvester } from "../../riesgos/scenario_service/riesgos.scenario.harvester";
-import { WpsVersion } from "@dlr-eoc/utils-ogc";
-const fs = require('fs');
-const path = require('path');
-
-const harvester = new Harvester(new HttpClient());
-const targetDir = path.resolve(__dirname, './dataNew/services/');
+import { WpsHarvester } from "./harvester";
+import { WpsVersion } from "../../wps/public-api";
+import { createMongoDbInterface, MongoDbRiesgosDatabase } from "../mongo/mongoClient";
 
 
-const services: {
+
+
+const servicesToHarvest: {
     wpsUrl: string, wpsVersion: WpsVersion, processId: string
 }[] = [
 {
@@ -43,13 +41,11 @@ const services: {
     wpsUrl: 'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService',
     wpsVersion: '1.0.0',
     processId: 'org.n52.gfz.riesgos.algorithm.impl.ShakygroundProcess'
-}, 
-{
+}, {
     wpsUrl: 'http://tsunami-wps.awi.de/wps',
     wpsVersion: '1.0.0',
     processId: 'get_tsunamap',
-}, 
-{
+}, {
     wpsUrl: 'http://tsunami-wps.awi.de/wps',
     wpsVersion: '1.0.0',
     processId: 'get_scenario',
@@ -79,6 +75,18 @@ const services: {
     processId: 'org.n52.gfz.riesgos.algorithm.impl.VolcanusProcess'
 }];
 
-for (const service of services) {
-    harvester.downloadProcessData(service.wpsUrl, service.wpsVersion, service.processId, targetDir, 'ts');
-}
+
+
+createMongoDbInterface(1410, 'riesgos').subscribe((db: MongoDbRiesgosDatabase) => {
+    const harvester = new WpsHarvester(new HttpClient(), db);
+    for (const service of servicesToHarvest) {
+        harvester.downloadWpsProcessData({
+                serverUrl: service.wpsUrl,
+                serverVersion: service.wpsVersion
+            },
+            service.processId
+        );
+    }
+});
+
+
