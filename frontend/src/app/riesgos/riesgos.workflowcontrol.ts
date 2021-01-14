@@ -40,7 +40,7 @@ export class WorkflowControl {
         }
 
         this.products = this.getProductsInExecutionOrder(products);
-        this.processes = this.getProcessesInExecutionOrder(processes);
+        this.processes = processes; // <-- we have pre-hardcoded the desired process order here. // this.getProcessesInExecutionOrder(processes);
         this.processes.map(p => p.state = this.calculateState(p.uid));
     }
 

@@ -113,10 +113,10 @@ export class RiesgosService {
     switch (scenario) {
       case 'c1':
         processes = [
-          new ExposureSelection(this.httpClient, cache),
           new QuakeLedger(this.httpClient, cache),
           EqSelection,
           new Shakyground(this.httpClient, cache),
+          new ExposureSelection(this.httpClient, cache),
           new EqDeus(this.httpClient, cache),
           new TsService(this.httpClient, cache),
           new TsDeus(this.httpClient, cache),
@@ -141,10 +141,10 @@ export class RiesgosService {
         break;
       case 'p1':
         processes = [
-          new ExposureModelPeru(this.httpClient, cache),
           new QuakeLedgerPeru(this.httpClient, cache),
           EqSelectionPeru,
           new ShakygroundPeru(this.httpClient, cache),
+          new ExposureModelPeru(this.httpClient, cache),
           new EqDeusPeru(this.httpClient, cache),
           new TsServicePeru(this.httpClient, cache),
           new TsDeusPeru(this.httpClient, cache),

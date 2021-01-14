@@ -25,11 +25,6 @@ export function riesgosReducer(state: RiesgosState = initialRiesgosState, action
                 productValues: newProducts,
                 graph: newGraph
             };
-            // Ugly hack: manually adjusting order of processes in Ecuador
-            if (newScenario === 'e1') {
-                const cut = newState.scenarioData[state.currentScenario].processStates.splice(6, 1);
-                newState.scenarioData[state.currentScenario].processStates.splice(3, 0, ...cut);
-            }
             return newState;
 
         case ERiesgosActionTypes.scenarioChosen:
