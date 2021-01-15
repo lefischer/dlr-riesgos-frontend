@@ -1,1 +1,0 @@
-The contents of this directory are what will in Riesgos 2 be stored in db/configuredScenarios.

@@ -1,92 +1,41 @@
 import { HttpClient } from "../../http_client/http_client";
-import { WpsHarvester } from "./harvester";
-import { WpsVersion } from "../../wps/public-api";
+import { WpsServerDescription } from "../../wps/public-api";
 import { createMongoDbInterface, MongoDbRiesgosDatabase } from "../mongo/mongoClient";
+import { TextFileRiesgosDatabase } from "../textFile/textFileClient";
+import { WpsHarvester } from "./harvester";
 
 
 
-
-const servicesToHarvest: {
-    wpsUrl: string, wpsVersion: WpsVersion, processId: string
-}[] = [
-{
-    wpsUrl: 'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService',
-    wpsVersion: '1.0.0',
-    processId: 'org.n52.gfz.riesgos.algorithm.impl.DeusProcess'
+const servicesToHarvest: WpsServerDescription[] = [{
+    serverUrl: 'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService',
+    serverVersion: '1.0.0'
 }, {
-    wpsUrl: 'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService',
-    wpsVersion: '1.0.0',
-    processId: 'org.n52.gfz.riesgos.algorithm.impl.ModelpropProcess'
+    serverUrl: 'http://riesgos.dlr.de/wps/WebProcessingService',
+    serverVersion: '1.0.0'
 }, {
-    wpsUrl: 'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService',
-    wpsVersion: '1.0.0',
-    processId: 'org.n52.gfz.riesgos.algorithm.impl.OldAssetmasterProcess'
+    serverUrl: 'http://91.250.85.221/wps/WebProcessingService',
+    serverVersion: '1.0.0'
 }, {
-    wpsUrl: 'http://riesgos.dlr.de/wps/WebProcessingService',
-    wpsVersion: '1.0.0',
-    processId: 'org.n52.dlr.riesgos.algorithm.PhysicalImpactAssessment'
+    serverUrl: 'http://tsunami-wps.awi.de/wps',
+    serverVersion: '1.0.0'
 }, {
-    wpsUrl: 'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService',
-    wpsVersion: '1.0.0',
-    processId: 'org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess',
-}, {
-    wpsUrl: 'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService',
-    wpsVersion: '1.0.0',
-    processId: 'org.n52.gfz.riesgos.algorithm.impl.AssetmasterProcess'
-}, {
-    wpsUrl: 'http://91.250.85.221/wps/WebProcessingService',
-    wpsVersion: '1.0.0',
-    processId: 'org.n52.gfz.riesgos.algorithm.impl.SystemReliabilitySingleProcess'
-}, {
-    wpsUrl: 'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService',
-    wpsVersion: '1.0.0',
-    processId: 'org.n52.gfz.riesgos.algorithm.impl.ShakygroundProcess'
-}, {
-    wpsUrl: 'http://tsunami-wps.awi.de/wps',
-    wpsVersion: '1.0.0',
-    processId: 'get_tsunamap',
-}, {
-    wpsUrl: 'http://tsunami-wps.awi.de/wps',
-    wpsVersion: '1.0.0',
-    processId: 'get_scenario',
-}, {
-    wpsUrl: 'http://riesgos.dlr.de/wps/WebProcessingService',
-    wpsVersion: '1.0.0',
-    processId: 'org.n52.dlr.riesgos.algorithm.CotopaxiAshfall'
-}, {
-    wpsUrl: 'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService',
-    wpsVersion: '1.0.0',
-    processId: 'org.n52.gfz.riesgos.algorithm.impl.CachedFlooddamageProcess'
-}, {
-    wpsUrl: 'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService',
-    wpsVersion: '1.0.0',
-    processId: 'org.n52.gfz.riesgos.algorithm.impl.FlooddamageProcess'
-}, {
-    wpsUrl: 'http://91.250.85.221/geoserver/riesgos/wps',
-    wpsVersion: '1.0.0',
-    processId: 'gs:LaharModel'
-}, {
-    wpsUrl: 'http://91.250.85.221/wps/WebProcessingService',
-    wpsVersion: '1.0.0',
-    processId: 'org.n52.gfz.riesgos.algorithm.impl.SystemReliabilityMultiProcess'
-}, {
-    wpsUrl: 'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService',
-    wpsVersion: '1.0.0',
-    processId: 'org.n52.gfz.riesgos.algorithm.impl.VolcanusProcess'
+    serverUrl: 'http://91.250.85.221/geoserver/riesgos/wps',
+    serverVersion: '1.0.0'
 }];
 
 
 
-createMongoDbInterface(1410, 'riesgos').subscribe((db: MongoDbRiesgosDatabase) => {
-    const harvester = new WpsHarvester(new HttpClient(), db);
-    for (const service of servicesToHarvest) {
-        harvester.downloadWpsProcessData({
-                serverUrl: service.wpsUrl,
-                serverVersion: service.wpsVersion
-            },
-            service.processId
-        );
-    }
-});
 
 
+const db = new TextFileRiesgosDatabase('textFileData');
+const harvester = new WpsHarvester(new HttpClient(), db);
+for (const service of servicesToHarvest) {
+    harvester.harvestAllData(service);
+}
+
+// createMongoDbInterface(1410, 'riesgos').subscribe((db: MongoDbRiesgosDatabase) => {
+//     const harvester = new WpsHarvester(new HttpClient(), db);
+//     for (const service of servicesToHarvest) {
+//         harvester.harvestAllData(service);
+//     }
+// });

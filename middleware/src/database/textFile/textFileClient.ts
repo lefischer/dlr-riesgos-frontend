@@ -7,7 +7,7 @@ const fs = require('fs');
 
 export class TextFileRiesgosDatabase implements RiesgosDatabase {
 
-    private baseDir = 'src/data/';
+    constructor(private baseDir: string) {}
 
     getScenarioMetaData(id: string): Observable<RiesgosScenarioMetadata> {
         throw new Error("Method not implemented.");
@@ -22,21 +22,27 @@ export class TextFileRiesgosDatabase implements RiesgosDatabase {
     }
 
     addProcess(process: Process): Observable<boolean> {
-        const fileName = `${this.baseDir}/processes/${this.cleanString(process.uid)}.json`;
+        const path = `${this.baseDir}/processes/`
+        const fileName = `${this.cleanString(process.uid)}.json`;
         const body = JSON.stringify(process, null, 4);
-        this.writeToFile(fileName, body);
+        this.writeToFile(path, fileName, body);
         return of(true);
     }
 
     addProduct(product: Product): Observable<boolean> {
-        const fileName = `${this.baseDir}/products/${this.cleanString(product.uid)}.json`;
+        const path = `${this.baseDir}/products/`;
+        const fileName = `${this.cleanString(product.uid)}.json`;
         const body = JSON.stringify(product, null, 4);
-        this.writeToFile(fileName, body);
+        this.writeToFile(path, fileName, body);
         return of(true);
     }
 
-    private writeToFile(fileName: string, text: string) {
-        fs.writeFile(fileName, text, (err: any) => {
+    private writeToFile(path: string, fileName: string, text: string) {
+        path = path.replace(/\/$/, "");
+        if (!fs.existsSync(path)) {
+            fs.mkdirSync(path, { recursive: true });
+        }
+        fs.writeFile(`${path}/${fileName}`, text, (err: any) => {
             if (err) {
                 throw err;
             } else {
