@@ -2,10 +2,10 @@ import { Graph, alg, Edge } from 'graphlib';
 import { map, tap, catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Process, Product, ProcessStateRunning, ProcessStateCompleted, ProcessStateError, 
-    ProcessStateTypes, ProcessState, ProcessStateUnavailable, ProcessStateAvailable } from '../datatypes/riesgos.datatypes';
+    ProcessStateTypes, ProcessState, ProcessStateUnavailable, ProcessStateAvailable, ExecutableProcess } from '../datatypes/riesgos.datatypes';
 
 
-export function createGraph(processes: Process[]): Graph {
+export function createGraph(processes: ExecutableProcess[]): Graph {
     const graph = new Graph({ directed: true });
     for (const process of processes) {
         for (const inProdId of process.requiredProducts) {
@@ -21,11 +21,11 @@ export function createGraph(processes: Process[]): Graph {
 
 export class WorkflowControl {
 
-    private processes: Process[];
+    private processes: ExecutableProcess[];
     private products: Product[];
     private graph: Graph;
 
-    constructor(processes: Process[], products: Product[]) {
+    constructor(processes: ExecutableProcess[], products: Product[]) {
 
         this.checkDataIntegrity(processes, products);
 
@@ -78,7 +78,7 @@ export class WorkflowControl {
 
     }
 
-    private getProcesses(ids?: string[]): Process[] {
+    private getProcesses(ids?: string[]): ExecutableProcess[] {
         if (!ids) {
             return this.processes;
         } else {
@@ -118,7 +118,7 @@ export class WorkflowControl {
     }
 
 
-    public getActiveProcesses(): Process[] {
+    public getActiveProcesses(): ExecutableProcess[] {
         return this.processes.filter(p => p.state.type === ProcessStateTypes.available);
     }
 
@@ -172,7 +172,7 @@ export class WorkflowControl {
         return products;
     }
 
-    private getProcess(id: string): Process {
+    private getProcess(id: string): ExecutableProcess {
         const process = this.processes.find(p => p.uid === id);
         if (!process) {
             throw new Error(`no such process: ${id}`);
@@ -195,7 +195,7 @@ export class WorkflowControl {
     }
 
 
-    private setProcessState(id: string, state: ProcessState): Process {
+    private setProcessState(id: string, state: ProcessState): ExecutableProcess {
         this.processes.map(process => {
             if (process.uid === id) {
                 process.state = state;
@@ -232,11 +232,11 @@ export class WorkflowControl {
     }
 
 
-    private getProcessesInExecutionOrder(processes: Process[]): Process[] {
+    private getProcessesInExecutionOrder(processes: ExecutableProcess[]): ExecutableProcess[] {
         const allIds = alg.topsort(this.graph);
         const processIds = processes.map(proc => proc.uid);
         const sortedProcessIds = allIds.filter(id => processIds.includes(id));
-        const sortedProcesses = sortedProcessIds.map(id => processes.find(proc => proc.uid === id) ).filter(p => p !== null) as Process[];
+        const sortedProcesses = sortedProcessIds.map(id => processes.find(proc => proc.uid === id) ).filter(p => p !== null) as ExecutableProcess[];
         return sortedProcesses;
     }
 
@@ -296,7 +296,7 @@ export class WorkflowControl {
     }
 
 
-    private checkDataIntegrity(processes: Process[], products: Product[]): void {
+    private checkDataIntegrity(processes: ExecutableProcess[], products: Product[]): void {
 
         const processIds = processes.map(p => p.uid);
         const productIds = products.map(p => p.uid);

@@ -53,8 +53,12 @@ export interface Process {
     readonly requiredProducts: string[];
     readonly providedProducts: string[];
     readonly autoRunning: boolean;
-    state: ProcessState;
     readonly description?: string;
+}
+
+export interface Executable {
+    state: ProcessState;
+    
     execute(
         inputs: Product[],
         outputs: Product[],
@@ -63,8 +67,5 @@ export interface Process {
 }
 
 
-export const isProcess = (o: any): o is Process => {
-    return o.hasOwnProperty('uid') && o.hasOwnProperty('requiredProducts')
-     && o.hasOwnProperty('providedProduct') && o.hasOwnProperty('execute')
-     && o.hasOwnProperty('autorunning');
-};
+export interface ExecutableProcess extends Process, Executable {};
+

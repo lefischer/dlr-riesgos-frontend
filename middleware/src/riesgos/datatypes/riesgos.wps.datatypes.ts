@@ -4,7 +4,7 @@ import { HttpClient } from '../../http_client/http_client';
 import { Cache, FakeCache } from '../../wps/lib/cache';
 import { WpsClient } from '../../wps/lib/wpsclient';
 import { WpsData, WpsVersion } from '../../wps/lib/wps_datatypes';
-import { Product, ProcessStateUnavailable, Process, ProcessState } from './riesgos.datatypes';
+import { Product, ProcessStateUnavailable, Process, ProcessState, CProcess, Executable } from './riesgos.datatypes';
 
 
 export interface WpsProduct extends Product {
@@ -21,9 +21,9 @@ export interface WpsProcess extends Process {
 };
 
 
-export class CWpsProcess implements WpsProcess {
+export class ExecutableWpsProcess implements WpsProcess, Executable {
 
-    private wpsClient: WpsClient;
+    private wpsClient: WpsClient | undefined;
 
     constructor(
         readonly uid: string,
@@ -36,17 +36,22 @@ export class CWpsProcess implements WpsProcess {
         readonly wpsVersion: WpsVersion,
         readonly processVersion: string,
         readonly autoRunning: boolean,
-        httpClient: HttpClient,
         public state = new ProcessStateUnavailable(),
-        cache: Cache = new FakeCache()
         ) {
-            this.wpsClient = new WpsClient(this.wpsVersion, httpClient, cache);
+        }
+        
+    public init(httpClient: HttpClient, cache: Cache = new FakeCache()) {
+        this.wpsClient = new WpsClient(this.wpsVersion, httpClient, cache);
     }
 
     public execute(
         inputProducts: WpsProduct[],
         outputProducts: WpsProduct[],
         doWhileExecuting?: (response: any, counter: number) => void): Observable<Product[]> {
+
+            if (!this.wpsClient) {
+                throw new Error('No WpsClient set yet!');
+            }
 
             const wpsInputs = inputProducts.map(prod => prod.value);
             const wpsOutputDescriptions = outputProducts.map(prod => prod.value.description);
@@ -81,10 +86,6 @@ export class CWpsProcess implements WpsProcess {
                 })
             );
 
-    }
-
-    public setCache(cache: Cache) {
-        this.wpsClient.setCache(cache);
     }
 }
 
