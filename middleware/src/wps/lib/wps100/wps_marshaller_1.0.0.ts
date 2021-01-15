@@ -138,6 +138,7 @@ export class WpsMarshaller100 implements WpsMarshaller {
         if (typeof module !== 'undefined' && module.exports) { // node
           data.complexData.content.map(c => new Buffer(c, 'base64').toString('ascii'));
         } else { // browser
+          // @ts-ignore
           data.complexData.content.map(c => atob(c));
         }
       }
@@ -204,12 +205,17 @@ export class WpsMarshaller100 implements WpsMarshaller {
 
   protected unmarshalOutputDescription(data: OutputDescriptionType): WpsDataDescription {
     if (data.complexOutput) {
+      let format =
+          data.complexOutput._default?.format?.mimeType as WpsDataFormat
+          || data.complexOutput.supported.format?.[0].mimeType as WpsDataFormat
+          || undefined;
+
       return {
         id: data.identifier.value,
         title: data.title.value,
         reference: true,
         type: 'complex',
-        format: data.complexOutput._default.format.mimeType as WpsDataFormat
+        format: format
       };
     } else if (data.boundingBoxOutput) {
       return {

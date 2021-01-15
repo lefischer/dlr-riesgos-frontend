@@ -99,7 +99,7 @@ export interface SupportedComplexDataInputType {
 }
 
 export interface SupportedComplexDataType {
-  _default: ComplexDataCombinationType;
+  _default?: ComplexDataCombinationType;
   supported: ComplexDataCombinationsType;
 }
 

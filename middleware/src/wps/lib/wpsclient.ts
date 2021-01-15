@@ -4,11 +4,17 @@ import { WpsMarshaller100 } from './wps100/wps_marshaller_1.0.0';
 import { WpsMarshaller200 } from './wps200/wps_marshaller_2.0.0';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, tap, share, mergeMap } from 'rxjs/operators';
+//@ts-ignore
 import * as XLink_1_0_Factory from 'w3c-schemas/lib/XLink_1_0'; const XLink_1_0 = XLink_1_0_Factory.XLink_1_0;
+//@ts-ignore
 import * as OWS_1_1_0_Factory from 'ogc-schemas/lib/OWS_1_1_0'; const OWS_1_1_0 = OWS_1_1_0_Factory.OWS_1_1_0;
+//@ts-ignore
 import * as OWS_2_0_Factory from 'ogc-schemas/lib/OWS_2_0'; const OWS_2_0 = OWS_2_0_Factory.OWS_2_0;
+//@ts-ignore
 import * as WPS_1_0_0_Factory from 'ogc-schemas/lib/WPS_1_0_0'; const WPS_1_0_0 = WPS_1_0_0_Factory.WPS_1_0_0;
+//@ts-ignore
 import * as WPS_2_0_Factory from 'ogc-schemas/lib/WPS_2_0'; const WPS_2_0 = WPS_2_0_Factory.WPS_2_0;
+//@ts-ignore
 import * as JsonixFactory from '@michaellangbein/jsonix'; const Jsonix = JsonixFactory.Jsonix;
 import { pollUntil, delayedRetry } from './utils/polling';
 import { Cache, FakeCache } from './cache';
