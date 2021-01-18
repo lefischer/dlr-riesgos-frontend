@@ -46,7 +46,7 @@ wsServer.on('connection', (socket) => {
             socket.close();
         }, (error: any) => {
             console.log('An error occurred: ', error);
-            socket.send(JSON.stringify(error));
+            socket.send(JSON.stringify(error.message));
             socket.close();
         });
     });

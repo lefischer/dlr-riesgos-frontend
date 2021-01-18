@@ -3,8 +3,6 @@ import { map } from "rxjs/operators";
 import { HttpClient } from "./http_client/http_client";
 import { Process, Product, RiesgosScenarioData, RiesgosScenarioMetaData } from "./model/datatypes/riesgos.datatypes";
 import WebSocket from 'ws';
-import { WpsProduct } from "./model/datatypes/riesgos.wps.datatypes";
-import { WpsData } from "./wps/public-api";
 
 
 export class RiesgosClient {

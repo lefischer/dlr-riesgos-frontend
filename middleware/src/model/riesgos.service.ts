@@ -51,6 +51,7 @@ export class RiesgosService {
                     this.wpsCache
                 );
                 output$ = service.execute(inputs, outputs);
+                break;
             default:
                 output$ = throwError('This process is not of any known concrete class. Aborting.');
         }
