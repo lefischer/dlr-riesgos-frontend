@@ -1,5 +1,6 @@
 import { HttpClient } from "../../http_client/http_client";
 import { WpsServerDescription } from "../../wps/public-api";
+import { LowdbClient } from "../lowdb/lowdbClient";
 import { createMongoDbInterface, MongoDbRiesgosDatabase } from "../mongo/mongoClient";
 import { TextFileRiesgosDatabase } from "../textFile/textFileClient";
 import { WpsHarvester } from "./harvester";
@@ -27,7 +28,7 @@ const servicesToHarvest: WpsServerDescription[] = [{
 
 
 
-const db = new TextFileRiesgosDatabase('textFileData');
+const db = new LowdbClient();
 const harvester = new WpsHarvester(new HttpClient(), db);
 for (const service of servicesToHarvest) {
     harvester.harvestAllData(service);

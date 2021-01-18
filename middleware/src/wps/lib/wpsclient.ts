@@ -2,7 +2,7 @@ import { WpsMarshaller, WpsInput, WpsVersion, WpsResult, WpsOutputDescription, W
     WpsCapability, WpsProcessDescription } from './wps_datatypes';
 import { WpsMarshaller100 } from './wps100/wps_marshaller_1.0.0';
 import { WpsMarshaller200 } from './wps200/wps_marshaller_2.0.0';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { map, switchMap, tap, share, mergeMap } from 'rxjs/operators';
 //@ts-ignore
 import * as XLink_1_0_Factory from 'w3c-schemas/lib/XLink_1_0'; const XLink_1_0 = XLink_1_0_Factory.XLink_1_0;
@@ -169,14 +169,14 @@ export class WpsClient {
         if (this.version === '1.0.0') {
 
             if (!currentState.statusLocation) {
-                throw Error('No status location');
+                throw new Error('No status location');
             }
             request$ = this.getRaw(currentState.statusLocation);
 
         } else if (this.version === '2.0.0') {
 
             if (!currentState.jobID) {
-                throw Error('No job-Id');
+                throw new Error('No job-Id');
             }
             const execbody = this.wpsmarshaller.marshallGetStatusBody(serverUrl, processId, currentState.jobID);
             const xmlExecbody = this.xmlmarshaller.marshalString(execbody);

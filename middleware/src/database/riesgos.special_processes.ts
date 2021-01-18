@@ -1,12 +1,12 @@
 import { Observable, of } from "rxjs";
-import { Process, ProcessState, ProcessStateUnavailable, Product } from "../riesgos/datatypes/riesgos.datatypes";
+import { ExecutableProcess, Process, ProcessState, ProcessStateUnavailable, Product } from "../model/datatypes/riesgos.datatypes";
 
 
 /**
  * Process that renames a products property, returning another product
  * that is identical in everything except that property-name.
  */
-export class Renamer implements Process {
+export class Renamer implements ExecutableProcess {
 
     requiredProducts: string[];
     providedProducts: string[];
@@ -38,7 +38,7 @@ export class Renamer implements Process {
 /**
  * Process that selects one element of a product containing a list.
  */
-export class Selector implements Process {
+export class Selector implements ExecutableProcess {
 
     readonly requiredProducts: string[];
     readonly providedProducts: string[];

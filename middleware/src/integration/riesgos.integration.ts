@@ -1,5 +1,5 @@
-import { RiesgosScenarioData, RiesgosService } from "../riesgos/scenario_service/riesgos.service";
-import { WorkflowControl } from "../riesgos/workflowcontrol/riesgos.workflowcontrol";
+import { RiesgosScenarioData, RiesgosService } from "../model/riesgos.service";
+import { WorkflowControl } from "../model/workflowcontrol/riesgos.workflowcontrol";
 
 export class IntegrationTester {
     metaData: any;

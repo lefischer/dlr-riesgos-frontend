@@ -4,7 +4,7 @@ import { HttpClient } from '../../http_client/http_client';
 import { Cache, FakeCache } from '../../wps/lib/cache';
 import { WpsClient } from '../../wps/lib/wpsclient';
 import { WpsData, WpsVersion } from '../../wps/lib/wps_datatypes';
-import { Product, ProcessStateUnavailable, Process, ProcessState, CProcess, Executable } from './riesgos.datatypes';
+import { Product, Process, Executable } from './riesgos.datatypes';
 
 
 export interface WpsProduct extends Product {
@@ -23,7 +23,8 @@ export interface WpsProcess extends Process {
 
 export class ExecutableWpsProcess implements WpsProcess, Executable {
 
-    private wpsClient: WpsClient | undefined;
+    concreteClassName = 'ExecutableWpsProcess';
+    private wpsClient: WpsClient;
 
     constructor(
         readonly uid: string,
@@ -36,36 +37,21 @@ export class ExecutableWpsProcess implements WpsProcess, Executable {
         readonly wpsVersion: WpsVersion,
         readonly processVersion: string,
         readonly autoRunning: boolean,
-        public state = new ProcessStateUnavailable(),
+        httpClient: HttpClient,
+        cache: Cache = new FakeCache(),
         ) {
+            this.wpsClient = new WpsClient(this.wpsVersion, httpClient, cache);
         }
-        
-    public init(httpClient: HttpClient, cache: Cache = new FakeCache()) {
-        this.wpsClient = new WpsClient(this.wpsVersion, httpClient, cache);
-    }
+
 
     public execute(
         inputProducts: WpsProduct[],
-        outputProducts: WpsProduct[],
-        doWhileExecuting?: (response: any, counter: number) => void): Observable<Product[]> {
-
-            if (!this.wpsClient) {
-                throw new Error('No WpsClient set yet!');
-            }
+        outputProducts: WpsProduct[]): Observable<Product[]> {
 
             const wpsInputs = inputProducts.map(prod => prod.value);
             const wpsOutputDescriptions = outputProducts.map(prod => prod.value.description);
 
-            let requestCounter = 0;
-            return this.wpsClient.executeAsync(this.url, this.id, wpsInputs, wpsOutputDescriptions, 2000,
-                (response: any) => {
-                    if (doWhileExecuting) {
-                        doWhileExecuting(response, requestCounter);
-                    }
-                    requestCounter += 1;
-                }
-            ).pipe(
-
+            return this.wpsClient.executeAsync(this.url, this.id, wpsInputs, wpsOutputDescriptions, 2000).pipe(
                 map((outputs: WpsData[]) => {
                     const outputProductsWithValues: WpsProduct[] = [];
                     for (const output of outputs) {
@@ -78,11 +64,6 @@ export class ExecutableWpsProcess implements WpsProcess, Executable {
                         }
                     }
                     return outputProductsWithValues;
-                }),
-
-                catchError((error) => {
-                    console.error(error);
-                    return throwError(error);
                 })
             );
 

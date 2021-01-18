@@ -1,7 +1,6 @@
 import { HttpClient } from "../../http_client/http_client";
-import { ProcessStateUnavailable } from "../../riesgos/datatypes/riesgos.datatypes";
-import { ExecutableWpsProcess, WpsProcess, WpsProduct } from "../../riesgos/datatypes/riesgos.wps.datatypes";
-import { WpsProcessDescription, WpsServerDescription, WpsClient, WpsData, WpsHttpClient, WpsCapability } from "../../wps/public-api";
+import { WpsProcess, WpsProduct } from "../../model/datatypes/riesgos.wps.datatypes";
+import { WpsProcessDescription, WpsServerDescription, WpsClient, WpsData, WpsCapability } from "../../wps/public-api";
 import { RiesgosDatabase } from "../db";
 
 
@@ -53,6 +52,7 @@ export class WpsHarvester {
 
         return {
             uid: server.serverUrl + '_' + description.id,
+            concreteClassName: 'ExecutableWpsProcess',
             id: description.id,
             autoRunning: false,
             description: description.description || '',

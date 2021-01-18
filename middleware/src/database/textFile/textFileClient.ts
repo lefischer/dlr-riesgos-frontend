@@ -1,6 +1,5 @@
 import { Observable, of } from "rxjs";
-import { Process, Product } from "../../riesgos/datatypes/riesgos.datatypes";
-import { RiesgosScenarioMetadata, RiesgosScenarioData } from "../../riesgos/scenario_service/riesgos.service";
+import { Process, Product, RiesgosScenarioMetaData, RiesgosScenarioMetadata } from "../../model/datatypes/riesgos.datatypes";
 import { RiesgosDatabase } from "../db";
 const fs = require('fs');
 
@@ -9,15 +8,15 @@ export class TextFileRiesgosDatabase implements RiesgosDatabase {
 
     constructor(private baseDir: string) {}
 
-    getScenarioMetaData(id: string): Observable<RiesgosScenarioMetadata> {
+    getScenarioMetaData(id: string): Observable<RiesgosScenarioMetadata[]> {
         throw new Error("Method not implemented.");
     }
 
-    getScenarioData(id: string): Observable<RiesgosScenarioData> {
+    getScenarioData(id: string): Observable<RiesgosScenarioMetaData> {
         throw new Error("Method not implemented.");
     }
 
-    addScenario(scenario: RiesgosScenarioData): Observable<boolean> {
+    addScenario(scenario: RiesgosScenarioMetaData): Observable<boolean> {
         return of(false);
     }
 

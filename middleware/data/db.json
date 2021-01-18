@@ -1,0 +1,4910 @@
+{
+  "scenarios": [
+    {
+      "id": "Chile",
+      "title": "Chile",
+      "description": "Earthquake and tsunami",
+      "preview": "",
+      "processes": [
+        "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess",
+        "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.ShakygroundProcess"
+      ],
+      "products": [
+        "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_input-boundingbox",
+        "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_mmin",
+        "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_mmax",
+        "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_zmin",
+        "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_zmax",
+        "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_p",
+        "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_etype",
+        "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_tlon",
+        "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_tlat",
+        "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_selectedRows",
+        "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.ShakygroundProcess_quakeMLFile"
+      ]
+    }
+  ],
+  "processes": [
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.dlr.riesgos.algorithm.PhysicalImpactAssessment",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.dlr.riesgos.algorithm.PhysicalImpactAssessment",
+      "autoRunning": false,
+      "description": "Physical impact assessment",
+      "name": "org.n52.dlr.riesgos.algorithm.PhysicalImpactAssessment",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "shakeMapFile"
+      ],
+      "providedProducts": [
+        "physicalImpact"
+      ],
+      "url": "http://riesgos.dlr.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.dlr.riesgos.algorithm.CotopaxiAshfall",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.dlr.riesgos.algorithm.CotopaxiAshfall",
+      "autoRunning": false,
+      "description": "Ashfall for the cotopaxi volcano",
+      "name": "org.n52.dlr.riesgos.algorithm.CotopaxiAshfall",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "probability",
+        "vei"
+      ],
+      "providedProducts": [
+        "ashfall"
+      ],
+      "url": "http://riesgos.dlr.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.JTSConvexHullAlgorithm",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.wps.server.algorithm.JTSConvexHullAlgorithm",
+      "autoRunning": false,
+      "description": "",
+      "name": "org.n52.wps.server.algorithm.JTSConvexHullAlgorithm",
+      "processVersion": "1.1.0",
+      "requiredProducts": [
+        "data"
+      ],
+      "providedProducts": [
+        "result"
+      ],
+      "url": "http://riesgos.dlr.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultiReferenceBinaryInputAlgorithm",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.wps.server.algorithm.test.MultiReferenceBinaryInputAlgorithm",
+      "autoRunning": false,
+      "description": "",
+      "name": "org.n52.wps.server.algorithm.test.MultiReferenceBinaryInputAlgorithm",
+      "processVersion": "1.1.0",
+      "requiredProducts": [
+        "data"
+      ],
+      "providedProducts": [
+        "result"
+      ],
+      "url": "http://riesgos.dlr.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.DummyTestClass",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.wps.server.algorithm.test.DummyTestClass",
+      "autoRunning": false,
+      "description": "",
+      "name": "org.n52.wps.server.algorithm.test.DummyTestClass",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "ComplexInputData",
+        "LiteralInputData",
+        "BBOXInputData"
+      ],
+      "providedProducts": [
+        "ComplexOutputData",
+        "LiteralOutputData",
+        "BBOXOutputData"
+      ],
+      "url": "http://riesgos.dlr.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.LongRunningDummyTestClass",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.wps.server.algorithm.test.LongRunningDummyTestClass",
+      "autoRunning": false,
+      "description": "",
+      "name": "org.n52.wps.server.algorithm.test.LongRunningDummyTestClass",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "ComplexInputData",
+        "LiteralInputData",
+        "BBOXInputData"
+      ],
+      "providedProducts": [
+        "ComplexOutputData",
+        "LiteralOutputData",
+        "BBOXOutputData"
+      ],
+      "url": "http://riesgos.dlr.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.EchoProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.wps.server.algorithm.test.EchoProcess",
+      "autoRunning": false,
+      "description": "A simple echo process for complex and literal data - get what you give.",
+      "name": "org.n52.wps.server.algorithm.test.EchoProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "literalInput",
+        "complexInput"
+      ],
+      "providedProducts": [
+        "literalOutput",
+        "complexOutput"
+      ],
+      "url": "http://riesgos.dlr.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultiReferenceInputAlgorithm",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.wps.server.algorithm.test.MultiReferenceInputAlgorithm",
+      "autoRunning": false,
+      "description": "",
+      "name": "org.n52.wps.server.algorithm.test.MultiReferenceInputAlgorithm",
+      "processVersion": "1.1.0",
+      "requiredProducts": [
+        "data"
+      ],
+      "providedProducts": [
+        "result"
+      ],
+      "url": "http://riesgos.dlr.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.wps.server.algorithm.r.AnnotationValidation",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.wps.server.algorithm.r.AnnotationValidation",
+      "autoRunning": false,
+      "description": "Validate the annotations of a WPS4R script without deploying it",
+      "name": "org.n52.wps.server.algorithm.r.AnnotationValidation",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "script"
+      ],
+      "providedProducts": [
+        "validationResultString",
+        "validationResultBool",
+        "annotations"
+      ],
+      "url": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.ShakemapTransformationProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.ShakemapTransformationProcess",
+      "autoRunning": false,
+      "description": "Process to transform shakemaps between various formats",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.ShakemapTransformationProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "input"
+      ],
+      "providedProducts": [
+        "output"
+      ],
+      "url": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess",
+      "autoRunning": false,
+      "description": "This is the description of the quakeledger process.",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "input-boundingbox",
+        "mmin",
+        "mmax",
+        "zmin",
+        "zmax",
+        "p",
+        "etype",
+        "tlon",
+        "tlat"
+      ],
+      "providedProducts": [
+        "selectedRows"
+      ],
+      "url": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedShakygroundProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.CachedShakygroundProcess",
+      "autoRunning": false,
+      "description": "Process to read from the cache for the process ShakygroundProcess",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.CachedShakygroundProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "Cache-Key"
+      ],
+      "providedProducts": [
+        "shakeMapFile"
+      ],
+      "url": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedVolcanusProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.CachedVolcanusProcess",
+      "autoRunning": false,
+      "description": "Process to read from the cache for the process VolcanusProcess",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.CachedVolcanusProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "Cache-Key"
+      ],
+      "providedProducts": [
+        "updated_exposure",
+        "transition",
+        "damage",
+        "merged_output"
+      ],
+      "url": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeMLCacheReader",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.QuakeMLCacheReader",
+      "autoRunning": false,
+      "description": "",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.QuakeMLCacheReader",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "Cache-Key",
+        "Output-Name"
+      ],
+      "providedProducts": [
+        "Output"
+      ],
+      "url": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedOldAssetmasterProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.CachedOldAssetmasterProcess",
+      "autoRunning": false,
+      "description": "Process to read from the cache for the process OldAssetmasterProcess",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.CachedOldAssetmasterProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "Cache-Key"
+      ],
+      "providedProducts": [
+        "selectedRowsGeoJson"
+      ],
+      "url": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedFlooddamageProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.CachedFlooddamageProcess",
+      "autoRunning": false,
+      "description": "Process to read from the cache for the process FlooddamageProcess",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.CachedFlooddamageProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "Cache-Key"
+      ],
+      "providedProducts": [
+        "damage_manzanas",
+        "damage_buildings"
+      ],
+      "url": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.OldAssetmasterProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.OldAssetmasterProcess",
+      "autoRunning": false,
+      "description": "",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.OldAssetmasterProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "lonmin",
+        "lonmax",
+        "latmin",
+        "latmax",
+        "schema",
+        "assettype",
+        "querymode"
+      ],
+      "providedProducts": [
+        "selectedRowsGeoJson"
+      ],
+      "url": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.FlooddamageProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.FlooddamageProcess",
+      "autoRunning": false,
+      "description": "Process to compute the damage of a flood in ecuador.",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.FlooddamageProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "duration-h",
+        "vsmax-ms",
+        "wdmax-cm"
+      ],
+      "providedProducts": [
+        "damage_manzanas",
+        "damage_buildings"
+      ],
+      "url": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.NrmlTransformationProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.NrmlTransformationProcess",
+      "autoRunning": false,
+      "description": "Process to transform nrml between various formats",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.NrmlTransformationProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "input"
+      ],
+      "providedProducts": [
+        "output"
+      ],
+      "url": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedDeusProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.CachedDeusProcess",
+      "autoRunning": false,
+      "description": "Process to read from the cache for the process DeusProcess",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.CachedDeusProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "Cache-Key"
+      ],
+      "providedProducts": [
+        "updated_exposure",
+        "transition",
+        "damage",
+        "merged_output"
+      ],
+      "url": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedQuakeledgerProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.CachedQuakeledgerProcess",
+      "autoRunning": false,
+      "description": "Process to read from the cache for the process QuakeledgerProcess",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.CachedQuakeledgerProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "Cache-Key"
+      ],
+      "providedProducts": [
+        "selectedRows"
+      ],
+      "url": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.ModelpropProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.ModelpropProcess",
+      "autoRunning": false,
+      "description": "",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.ModelpropProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "schema",
+        "assetcategory",
+        "losscategory",
+        "taxonomies"
+      ],
+      "providedProducts": [
+        "selectedRows"
+      ],
+      "url": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.r.AnnotationValidation",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.wps.server.algorithm.r.AnnotationValidation",
+      "autoRunning": false,
+      "description": "Validate the annotations of a WPS4R script without deploying it",
+      "name": "org.n52.wps.server.algorithm.r.AnnotationValidation",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "script"
+      ],
+      "providedProducts": [
+        "validationResultString",
+        "validationResultBool",
+        "annotations"
+      ],
+      "url": "http://91.250.85.221/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.ShakemapTransformationProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.ShakemapTransformationProcess",
+      "autoRunning": false,
+      "description": "Process to transform shakemaps between various formats",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.ShakemapTransformationProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "input"
+      ],
+      "providedProducts": [
+        "output"
+      ],
+      "url": "http://91.250.85.221/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeMLTransformationProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.QuakeMLTransformationProcess",
+      "autoRunning": false,
+      "description": "Process to transform quakeml between various formats",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.QuakeMLTransformationProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "input"
+      ],
+      "providedProducts": [
+        "output"
+      ],
+      "url": "http://91.250.85.221/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.GTVectorCacheReader",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.GTVectorCacheReader",
+      "autoRunning": false,
+      "description": "",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.GTVectorCacheReader",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "Cache-Key",
+        "Output-Name"
+      ],
+      "providedProducts": [
+        "Output"
+      ],
+      "url": "http://91.250.85.221/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.SystemReliabilityMultiProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.SystemReliabilityMultiProcess",
+      "autoRunning": false,
+      "description": "Process for performing the reliability of infrastructure networks",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.SystemReliabilityMultiProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "height",
+        "velocity",
+        "country",
+        "hazard"
+      ],
+      "providedProducts": [
+        "damage_consumer_areas"
+      ],
+      "url": "http://91.250.85.221/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedSystemReliabilitySingleProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.CachedSystemReliabilitySingleProcess",
+      "autoRunning": false,
+      "description": "Process to read from the cache for the process SystemReliabilitySingleProcess",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.CachedSystemReliabilitySingleProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "Cache-Key"
+      ],
+      "providedProducts": [
+        "damage_consumer_areas"
+      ],
+      "url": "http://91.250.85.221/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.JSONCacheReader",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.JSONCacheReader",
+      "autoRunning": false,
+      "description": "",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.JSONCacheReader",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "Cache-Key",
+        "Output-Name"
+      ],
+      "providedProducts": [
+        "Output"
+      ],
+      "url": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.NrmlTransformationProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.NrmlTransformationProcess",
+      "autoRunning": false,
+      "description": "Process to transform nrml between various formats",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.NrmlTransformationProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "input"
+      ],
+      "providedProducts": [
+        "output"
+      ],
+      "url": "http://91.250.85.221/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedSystemReliabilityMultiProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.CachedSystemReliabilityMultiProcess",
+      "autoRunning": false,
+      "description": "Process to read from the cache for the process SystemReliabilityMultiProcess",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.CachedSystemReliabilityMultiProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "Cache-Key"
+      ],
+      "providedProducts": [
+        "damage_consumer_areas"
+      ],
+      "url": "http://91.250.85.221/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.EchoProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.wps.server.algorithm.test.EchoProcess",
+      "autoRunning": false,
+      "description": "A simple echo process for complex and literal data - get what you give.",
+      "name": "org.n52.wps.server.algorithm.test.EchoProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "literalInput",
+        "complexInput"
+      ],
+      "providedProducts": [
+        "literalOutput",
+        "complexOutput"
+      ],
+      "url": "http://91.250.85.221/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultiReferenceBinaryInputAlgorithm",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.wps.server.algorithm.test.MultiReferenceBinaryInputAlgorithm",
+      "autoRunning": false,
+      "description": "",
+      "name": "org.n52.wps.server.algorithm.test.MultiReferenceBinaryInputAlgorithm",
+      "processVersion": "1.1.0",
+      "requiredProducts": [
+        "data"
+      ],
+      "providedProducts": [
+        "result"
+      ],
+      "url": "http://91.250.85.221/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultipleComplexInAndOutputsDummyTestClass",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.wps.server.algorithm.test.MultipleComplexInAndOutputsDummyTestClass",
+      "autoRunning": false,
+      "description": "",
+      "name": "org.n52.wps.server.algorithm.test.MultipleComplexInAndOutputsDummyTestClass",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "ComplexInputData1",
+        "ComplexInputData2",
+        "LiteralInputData",
+        "BBOXInputData"
+      ],
+      "providedProducts": [
+        "ComplexOutputData1",
+        "ComplexOutputData2",
+        "LiteralOutputData",
+        "BBOXOutputData"
+      ],
+      "url": "http://riesgos.dlr.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultiReferenceInputAlgorithm",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.wps.server.algorithm.test.MultiReferenceInputAlgorithm",
+      "autoRunning": false,
+      "description": "",
+      "name": "org.n52.wps.server.algorithm.test.MultiReferenceInputAlgorithm",
+      "processVersion": "1.1.0",
+      "requiredProducts": [
+        "data"
+      ],
+      "providedProducts": [
+        "result"
+      ],
+      "url": "http://91.250.85.221/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.SystemReliabilitySingleProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.SystemReliabilitySingleProcess",
+      "autoRunning": false,
+      "description": "Process for performing the reliability of infrastructure networks",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.SystemReliabilitySingleProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "intensity",
+        "country",
+        "hazard"
+      ],
+      "providedProducts": [
+        "damage_consumer_areas"
+      ],
+      "url": "http://91.250.85.221/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.ShakemapCacheReader",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.ShakemapCacheReader",
+      "autoRunning": false,
+      "description": "",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.ShakemapCacheReader",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "Cache-Key",
+        "Output-Name"
+      ],
+      "providedProducts": [
+        "Output"
+      ],
+      "url": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.DeusProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.DeusProcess",
+      "autoRunning": false,
+      "description": "",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.DeusProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "intensity",
+        "exposure",
+        "schema",
+        "fragility"
+      ],
+      "providedProducts": [
+        "updated_exposure",
+        "transition",
+        "damage",
+        "merged_output"
+      ],
+      "url": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.DummyTestClass",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.wps.server.algorithm.test.DummyTestClass",
+      "autoRunning": false,
+      "description": "",
+      "name": "org.n52.wps.server.algorithm.test.DummyTestClass",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "ComplexInputData",
+        "LiteralInputData",
+        "BBOXInputData"
+      ],
+      "providedProducts": [
+        "ComplexOutputData",
+        "LiteralOutputData",
+        "BBOXOutputData"
+      ],
+      "url": "http://91.250.85.221/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultipleComplexInAndOutputsDummyTestClass",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.wps.server.algorithm.test.MultipleComplexInAndOutputsDummyTestClass",
+      "autoRunning": false,
+      "description": "",
+      "name": "org.n52.wps.server.algorithm.test.MultipleComplexInAndOutputsDummyTestClass",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "ComplexInputData1",
+        "ComplexInputData2",
+        "LiteralInputData",
+        "BBOXInputData"
+      ],
+      "providedProducts": [
+        "ComplexOutputData1",
+        "ComplexOutputData2",
+        "LiteralOutputData",
+        "BBOXOutputData"
+      ],
+      "url": "http://91.250.85.221/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.ShakygroundProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.ShakygroundProcess",
+      "autoRunning": false,
+      "description": "This is the description of the shakyground process",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.ShakygroundProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "quakeMLFile"
+      ],
+      "providedProducts": [
+        "shakeMapFile"
+      ],
+      "url": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadMap",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "gs:DownloadMap",
+      "autoRunning": false,
+      "description": "Builds a large map given a set of layer definitions, area of interest, size and eventual target time.",
+      "name": "gs:DownloadMap",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "bbox",
+        "decoration",
+        "time",
+        "width",
+        "height",
+        "layer"
+      ],
+      "providedProducts": [
+        "result"
+      ],
+      "url": "http://91.250.85.221/geoserver/riesgos/wps",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedModelpropProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.CachedModelpropProcess",
+      "autoRunning": false,
+      "description": "Process to read from the cache for the process ModelpropProcess",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.CachedModelpropProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "Cache-Key"
+      ],
+      "providedProducts": [
+        "selectedRows"
+      ],
+      "url": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedAssetmasterProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.CachedAssetmasterProcess",
+      "autoRunning": false,
+      "description": "Process to read from the cache for the process AssetmasterProcess",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.CachedAssetmasterProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "Cache-Key"
+      ],
+      "providedProducts": [
+        "selectedRowsGeoJson"
+      ],
+      "url": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadEstimator",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "gs:DownloadEstimator",
+      "autoRunning": false,
+      "description": "Checks if the input file does not exceed the limits",
+      "name": "gs:DownloadEstimator",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "layerName",
+        "filter",
+        "targetCRS",
+        "RoiCRS",
+        "ROI",
+        "cropToROI",
+        "targetSizeX",
+        "targetSizeY",
+        "selectedBands"
+      ],
+      "providedProducts": [
+        "result"
+      ],
+      "url": "http://91.250.85.221/geoserver/riesgos/wps",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeMLTransformationProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.QuakeMLTransformationProcess",
+      "autoRunning": false,
+      "description": "Process to transform quakeml between various formats",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.QuakeMLTransformationProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "input"
+      ],
+      "providedProducts": [
+        "output"
+      ],
+      "url": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.AssetmasterProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.AssetmasterProcess",
+      "autoRunning": false,
+      "description": "",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.AssetmasterProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "lonmin",
+        "lonmax",
+        "latmin",
+        "latmax",
+        "schema",
+        "assettype",
+        "querymode"
+      ],
+      "providedProducts": [
+        "selectedRowsGeoJson"
+      ],
+      "url": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:GeorectifyCoverage",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "gs:GeorectifyCoverage",
+      "autoRunning": false,
+      "description": "Georectifies a raster via Ground Control Points using gdal_warp",
+      "name": "gs:GeorectifyCoverage",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "data",
+        "gcp",
+        "bbox",
+        "targetCRS",
+        "width",
+        "height",
+        "warpOrder",
+        "transparent",
+        "store",
+        "outputPath"
+      ],
+      "providedProducts": [
+        "result",
+        "path"
+      ],
+      "url": "http://91.250.85.221/geoserver/riesgos/wps",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadAnimation",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "gs:DownloadAnimation",
+      "autoRunning": false,
+      "description": "Builds an animation given a set of layer definitions, area of interest, size and a series of times for animation frames.",
+      "name": "gs:DownloadAnimation",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "bbox",
+        "decoration",
+        "time",
+        "width",
+        "height",
+        "fps",
+        "layer"
+      ],
+      "providedProducts": [
+        "result"
+      ],
+      "url": "http://91.250.85.221/geoserver/riesgos/wps",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:StoreCoverage",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "gs:StoreCoverage",
+      "autoRunning": false,
+      "description": "Stores a raster on the server.",
+      "name": "gs:StoreCoverage",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "coverage"
+      ],
+      "providedProducts": [
+        "coverageLocation"
+      ],
+      "url": "http://91.250.85.221/geoserver/riesgos/wps",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Import",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "gs:Import",
+      "autoRunning": false,
+      "description": "Imports a feature collection into the catalog",
+      "name": "gs:Import",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "features",
+        "coverage",
+        "workspace",
+        "store",
+        "name",
+        "srs",
+        "srsHandling",
+        "styleName"
+      ],
+      "providedProducts": [
+        "layerName"
+      ],
+      "url": "http://91.250.85.221/geoserver/riesgos/wps",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:GetFullCoverage",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "gs:GetFullCoverage",
+      "autoRunning": false,
+      "description": "Returns a raster from the catalog, with optional filtering",
+      "name": "gs:GetFullCoverage",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "name",
+        "filter"
+      ],
+      "providedProducts": [
+        "result"
+      ],
+      "url": "http://91.250.85.221/geoserver/riesgos/wps",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:LaharModel",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "gs:LaharModel",
+      "autoRunning": false,
+      "description": "Lahar Model for Cotopaxi depending on direction (North|South), intensity (VEI1|VEI2|VEI3|VEI4) and parameter (MaxHeight|MaxVelocity|MaxPressure|MaxErosion|Deposition)",
+      "name": "gs:LaharModel",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "direction",
+        "intensity",
+        "parameter"
+      ],
+      "providedProducts": [
+        "wms",
+        "shakemap"
+      ],
+      "url": "http://91.250.85.221/geoserver/riesgos/wps",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.VolcanusProcess",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.gfz.riesgos.algorithm.impl.VolcanusProcess",
+      "autoRunning": false,
+      "description": "",
+      "name": "org.n52.gfz.riesgos.algorithm.impl.VolcanusProcess",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "intensity",
+        "intensitycolumn",
+        "exposure",
+        "schema",
+        "fragility"
+      ],
+      "providedProducts": [
+        "updated_exposure",
+        "transition",
+        "damage",
+        "merged_output"
+      ],
+      "url": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:PagedUnique",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "gs:PagedUnique",
+      "autoRunning": false,
+      "description": "Gets the list of unique values for the given featurecollection on a specified field, allows optional paging",
+      "name": "gs:PagedUnique",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "features",
+        "fieldName",
+        "startIndex",
+        "maxFeatures"
+      ],
+      "providedProducts": [
+        "result"
+      ],
+      "url": "http://91.250.85.221/geoserver/riesgos/wps",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Download",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "gs:Download",
+      "autoRunning": false,
+      "description": "Downloads Layer Stream and provides a ZIP.",
+      "name": "gs:Download",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "layerName",
+        "filter",
+        "outputFormat",
+        "targetCRS",
+        "RoiCRS",
+        "ROI",
+        "cropToROI",
+        "interpolation",
+        "targetSizeX",
+        "targetSizeY",
+        "selectedBands",
+        "writeParameters"
+      ],
+      "providedProducts": [
+        "result"
+      ],
+      "url": "http://91.250.85.221/geoserver/riesgos/wps",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.JTSConvexHullAlgorithm",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.wps.server.algorithm.JTSConvexHullAlgorithm",
+      "autoRunning": false,
+      "description": "",
+      "name": "org.n52.wps.server.algorithm.JTSConvexHullAlgorithm",
+      "processVersion": "1.1.0",
+      "requiredProducts": [
+        "data"
+      ],
+      "providedProducts": [
+        "result"
+      ],
+      "url": "http://91.250.85.221/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://tsunami-wps.awi.de/wps_get_tsunamap",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "get_tsunamap",
+      "autoRunning": false,
+      "description": "Input is earthquack epicenter with magnitude,\n            output is the nearest Tsunami epicenter and Inundation",
+      "name": "get_tsunamap",
+      "processVersion": "1",
+      "requiredProducts": [
+        "lat",
+        "lon",
+        "mag"
+      ],
+      "providedProducts": [
+        "tsunamap"
+      ],
+      "url": "http://tsunami-wps.awi.de/wps",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.LongRunningDummyTestClass",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "org.n52.wps.server.algorithm.test.LongRunningDummyTestClass",
+      "autoRunning": false,
+      "description": "",
+      "name": "org.n52.wps.server.algorithm.test.LongRunningDummyTestClass",
+      "processVersion": "1.0.0",
+      "requiredProducts": [
+        "ComplexInputData",
+        "LiteralInputData",
+        "BBOXInputData"
+      ],
+      "providedProducts": [
+        "ComplexOutputData",
+        "LiteralOutputData",
+        "BBOXOutputData"
+      ],
+      "url": "http://91.250.85.221/wps/WebProcessingService",
+      "wpsVersion": "1.0.0"
+    },
+    {
+      "uid": "http://tsunami-wps.awi.de/wps_get_scenario",
+      "concreteClassName": "ExecutableWpsProcess",
+      "id": "get_scenario",
+      "autoRunning": false,
+      "description": "Input is earthquack epicenter with magnitude,\n            output is the nearest Tsunami epicenter",
+      "name": "get_scenario",
+      "processVersion": "1",
+      "requiredProducts": [
+        "lat",
+        "lon",
+        "mag"
+      ],
+      "providedProducts": [
+        "epiCenter"
+      ],
+      "url": "http://tsunami-wps.awi.de/wps",
+      "wpsVersion": "1.0.0"
+    }
+  ],
+  "products": [
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.dlr.riesgos.algorithm.PhysicalImpactAssessment_shakeMapFile",
+      "value": {
+        "description": {
+          "id": "shakeMapFile",
+          "title": "shakeMapFile",
+          "type": "complex",
+          "format": "application/dbase"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.dlr.riesgos.algorithm.PhysicalImpactAssessment_physicalImpact",
+      "value": {
+        "description": {
+          "id": "physicalImpact",
+          "title": "physicalImpact",
+          "reference": true,
+          "type": "complex",
+          "format": "application/WFS"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.dlr.riesgos.algorithm.CotopaxiAshfall_probability",
+      "value": {
+        "description": {
+          "id": "probability",
+          "title": "probability",
+          "reference": false,
+          "type": "literal",
+          "options": [
+            "1",
+            "25",
+            "50",
+            "75",
+            "99"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.dlr.riesgos.algorithm.CotopaxiAshfall_vei",
+      "value": {
+        "description": {
+          "id": "vei",
+          "title": "vei",
+          "reference": false,
+          "type": "literal",
+          "description": "volcanic explosivity index",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.dlr.riesgos.algorithm.CotopaxiAshfall_ashfall",
+      "value": {
+        "description": {
+          "id": "ashfall",
+          "title": "ashfall",
+          "reference": true,
+          "type": "complex",
+          "format": "application/WFS"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.JTSConvexHullAlgorithm_data",
+      "value": {
+        "description": {
+          "id": "data",
+          "title": "data",
+          "type": "complex",
+          "format": "application/vnd.geo+json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.JTSConvexHullAlgorithm_result",
+      "value": {
+        "description": {
+          "id": "result",
+          "title": "result",
+          "reference": true,
+          "type": "complex",
+          "format": "application/wkt"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultiReferenceBinaryInputAlgorithm_data",
+      "value": {
+        "description": {
+          "id": "data",
+          "title": "data",
+          "type": "complex",
+          "format": "application/dbase"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultiReferenceBinaryInputAlgorithm_result",
+      "value": {
+        "description": {
+          "id": "result",
+          "title": "result",
+          "reference": true,
+          "type": "complex"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.DummyTestClass_ComplexInputData",
+      "value": {
+        "description": {
+          "id": "ComplexInputData",
+          "title": "ComplexInputData",
+          "type": "complex",
+          "format": "application/dbase"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.DummyTestClass_LiteralInputData",
+      "value": {
+        "description": {
+          "id": "LiteralInputData",
+          "title": "LiteralInputData",
+          "reference": false,
+          "type": "literal",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.DummyTestClass_BBOXInputData",
+      "value": {
+        "description": {
+          "id": "BBOXInputData",
+          "title": "BBOXInputData",
+          "reference": false,
+          "type": "bbox",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.DummyTestClass_ComplexOutputData",
+      "value": {
+        "description": {
+          "id": "ComplexOutputData",
+          "title": "ComplexOutputData",
+          "reference": true,
+          "type": "complex"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.DummyTestClass_LiteralOutputData",
+      "value": {
+        "description": {
+          "id": "LiteralOutputData",
+          "title": "LiteralOutputData",
+          "reference": false,
+          "type": "literal"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.DummyTestClass_BBOXOutputData",
+      "value": {
+        "description": {
+          "id": "BBOXOutputData",
+          "title": "BBOXOutputData",
+          "reference": false,
+          "type": "bbox"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.LongRunningDummyTestClass_ComplexInputData",
+      "value": {
+        "description": {
+          "id": "ComplexInputData",
+          "title": "ComplexInputData",
+          "type": "complex",
+          "format": "application/dbase"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.LongRunningDummyTestClass_LiteralInputData",
+      "value": {
+        "description": {
+          "id": "LiteralInputData",
+          "title": "LiteralInputData",
+          "reference": false,
+          "type": "literal",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.LongRunningDummyTestClass_BBOXInputData",
+      "value": {
+        "description": {
+          "id": "BBOXInputData",
+          "title": "BBOXInputData",
+          "reference": false,
+          "type": "bbox",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.LongRunningDummyTestClass_ComplexOutputData",
+      "value": {
+        "description": {
+          "id": "ComplexOutputData",
+          "title": "ComplexOutputData",
+          "reference": true,
+          "type": "complex"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.LongRunningDummyTestClass_LiteralOutputData",
+      "value": {
+        "description": {
+          "id": "LiteralOutputData",
+          "title": "LiteralOutputData",
+          "reference": false,
+          "type": "literal"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.LongRunningDummyTestClass_BBOXOutputData",
+      "value": {
+        "description": {
+          "id": "BBOXOutputData",
+          "title": "BBOXOutputData",
+          "reference": false,
+          "type": "bbox"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.EchoProcess_literalInput",
+      "value": {
+        "description": {
+          "id": "literalInput",
+          "title": "literalInput",
+          "reference": false,
+          "type": "literal",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.EchoProcess_complexInput",
+      "value": {
+        "description": {
+          "id": "complexInput",
+          "title": "complexInput",
+          "type": "complex",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.EchoProcess_literalOutput",
+      "value": {
+        "description": {
+          "id": "literalOutput",
+          "title": "literalOutput",
+          "reference": false,
+          "type": "literal"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.EchoProcess_complexOutput",
+      "value": {
+        "description": {
+          "id": "complexOutput",
+          "title": "complexOutput",
+          "reference": true,
+          "type": "complex",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultiReferenceInputAlgorithm_data",
+      "value": {
+        "description": {
+          "id": "data",
+          "title": "data",
+          "type": "complex",
+          "format": "application/dbase"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultiReferenceInputAlgorithm_result",
+      "value": {
+        "description": {
+          "id": "result",
+          "title": "result",
+          "reference": true,
+          "type": "complex"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.wps.server.algorithm.r.AnnotationValidation_script",
+      "value": {
+        "description": {
+          "id": "script",
+          "title": "annotated R script (as CDATA)",
+          "type": "complex",
+          "description": "An annotated R script to be validated for use within WPS4R. IMPORTANT: Wrap script in CDATA elements.",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.wps.server.algorithm.r.AnnotationValidation_validationResultString",
+      "value": {
+        "description": {
+          "id": "validationResultString",
+          "title": "Validation output as text",
+          "reference": false,
+          "type": "literal"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.wps.server.algorithm.r.AnnotationValidation_validationResultBool",
+      "value": {
+        "description": {
+          "id": "validationResultBool",
+          "title": "Validation output as boolean",
+          "reference": false,
+          "type": "literal"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.wps.server.algorithm.r.AnnotationValidation_annotations",
+      "value": {
+        "description": {
+          "id": "annotations",
+          "title": "A string representation of the Java objects of the parsed annotations",
+          "reference": false,
+          "type": "literal"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.ShakemapTransformationProcess_input",
+      "value": {
+        "description": {
+          "id": "input",
+          "title": "input",
+          "type": "complex",
+          "description": "This is the input parameter to transform to other formats",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.ShakemapTransformationProcess_output",
+      "value": {
+        "description": {
+          "id": "output",
+          "title": "output",
+          "reference": true,
+          "type": "complex",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_input-boundingbox",
+      "value": {
+        "description": {
+          "id": "input-boundingbox",
+          "title": "input-boundingbox",
+          "reference": false,
+          "type": "bbox",
+          "description": "bounding box for spatial search",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_mmin",
+      "value": {
+        "description": {
+          "id": "mmin",
+          "title": "mmin",
+          "reference": false,
+          "type": "literal",
+          "description": "minimum magnitude",
+          "defaultValue": "6.6",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_mmax",
+      "value": {
+        "description": {
+          "id": "mmax",
+          "title": "mmax",
+          "reference": false,
+          "type": "literal",
+          "description": "maximum magnitude",
+          "defaultValue": "8.5",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_zmin",
+      "value": {
+        "description": {
+          "id": "zmin",
+          "title": "zmin",
+          "reference": false,
+          "type": "literal",
+          "description": "minimum depth",
+          "defaultValue": "5",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_zmax",
+      "value": {
+        "description": {
+          "id": "zmax",
+          "title": "zmax",
+          "reference": false,
+          "type": "literal",
+          "description": "maximum depth",
+          "defaultValue": "140",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_p",
+      "value": {
+        "description": {
+          "id": "p",
+          "title": "p",
+          "reference": false,
+          "type": "literal",
+          "description": "probability for stochastic etype",
+          "defaultValue": "0.1",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_etype",
+      "value": {
+        "description": {
+          "id": "etype",
+          "title": "etype",
+          "reference": false,
+          "type": "literal",
+          "description": "type of the event from the catalogue",
+          "defaultValue": "deaggregation",
+          "options": [
+            "observed",
+            "deaggregation",
+            "stochastic",
+            "expert"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_tlon",
+      "value": {
+        "description": {
+          "id": "tlon",
+          "title": "tlon",
+          "reference": false,
+          "type": "literal",
+          "description": "longitude position of the site for deaggregation",
+          "defaultValue": "-71.5730623712764",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_tlat",
+      "value": {
+        "description": {
+          "id": "tlat",
+          "title": "tlat",
+          "reference": false,
+          "type": "literal",
+          "description": "latitude position of the site for deaggregation",
+          "defaultValue": "-33.1299174879672",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_selectedRows",
+      "value": {
+        "description": {
+          "id": "selectedRows",
+          "title": "selectedRows",
+          "reference": true,
+          "type": "complex",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedShakygroundProcess_Cache-Key",
+      "value": {
+        "description": {
+          "id": "Cache-Key",
+          "title": "Cache-Key",
+          "reference": false,
+          "type": "literal",
+          "description": "This is the key for the cache to lookup the existing results for the process",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedShakygroundProcess_shakeMapFile",
+      "value": {
+        "description": {
+          "id": "shakeMapFile",
+          "title": "shakeMapFile",
+          "reference": true,
+          "type": "complex",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedVolcanusProcess_Cache-Key",
+      "value": {
+        "description": {
+          "id": "Cache-Key",
+          "title": "Cache-Key",
+          "reference": false,
+          "type": "literal",
+          "description": "This is the key for the cache to lookup the existing results for the process",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedVolcanusProcess_updated_exposure",
+      "value": {
+        "description": {
+          "id": "updated_exposure",
+          "title": "updated_exposure",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedVolcanusProcess_transition",
+      "value": {
+        "description": {
+          "id": "transition",
+          "title": "transition",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedVolcanusProcess_damage",
+      "value": {
+        "description": {
+          "id": "damage",
+          "title": "damage",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedVolcanusProcess_merged_output",
+      "value": {
+        "description": {
+          "id": "merged_output",
+          "title": "merged_output",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeMLCacheReader_Cache-Key",
+      "value": {
+        "description": {
+          "id": "Cache-Key",
+          "title": "Cache-Key",
+          "reference": false,
+          "type": "literal",
+          "description": "This is the key for the cache to read the data out",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeMLCacheReader_Output-Name",
+      "value": {
+        "description": {
+          "id": "Output-Name",
+          "title": "Output-Name",
+          "reference": false,
+          "type": "literal",
+          "description": "This is the name of the data for which the cached dataset contains the dataset",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeMLCacheReader_Output",
+      "value": {
+        "description": {
+          "id": "Output",
+          "title": "Output",
+          "reference": true,
+          "type": "complex",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedOldAssetmasterProcess_Cache-Key",
+      "value": {
+        "description": {
+          "id": "Cache-Key",
+          "title": "Cache-Key",
+          "reference": false,
+          "type": "literal",
+          "description": "This is the key for the cache to lookup the existing results for the process",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedOldAssetmasterProcess_selectedRowsGeoJson",
+      "value": {
+        "description": {
+          "id": "selectedRowsGeoJson",
+          "title": "selectedRowsGeoJson",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedFlooddamageProcess_Cache-Key",
+      "value": {
+        "description": {
+          "id": "Cache-Key",
+          "title": "Cache-Key",
+          "reference": false,
+          "type": "literal",
+          "description": "This is the key for the cache to lookup the existing results for the process",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedFlooddamageProcess_damage_manzanas",
+      "value": {
+        "description": {
+          "id": "damage_manzanas",
+          "title": "damage_manzanas",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedFlooddamageProcess_damage_buildings",
+      "value": {
+        "description": {
+          "id": "damage_buildings",
+          "title": "damage_buildings",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.OldAssetmasterProcess_lonmin",
+      "value": {
+        "description": {
+          "id": "lonmin",
+          "title": "lonmin",
+          "reference": false,
+          "type": "literal",
+          "defaultValue": "-71.8",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.OldAssetmasterProcess_lonmax",
+      "value": {
+        "description": {
+          "id": "lonmax",
+          "title": "lonmax",
+          "reference": false,
+          "type": "literal",
+          "defaultValue": "-71.4",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.OldAssetmasterProcess_latmin",
+      "value": {
+        "description": {
+          "id": "latmin",
+          "title": "latmin",
+          "reference": false,
+          "type": "literal",
+          "defaultValue": "-33.2",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.OldAssetmasterProcess_latmax",
+      "value": {
+        "description": {
+          "id": "latmax",
+          "title": "latmax",
+          "reference": false,
+          "type": "literal",
+          "defaultValue": "-33.0",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.OldAssetmasterProcess_schema",
+      "value": {
+        "description": {
+          "id": "schema",
+          "title": "schema",
+          "reference": false,
+          "type": "literal",
+          "defaultValue": "SARA_v1.0",
+          "options": [
+            "SARA_v1.0",
+            "Mavrouli_et_al_2014",
+            "Torres_Corredor_et_al_2017"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.OldAssetmasterProcess_assettype",
+      "value": {
+        "description": {
+          "id": "assettype",
+          "title": "assettype",
+          "reference": false,
+          "type": "literal",
+          "defaultValue": "res",
+          "options": [
+            "res"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.OldAssetmasterProcess_querymode",
+      "value": {
+        "description": {
+          "id": "querymode",
+          "title": "querymode",
+          "reference": false,
+          "type": "literal",
+          "defaultValue": "intersects",
+          "options": [
+            "intersects",
+            "within"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.OldAssetmasterProcess_selectedRowsGeoJson",
+      "value": {
+        "description": {
+          "id": "selectedRowsGeoJson",
+          "title": "selectedRowsGeoJson",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.FlooddamageProcess_duration-h",
+      "value": {
+        "description": {
+          "id": "duration-h",
+          "title": "duration-h",
+          "type": "complex",
+          "description": "Tiff file with the duration of the flood in hours",
+          "format": "image/geotiff"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.FlooddamageProcess_vsmax-ms",
+      "value": {
+        "description": {
+          "id": "vsmax-ms",
+          "title": "vsmax-ms",
+          "type": "complex",
+          "description": "Tiff file with the maximum velocity of the flood in m/s",
+          "format": "image/geotiff"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.FlooddamageProcess_wdmax-cm",
+      "value": {
+        "description": {
+          "id": "wdmax-cm",
+          "title": "wdmax-cm",
+          "type": "complex",
+          "description": "Tiff file with the maximum water depth of the flood in cm",
+          "format": "image/geotiff"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.FlooddamageProcess_damage_manzanas",
+      "value": {
+        "description": {
+          "id": "damage_manzanas",
+          "title": "damage_manzanas",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.FlooddamageProcess_damage_buildings",
+      "value": {
+        "description": {
+          "id": "damage_buildings",
+          "title": "damage_buildings",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.NrmlTransformationProcess_input",
+      "value": {
+        "description": {
+          "id": "input",
+          "title": "input",
+          "type": "complex",
+          "description": "This is the input parameter to transform to other formats",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.NrmlTransformationProcess_output",
+      "value": {
+        "description": {
+          "id": "output",
+          "title": "output",
+          "reference": true,
+          "type": "complex",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedDeusProcess_Cache-Key",
+      "value": {
+        "description": {
+          "id": "Cache-Key",
+          "title": "Cache-Key",
+          "reference": false,
+          "type": "literal",
+          "description": "This is the key for the cache to lookup the existing results for the process",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedDeusProcess_updated_exposure",
+      "value": {
+        "description": {
+          "id": "updated_exposure",
+          "title": "updated_exposure",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedDeusProcess_transition",
+      "value": {
+        "description": {
+          "id": "transition",
+          "title": "transition",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedDeusProcess_damage",
+      "value": {
+        "description": {
+          "id": "damage",
+          "title": "damage",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedDeusProcess_merged_output",
+      "value": {
+        "description": {
+          "id": "merged_output",
+          "title": "merged_output",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedQuakeledgerProcess_Cache-Key",
+      "value": {
+        "description": {
+          "id": "Cache-Key",
+          "title": "Cache-Key",
+          "reference": false,
+          "type": "literal",
+          "description": "This is the key for the cache to lookup the existing results for the process",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedQuakeledgerProcess_selectedRows",
+      "value": {
+        "description": {
+          "id": "selectedRows",
+          "title": "selectedRows",
+          "reference": true,
+          "type": "complex",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.ModelpropProcess_schema",
+      "value": {
+        "description": {
+          "id": "schema",
+          "title": "schema",
+          "reference": false,
+          "type": "literal",
+          "defaultValue": "SARA_v1.0",
+          "options": [
+            "SARA_v1.0",
+            "HAZUS_v1.0",
+            "SUPPASRI2013_v2.0",
+            "Mavrouli_et_al_2014",
+            "Torres_Corredor_et_al_2017"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.ModelpropProcess_assetcategory",
+      "value": {
+        "description": {
+          "id": "assetcategory",
+          "title": "assetcategory",
+          "reference": false,
+          "type": "literal",
+          "defaultValue": "buildings",
+          "options": [
+            "buildings"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.ModelpropProcess_losscategory",
+      "value": {
+        "description": {
+          "id": "losscategory",
+          "title": "losscategory",
+          "reference": false,
+          "type": "literal",
+          "defaultValue": "structural",
+          "options": [
+            "structural"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.ModelpropProcess_taxonomies",
+      "value": {
+        "description": {
+          "id": "taxonomies",
+          "title": "taxonomies",
+          "reference": false,
+          "type": "literal",
+          "defaultValue": "",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.ModelpropProcess_selectedRows",
+      "value": {
+        "description": {
+          "id": "selectedRows",
+          "title": "selectedRows",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.r.AnnotationValidation_script",
+      "value": {
+        "description": {
+          "id": "script",
+          "title": "annotated R script (as CDATA)",
+          "type": "complex",
+          "description": "An annotated R script to be validated for use within WPS4R. IMPORTANT: Wrap script in CDATA elements.",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.r.AnnotationValidation_validationResultString",
+      "value": {
+        "description": {
+          "id": "validationResultString",
+          "title": "Validation output as text",
+          "reference": false,
+          "type": "literal"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.r.AnnotationValidation_validationResultBool",
+      "value": {
+        "description": {
+          "id": "validationResultBool",
+          "title": "Validation output as boolean",
+          "reference": false,
+          "type": "literal"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.r.AnnotationValidation_annotations",
+      "value": {
+        "description": {
+          "id": "annotations",
+          "title": "A string representation of the Java objects of the parsed annotations",
+          "reference": false,
+          "type": "literal"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.ShakemapTransformationProcess_input",
+      "value": {
+        "description": {
+          "id": "input",
+          "title": "input",
+          "type": "complex",
+          "description": "This is the input parameter to transform to other formats",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.ShakemapTransformationProcess_output",
+      "value": {
+        "description": {
+          "id": "output",
+          "title": "output",
+          "reference": true,
+          "type": "complex",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeMLTransformationProcess_input",
+      "value": {
+        "description": {
+          "id": "input",
+          "title": "input",
+          "type": "complex",
+          "description": "This is the input parameter to transform to other formats",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeMLTransformationProcess_output",
+      "value": {
+        "description": {
+          "id": "output",
+          "title": "output",
+          "reference": true,
+          "type": "complex",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.GTVectorCacheReader_Cache-Key",
+      "value": {
+        "description": {
+          "id": "Cache-Key",
+          "title": "Cache-Key",
+          "reference": false,
+          "type": "literal",
+          "description": "This is the key for the cache to read the data out",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.GTVectorCacheReader_Output-Name",
+      "value": {
+        "description": {
+          "id": "Output-Name",
+          "title": "Output-Name",
+          "reference": false,
+          "type": "literal",
+          "description": "This is the name of the data for which the cached dataset contains the dataset",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.GTVectorCacheReader_Output",
+      "value": {
+        "description": {
+          "id": "Output",
+          "title": "Output",
+          "reference": true,
+          "type": "complex",
+          "format": "application/vnd.google-earth.kml+xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.SystemReliabilityMultiProcess_height",
+      "value": {
+        "description": {
+          "id": "height",
+          "title": "height",
+          "type": "complex",
+          "description": "File with the height values",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.SystemReliabilityMultiProcess_velocity",
+      "value": {
+        "description": {
+          "id": "velocity",
+          "title": "velocity",
+          "type": "complex",
+          "description": "File with the velocity values",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.SystemReliabilityMultiProcess_country",
+      "value": {
+        "description": {
+          "id": "country",
+          "title": "country",
+          "reference": false,
+          "type": "literal",
+          "options": [
+            "chile",
+            "ecuador"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.SystemReliabilityMultiProcess_hazard",
+      "value": {
+        "description": {
+          "id": "hazard",
+          "title": "hazard",
+          "reference": false,
+          "type": "literal",
+          "options": [
+            "earthquake",
+            "lahar"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.SystemReliabilityMultiProcess_damage_consumer_areas",
+      "value": {
+        "description": {
+          "id": "damage_consumer_areas",
+          "title": "damage_consumer_areas",
+          "reference": true,
+          "type": "complex",
+          "format": "application/vnd.google-earth.kml+xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedSystemReliabilitySingleProcess_Cache-Key",
+      "value": {
+        "description": {
+          "id": "Cache-Key",
+          "title": "Cache-Key",
+          "reference": false,
+          "type": "literal",
+          "description": "This is the key for the cache to lookup the existing results for the process",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedSystemReliabilitySingleProcess_damage_consumer_areas",
+      "value": {
+        "description": {
+          "id": "damage_consumer_areas",
+          "title": "damage_consumer_areas",
+          "reference": true,
+          "type": "complex",
+          "format": "application/vnd.google-earth.kml+xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.JSONCacheReader_Cache-Key",
+      "value": {
+        "description": {
+          "id": "Cache-Key",
+          "title": "Cache-Key",
+          "reference": false,
+          "type": "literal",
+          "description": "This is the key for the cache to read the data out",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.JSONCacheReader_Output-Name",
+      "value": {
+        "description": {
+          "id": "Output-Name",
+          "title": "Output-Name",
+          "reference": false,
+          "type": "literal",
+          "description": "This is the name of the data for which the cached dataset contains the dataset",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.JSONCacheReader_Output",
+      "value": {
+        "description": {
+          "id": "Output",
+          "title": "Output",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.NrmlTransformationProcess_input",
+      "value": {
+        "description": {
+          "id": "input",
+          "title": "input",
+          "type": "complex",
+          "description": "This is the input parameter to transform to other formats",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.NrmlTransformationProcess_output",
+      "value": {
+        "description": {
+          "id": "output",
+          "title": "output",
+          "reference": true,
+          "type": "complex",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedSystemReliabilityMultiProcess_Cache-Key",
+      "value": {
+        "description": {
+          "id": "Cache-Key",
+          "title": "Cache-Key",
+          "reference": false,
+          "type": "literal",
+          "description": "This is the key for the cache to lookup the existing results for the process",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedSystemReliabilityMultiProcess_damage_consumer_areas",
+      "value": {
+        "description": {
+          "id": "damage_consumer_areas",
+          "title": "damage_consumer_areas",
+          "reference": true,
+          "type": "complex",
+          "format": "application/vnd.google-earth.kml+xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.EchoProcess_literalInput",
+      "value": {
+        "description": {
+          "id": "literalInput",
+          "title": "literalInput",
+          "reference": false,
+          "type": "literal",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.EchoProcess_complexInput",
+      "value": {
+        "description": {
+          "id": "complexInput",
+          "title": "complexInput",
+          "type": "complex",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.EchoProcess_literalOutput",
+      "value": {
+        "description": {
+          "id": "literalOutput",
+          "title": "literalOutput",
+          "reference": false,
+          "type": "literal"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.EchoProcess_complexOutput",
+      "value": {
+        "description": {
+          "id": "complexOutput",
+          "title": "complexOutput",
+          "reference": true,
+          "type": "complex",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultiReferenceBinaryInputAlgorithm_data",
+      "value": {
+        "description": {
+          "id": "data",
+          "title": "data",
+          "type": "complex",
+          "format": "application/dbase"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultiReferenceBinaryInputAlgorithm_result",
+      "value": {
+        "description": {
+          "id": "result",
+          "title": "result",
+          "reference": true,
+          "type": "complex",
+          "format": "application/dbase"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultipleComplexInAndOutputsDummyTestClass_ComplexInputData1",
+      "value": {
+        "description": {
+          "id": "ComplexInputData1",
+          "title": "ComplexInputData1",
+          "type": "complex",
+          "format": "application/dbase"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultipleComplexInAndOutputsDummyTestClass_ComplexInputData2",
+      "value": {
+        "description": {
+          "id": "ComplexInputData2",
+          "title": "ComplexInputData2",
+          "type": "complex",
+          "format": "application/dbase"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultipleComplexInAndOutputsDummyTestClass_LiteralInputData",
+      "value": {
+        "description": {
+          "id": "LiteralInputData",
+          "title": "LiteralInputData",
+          "reference": false,
+          "type": "literal",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultipleComplexInAndOutputsDummyTestClass_BBOXInputData",
+      "value": {
+        "description": {
+          "id": "BBOXInputData",
+          "title": "BBOXInputData",
+          "reference": false,
+          "type": "bbox",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultipleComplexInAndOutputsDummyTestClass_ComplexOutputData1",
+      "value": {
+        "description": {
+          "id": "ComplexOutputData1",
+          "title": "ComplexOutputData1",
+          "reference": true,
+          "type": "complex"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultipleComplexInAndOutputsDummyTestClass_ComplexOutputData2",
+      "value": {
+        "description": {
+          "id": "ComplexOutputData2",
+          "title": "ComplexOutputData2",
+          "reference": true,
+          "type": "complex"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultipleComplexInAndOutputsDummyTestClass_LiteralOutputData",
+      "value": {
+        "description": {
+          "id": "LiteralOutputData",
+          "title": "LiteralOutputData",
+          "reference": false,
+          "type": "literal"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultipleComplexInAndOutputsDummyTestClass_BBOXOutputData",
+      "value": {
+        "description": {
+          "id": "BBOXOutputData",
+          "title": "BBOXOutputData",
+          "reference": false,
+          "type": "bbox"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultiReferenceInputAlgorithm_data",
+      "value": {
+        "description": {
+          "id": "data",
+          "title": "data",
+          "type": "complex",
+          "format": "application/dbase"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultiReferenceInputAlgorithm_result",
+      "value": {
+        "description": {
+          "id": "result",
+          "title": "result",
+          "reference": true,
+          "type": "complex",
+          "format": "application/dbase"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.SystemReliabilitySingleProcess_intensity",
+      "value": {
+        "description": {
+          "id": "intensity",
+          "title": "intensity",
+          "type": "complex",
+          "description": "File with the intensities",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.SystemReliabilitySingleProcess_country",
+      "value": {
+        "description": {
+          "id": "country",
+          "title": "country",
+          "reference": false,
+          "type": "literal",
+          "options": [
+            "chile",
+            "ecuador",
+            "peru"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.SystemReliabilitySingleProcess_hazard",
+      "value": {
+        "description": {
+          "id": "hazard",
+          "title": "hazard",
+          "reference": false,
+          "type": "literal",
+          "options": [
+            "earthquake",
+            "lahar"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.SystemReliabilitySingleProcess_damage_consumer_areas",
+      "value": {
+        "description": {
+          "id": "damage_consumer_areas",
+          "title": "damage_consumer_areas",
+          "reference": true,
+          "type": "complex",
+          "format": "application/vnd.google-earth.kml+xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.ShakemapCacheReader_Cache-Key",
+      "value": {
+        "description": {
+          "id": "Cache-Key",
+          "title": "Cache-Key",
+          "reference": false,
+          "type": "literal",
+          "description": "This is the key for the cache to read the data out",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.ShakemapCacheReader_Output-Name",
+      "value": {
+        "description": {
+          "id": "Output-Name",
+          "title": "Output-Name",
+          "reference": false,
+          "type": "literal",
+          "description": "This is the name of the data for which the cached dataset contains the dataset",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.ShakemapCacheReader_Output",
+      "value": {
+        "description": {
+          "id": "Output",
+          "title": "Output",
+          "reference": true,
+          "type": "complex",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.DeusProcess_intensity",
+      "value": {
+        "description": {
+          "id": "intensity",
+          "title": "intensity",
+          "type": "complex",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.DeusProcess_exposure",
+      "value": {
+        "description": {
+          "id": "exposure",
+          "title": "exposure",
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.DeusProcess_schema",
+      "value": {
+        "description": {
+          "id": "schema",
+          "title": "schema",
+          "reference": false,
+          "type": "literal",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.DeusProcess_fragility",
+      "value": {
+        "description": {
+          "id": "fragility",
+          "title": "fragility",
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.DeusProcess_updated_exposure",
+      "value": {
+        "description": {
+          "id": "updated_exposure",
+          "title": "updated_exposure",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.DeusProcess_transition",
+      "value": {
+        "description": {
+          "id": "transition",
+          "title": "transition",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.DeusProcess_damage",
+      "value": {
+        "description": {
+          "id": "damage",
+          "title": "damage",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.DeusProcess_merged_output",
+      "value": {
+        "description": {
+          "id": "merged_output",
+          "title": "merged_output",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.DummyTestClass_ComplexInputData",
+      "value": {
+        "description": {
+          "id": "ComplexInputData",
+          "title": "ComplexInputData",
+          "type": "complex",
+          "format": "application/dbase"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.DummyTestClass_LiteralInputData",
+      "value": {
+        "description": {
+          "id": "LiteralInputData",
+          "title": "LiteralInputData",
+          "reference": false,
+          "type": "literal",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.DummyTestClass_BBOXInputData",
+      "value": {
+        "description": {
+          "id": "BBOXInputData",
+          "title": "BBOXInputData",
+          "reference": false,
+          "type": "bbox",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.DummyTestClass_ComplexOutputData",
+      "value": {
+        "description": {
+          "id": "ComplexOutputData",
+          "title": "ComplexOutputData",
+          "reference": true,
+          "type": "complex",
+          "format": "application/dbase"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.DummyTestClass_LiteralOutputData",
+      "value": {
+        "description": {
+          "id": "LiteralOutputData",
+          "title": "LiteralOutputData",
+          "reference": false,
+          "type": "literal"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.DummyTestClass_BBOXOutputData",
+      "value": {
+        "description": {
+          "id": "BBOXOutputData",
+          "title": "BBOXOutputData",
+          "reference": false,
+          "type": "bbox"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultipleComplexInAndOutputsDummyTestClass_ComplexInputData1",
+      "value": {
+        "description": {
+          "id": "ComplexInputData1",
+          "title": "ComplexInputData1",
+          "type": "complex",
+          "format": "application/dbase"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultipleComplexInAndOutputsDummyTestClass_ComplexInputData2",
+      "value": {
+        "description": {
+          "id": "ComplexInputData2",
+          "title": "ComplexInputData2",
+          "type": "complex",
+          "format": "application/dbase"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultipleComplexInAndOutputsDummyTestClass_LiteralInputData",
+      "value": {
+        "description": {
+          "id": "LiteralInputData",
+          "title": "LiteralInputData",
+          "reference": false,
+          "type": "literal",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultipleComplexInAndOutputsDummyTestClass_BBOXInputData",
+      "value": {
+        "description": {
+          "id": "BBOXInputData",
+          "title": "BBOXInputData",
+          "reference": false,
+          "type": "bbox",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultipleComplexInAndOutputsDummyTestClass_ComplexOutputData1",
+      "value": {
+        "description": {
+          "id": "ComplexOutputData1",
+          "title": "ComplexOutputData1",
+          "reference": true,
+          "type": "complex",
+          "format": "application/dbase"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultipleComplexInAndOutputsDummyTestClass_ComplexOutputData2",
+      "value": {
+        "description": {
+          "id": "ComplexOutputData2",
+          "title": "ComplexOutputData2",
+          "reference": true,
+          "type": "complex",
+          "format": "application/dbase"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultipleComplexInAndOutputsDummyTestClass_LiteralOutputData",
+      "value": {
+        "description": {
+          "id": "LiteralOutputData",
+          "title": "LiteralOutputData",
+          "reference": false,
+          "type": "literal"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.MultipleComplexInAndOutputsDummyTestClass_BBOXOutputData",
+      "value": {
+        "description": {
+          "id": "BBOXOutputData",
+          "title": "BBOXOutputData",
+          "reference": false,
+          "type": "bbox"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.ShakygroundProcess_quakeMLFile",
+      "value": {
+        "description": {
+          "id": "quakeMLFile",
+          "title": "quakeMLFile",
+          "type": "complex",
+          "description": "quakeML to use for computing the shakemap",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.ShakygroundProcess_shakeMapFile",
+      "value": {
+        "description": {
+          "id": "shakeMapFile",
+          "title": "shakeMapFile",
+          "reference": true,
+          "type": "complex",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadMap_bbox",
+      "value": {
+        "description": {
+          "id": "bbox",
+          "title": "bbox",
+          "reference": false,
+          "type": "bbox",
+          "description": "The map area and output projection",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadMap_decoration",
+      "value": {
+        "description": {
+          "id": "decoration",
+          "title": "decoration",
+          "reference": false,
+          "type": "literal",
+          "description": "A WMS decoration layout name to watermark the output",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadMap_time",
+      "value": {
+        "description": {
+          "id": "time",
+          "title": "time",
+          "reference": false,
+          "type": "literal",
+          "description": "Map time specification (a single time value or a range like in WMS time parameter)",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadMap_width",
+      "value": {
+        "description": {
+          "id": "width",
+          "title": "width",
+          "reference": false,
+          "type": "literal",
+          "description": "Map width",
+          "options": [
+            null
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadMap_height",
+      "value": {
+        "description": {
+          "id": "height",
+          "title": "height",
+          "reference": false,
+          "type": "literal",
+          "description": "Map height",
+          "options": [
+            null
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadMap_layer",
+      "value": {
+        "description": {
+          "id": "layer",
+          "title": "layer",
+          "type": "complex",
+          "description": "List of layers",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadMap_result",
+      "value": {
+        "description": {
+          "id": "result",
+          "title": "result",
+          "reference": true,
+          "type": "complex",
+          "format": "image/png"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedModelpropProcess_Cache-Key",
+      "value": {
+        "description": {
+          "id": "Cache-Key",
+          "title": "Cache-Key",
+          "reference": false,
+          "type": "literal",
+          "description": "This is the key for the cache to lookup the existing results for the process",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedModelpropProcess_selectedRows",
+      "value": {
+        "description": {
+          "id": "selectedRows",
+          "title": "selectedRows",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedAssetmasterProcess_Cache-Key",
+      "value": {
+        "description": {
+          "id": "Cache-Key",
+          "title": "Cache-Key",
+          "reference": false,
+          "type": "literal",
+          "description": "This is the key for the cache to lookup the existing results for the process",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.CachedAssetmasterProcess_selectedRowsGeoJson",
+      "value": {
+        "description": {
+          "id": "selectedRowsGeoJson",
+          "title": "selectedRowsGeoJson",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadEstimator_layerName",
+      "value": {
+        "description": {
+          "id": "layerName",
+          "title": "layerName",
+          "reference": false,
+          "type": "literal",
+          "description": "Original layer to download",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadEstimator_filter",
+      "value": {
+        "description": {
+          "id": "filter",
+          "title": "filter",
+          "type": "complex",
+          "description": "Optional Vectorial Filter",
+          "format": "text/xml; subtype=filter/1.0"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadEstimator_targetCRS",
+      "value": {
+        "description": {
+          "id": "targetCRS",
+          "title": "targetCRS",
+          "reference": false,
+          "type": "literal",
+          "description": "Target CRS",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadEstimator_RoiCRS",
+      "value": {
+        "description": {
+          "id": "RoiCRS",
+          "title": "RoiCRS",
+          "reference": false,
+          "type": "literal",
+          "description": "Region Of Interest CRS",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadEstimator_ROI",
+      "value": {
+        "description": {
+          "id": "ROI",
+          "title": "ROI",
+          "type": "complex",
+          "description": "Region Of Interest",
+          "format": "text/xml; subtype=gml/3.1.1"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadEstimator_cropToROI",
+      "value": {
+        "description": {
+          "id": "cropToROI",
+          "title": "cropToROI",
+          "reference": false,
+          "type": "literal",
+          "description": "Crop to ROI",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadEstimator_targetSizeX",
+      "value": {
+        "description": {
+          "id": "targetSizeX",
+          "title": "targetSizeX",
+          "reference": false,
+          "type": "literal",
+          "description": "X Size of the Target Image (applies to raster data only), or native resolution if missing",
+          "options": [
+            null
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadEstimator_targetSizeY",
+      "value": {
+        "description": {
+          "id": "targetSizeY",
+          "title": "targetSizeY",
+          "reference": false,
+          "type": "literal",
+          "description": "Y Size of the Target Image (applies to raster data only), or native resolution if missing",
+          "options": [
+            null
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadEstimator_selectedBands",
+      "value": {
+        "description": {
+          "id": "selectedBands",
+          "title": "selectedBands",
+          "reference": false,
+          "type": "literal",
+          "description": "Band Selection Indices",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadEstimator_result",
+      "value": {
+        "description": {
+          "id": "result",
+          "title": "result",
+          "reference": false,
+          "type": "literal"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeMLTransformationProcess_input",
+      "value": {
+        "description": {
+          "id": "input",
+          "title": "input",
+          "type": "complex",
+          "description": "This is the input parameter to transform to other formats",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeMLTransformationProcess_output",
+      "value": {
+        "description": {
+          "id": "output",
+          "title": "output",
+          "reference": true,
+          "type": "complex",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.AssetmasterProcess_lonmin",
+      "value": {
+        "description": {
+          "id": "lonmin",
+          "title": "lonmin",
+          "reference": false,
+          "type": "literal",
+          "defaultValue": "-71.8",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.AssetmasterProcess_lonmax",
+      "value": {
+        "description": {
+          "id": "lonmax",
+          "title": "lonmax",
+          "reference": false,
+          "type": "literal",
+          "defaultValue": "-71.4",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.AssetmasterProcess_latmin",
+      "value": {
+        "description": {
+          "id": "latmin",
+          "title": "latmin",
+          "reference": false,
+          "type": "literal",
+          "defaultValue": "-33.2",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.AssetmasterProcess_latmax",
+      "value": {
+        "description": {
+          "id": "latmax",
+          "title": "latmax",
+          "reference": false,
+          "type": "literal",
+          "defaultValue": "-33.0",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.AssetmasterProcess_schema",
+      "value": {
+        "description": {
+          "id": "schema",
+          "title": "schema",
+          "reference": false,
+          "type": "literal",
+          "defaultValue": "SARA_v1.0",
+          "options": [
+            "SARA_v1.0",
+            "Mavrouli_et_al_2014",
+            "Torres_Corredor_et_al_2017"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.AssetmasterProcess_assettype",
+      "value": {
+        "description": {
+          "id": "assettype",
+          "title": "assettype",
+          "reference": false,
+          "type": "literal",
+          "defaultValue": "res",
+          "options": [
+            "res"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.AssetmasterProcess_querymode",
+      "value": {
+        "description": {
+          "id": "querymode",
+          "title": "querymode",
+          "reference": false,
+          "type": "literal",
+          "defaultValue": "intersects",
+          "options": [
+            "intersects",
+            "within"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.AssetmasterProcess_selectedRowsGeoJson",
+      "value": {
+        "description": {
+          "id": "selectedRowsGeoJson",
+          "title": "selectedRowsGeoJson",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:GeorectifyCoverage_data",
+      "value": {
+        "description": {
+          "id": "data",
+          "title": "data",
+          "type": "complex",
+          "description": "Input raster",
+          "format": "image/tiff"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:GeorectifyCoverage_gcp",
+      "value": {
+        "description": {
+          "id": "gcp",
+          "title": "gcp",
+          "reference": false,
+          "type": "literal",
+          "description": "List of Ground control points.  Points are specified as [x,y] or [x,y,z].",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:GeorectifyCoverage_bbox",
+      "value": {
+        "description": {
+          "id": "bbox",
+          "title": "bbox",
+          "reference": false,
+          "type": "bbox",
+          "description": "Bounding box for output",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:GeorectifyCoverage_targetCRS",
+      "value": {
+        "description": {
+          "id": "targetCRS",
+          "title": "targetCRS",
+          "reference": false,
+          "type": "literal",
+          "description": "Coordinate reference system to use for the output raster",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:GeorectifyCoverage_width",
+      "value": {
+        "description": {
+          "id": "width",
+          "title": "width",
+          "reference": false,
+          "type": "literal",
+          "description": "Width of output raster in pixels",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:GeorectifyCoverage_height",
+      "value": {
+        "description": {
+          "id": "height",
+          "title": "height",
+          "reference": false,
+          "type": "literal",
+          "description": "Height of output raster in pixels",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:GeorectifyCoverage_warpOrder",
+      "value": {
+        "description": {
+          "id": "warpOrder",
+          "title": "warpOrder",
+          "reference": false,
+          "type": "literal",
+          "description": "Order of the warping polynomial (1 to 3)",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:GeorectifyCoverage_transparent",
+      "value": {
+        "description": {
+          "id": "transparent",
+          "title": "transparent",
+          "reference": false,
+          "type": "literal",
+          "description": "Force output to have transparent background",
+          "defaultValue": "true",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:GeorectifyCoverage_store",
+      "value": {
+        "description": {
+          "id": "store",
+          "title": "store",
+          "reference": false,
+          "type": "literal",
+          "description": "Indicates whether to keep the output file after processing",
+          "defaultValue": "false",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:GeorectifyCoverage_outputPath",
+      "value": {
+        "description": {
+          "id": "outputPath",
+          "title": "outputPath",
+          "reference": false,
+          "type": "literal",
+          "description": "Pathname where the output file is stored",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:GeorectifyCoverage_result",
+      "value": {
+        "description": {
+          "id": "result",
+          "title": "result",
+          "reference": true,
+          "type": "complex",
+          "format": "image/tiff"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:GeorectifyCoverage_path",
+      "value": {
+        "description": {
+          "id": "path",
+          "title": "path",
+          "reference": false,
+          "type": "literal"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadAnimation_bbox",
+      "value": {
+        "description": {
+          "id": "bbox",
+          "title": "bbox",
+          "reference": false,
+          "type": "bbox",
+          "description": "The map area and output projection",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadAnimation_decoration",
+      "value": {
+        "description": {
+          "id": "decoration",
+          "title": "decoration",
+          "reference": false,
+          "type": "literal",
+          "description": "A WMS decoration layout name to watermark the output",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadAnimation_time",
+      "value": {
+        "description": {
+          "id": "time",
+          "title": "time",
+          "reference": false,
+          "type": "literal",
+          "description": "Map time specification (a range with periodicity or a list of time values)",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadAnimation_width",
+      "value": {
+        "description": {
+          "id": "width",
+          "title": "width",
+          "reference": false,
+          "type": "literal",
+          "description": "Map width",
+          "options": [
+            null
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadAnimation_height",
+      "value": {
+        "description": {
+          "id": "height",
+          "title": "height",
+          "reference": false,
+          "type": "literal",
+          "description": "Map height",
+          "options": [
+            null
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadAnimation_fps",
+      "value": {
+        "description": {
+          "id": "fps",
+          "title": "fps",
+          "reference": false,
+          "type": "literal",
+          "description": "Frames per second",
+          "defaultValue": "1.0",
+          "options": [
+            null
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadAnimation_layer",
+      "value": {
+        "description": {
+          "id": "layer",
+          "title": "layer",
+          "type": "complex",
+          "description": "The list of layers",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:DownloadAnimation_result",
+      "value": {
+        "description": {
+          "id": "result",
+          "title": "result",
+          "reference": true,
+          "type": "complex",
+          "format": "video/mp4"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:StoreCoverage_coverage",
+      "value": {
+        "description": {
+          "id": "coverage",
+          "title": "coverage",
+          "type": "complex",
+          "description": "Input raster",
+          "format": "image/tiff"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:StoreCoverage_coverageLocation",
+      "value": {
+        "description": {
+          "id": "coverageLocation",
+          "title": "coverageLocation",
+          "reference": false,
+          "type": "literal"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Import_features",
+      "value": {
+        "description": {
+          "id": "features",
+          "title": "features",
+          "type": "complex",
+          "description": "Input feature collection",
+          "format": "text/xml; subtype=wfs-collection/1.0"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Import_coverage",
+      "value": {
+        "description": {
+          "id": "coverage",
+          "title": "coverage",
+          "type": "complex",
+          "description": "Input raster",
+          "format": "image/tiff"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Import_workspace",
+      "value": {
+        "description": {
+          "id": "workspace",
+          "title": "workspace",
+          "reference": false,
+          "type": "literal",
+          "description": "Target workspace (default is the system default)",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Import_store",
+      "value": {
+        "description": {
+          "id": "store",
+          "title": "store",
+          "reference": false,
+          "type": "literal",
+          "description": "Target store (default is the workspace default)",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Import_name",
+      "value": {
+        "description": {
+          "id": "name",
+          "title": "name",
+          "reference": false,
+          "type": "literal",
+          "description": "Name of the new featuretype/coverage (default is the name of the features in the collection)",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Import_srs",
+      "value": {
+        "description": {
+          "id": "srs",
+          "title": "srs",
+          "reference": false,
+          "type": "literal",
+          "description": "Target coordinate reference system (default is based on source when possible)",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Import_srsHandling",
+      "value": {
+        "description": {
+          "id": "srsHandling",
+          "title": "srsHandling",
+          "reference": false,
+          "type": "literal",
+          "description": "Desired SRS handling (default is FORCE_DECLARED, others are REPROJECT_TO_DECLARED or NONE)",
+          "options": [
+            "FORCE_DECLARED",
+            "REPROJECT_TO_DECLARED",
+            "NONE"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Import_styleName",
+      "value": {
+        "description": {
+          "id": "styleName",
+          "title": "styleName",
+          "reference": false,
+          "type": "literal",
+          "description": "Name of the style to be associated with the layer (default is a standard geometry-specific style)",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Import_layerName",
+      "value": {
+        "description": {
+          "id": "layerName",
+          "title": "layerName",
+          "reference": false,
+          "type": "literal"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:GetFullCoverage_name",
+      "value": {
+        "description": {
+          "id": "name",
+          "title": "name",
+          "reference": false,
+          "type": "literal",
+          "description": "Name of raster, optionally fully qualified (workspace:name)",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:GetFullCoverage_filter",
+      "value": {
+        "description": {
+          "id": "filter",
+          "title": "filter",
+          "type": "complex",
+          "description": "Filter to use on the raster data",
+          "format": "text/xml; subtype=filter/1.0"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:GetFullCoverage_result",
+      "value": {
+        "description": {
+          "id": "result",
+          "title": "result",
+          "reference": true,
+          "type": "complex",
+          "format": "image/tiff"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:LaharModel_direction",
+      "value": {
+        "description": {
+          "id": "direction",
+          "title": "direction",
+          "reference": false,
+          "type": "literal",
+          "description": "Direction of Lahar: North | South",
+          "options": [
+            "North",
+            "South"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:LaharModel_intensity",
+      "value": {
+        "description": {
+          "id": "intensity",
+          "title": "intensity",
+          "reference": false,
+          "type": "literal",
+          "description": "Vulcan Eruption Index (VEI): 1-2 | 2-3 | 3-4 | 4+",
+          "options": [
+            "VEI1",
+            "VEI2",
+            "VEI3",
+            "VEI4"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:LaharModel_parameter",
+      "value": {
+        "description": {
+          "id": "parameter",
+          "title": "parameter",
+          "reference": false,
+          "type": "literal",
+          "description": "Requested parameter: MaxHeight | MaxVelocity | MaxPressure | MaxErosion | Deposition",
+          "options": [
+            "MaxHeight",
+            "MaxVelocity",
+            "MaxPressure",
+            "MaxErosion",
+            "Deposition"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:LaharModel_wms",
+      "value": {
+        "description": {
+          "id": "wms",
+          "title": "wms",
+          "reference": false,
+          "type": "literal"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:LaharModel_shakemap",
+      "value": {
+        "description": {
+          "id": "shakemap",
+          "title": "shakemap",
+          "reference": true,
+          "type": "complex",
+          "format": "application/octet-stream"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.VolcanusProcess_intensity",
+      "value": {
+        "description": {
+          "id": "intensity",
+          "title": "intensity",
+          "type": "complex",
+          "format": "application/vnd.google-earth.kml+xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.VolcanusProcess_intensitycolumn",
+      "value": {
+        "description": {
+          "id": "intensitycolumn",
+          "title": "intensitycolumn",
+          "reference": false,
+          "type": "literal",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.VolcanusProcess_exposure",
+      "value": {
+        "description": {
+          "id": "exposure",
+          "title": "exposure",
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.VolcanusProcess_schema",
+      "value": {
+        "description": {
+          "id": "schema",
+          "title": "schema",
+          "reference": false,
+          "type": "literal",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.VolcanusProcess_fragility",
+      "value": {
+        "description": {
+          "id": "fragility",
+          "title": "fragility",
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.VolcanusProcess_updated_exposure",
+      "value": {
+        "description": {
+          "id": "updated_exposure",
+          "title": "updated_exposure",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.VolcanusProcess_transition",
+      "value": {
+        "description": {
+          "id": "transition",
+          "title": "transition",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.VolcanusProcess_damage",
+      "value": {
+        "description": {
+          "id": "damage",
+          "title": "damage",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.VolcanusProcess_merged_output",
+      "value": {
+        "description": {
+          "id": "merged_output",
+          "title": "merged_output",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:PagedUnique_features",
+      "value": {
+        "description": {
+          "id": "features",
+          "title": "features",
+          "type": "complex",
+          "description": "Layer from which field values should be retrieved",
+          "format": "text/xml; subtype=wfs-collection/1.0"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:PagedUnique_fieldName",
+      "value": {
+        "description": {
+          "id": "fieldName",
+          "title": "fieldName",
+          "reference": false,
+          "type": "literal",
+          "description": "Field from which the values should be retrieved",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:PagedUnique_startIndex",
+      "value": {
+        "description": {
+          "id": "startIndex",
+          "title": "startIndex",
+          "reference": false,
+          "type": "literal",
+          "description": "The index of the first feature to retrieve",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:PagedUnique_maxFeatures",
+      "value": {
+        "description": {
+          "id": "maxFeatures",
+          "title": "maxFeatures",
+          "reference": false,
+          "type": "literal",
+          "description": "The maximum numbers of features to fetch",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:PagedUnique_result",
+      "value": {
+        "description": {
+          "id": "result",
+          "title": "result",
+          "reference": true,
+          "type": "complex",
+          "format": "application/json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Download_layerName",
+      "value": {
+        "description": {
+          "id": "layerName",
+          "title": "layerName",
+          "reference": false,
+          "type": "literal",
+          "description": "Original layer to download",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Download_filter",
+      "value": {
+        "description": {
+          "id": "filter",
+          "title": "filter",
+          "type": "complex",
+          "description": "Optional Vector Filter",
+          "format": "text/xml; subtype=filter/1.0"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Download_outputFormat",
+      "value": {
+        "description": {
+          "id": "outputFormat",
+          "title": "outputFormat",
+          "reference": false,
+          "type": "literal",
+          "description": "Output Format Mime-Type",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Download_targetCRS",
+      "value": {
+        "description": {
+          "id": "targetCRS",
+          "title": "targetCRS",
+          "reference": false,
+          "type": "literal",
+          "description": "Optional Target CRS",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Download_RoiCRS",
+      "value": {
+        "description": {
+          "id": "RoiCRS",
+          "title": "RoiCRS",
+          "reference": false,
+          "type": "literal",
+          "description": "Optional Region Of Interest CRS",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Download_ROI",
+      "value": {
+        "description": {
+          "id": "ROI",
+          "title": "ROI",
+          "type": "complex",
+          "description": "Optional Region Of Interest (Polygon)",
+          "format": "text/xml; subtype=gml/3.1.1"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Download_cropToROI",
+      "value": {
+        "description": {
+          "id": "cropToROI",
+          "title": "cropToROI",
+          "reference": false,
+          "type": "literal",
+          "description": "Crop to ROI",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Download_interpolation",
+      "value": {
+        "description": {
+          "id": "interpolation",
+          "title": "interpolation",
+          "reference": false,
+          "type": "literal",
+          "description": "Interpolation function to use when reprojecting / scaling raster data.  Values are NEAREST (default), BILINEAR, BICUBIC2, BICUBIC",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Download_targetSizeX",
+      "value": {
+        "description": {
+          "id": "targetSizeX",
+          "title": "targetSizeX",
+          "reference": false,
+          "type": "literal",
+          "description": "X Size of the Target Image (applies to raster data only), or native resolution if missing",
+          "options": [
+            null
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Download_targetSizeY",
+      "value": {
+        "description": {
+          "id": "targetSizeY",
+          "title": "targetSizeY",
+          "reference": false,
+          "type": "literal",
+          "description": "Y Size of the Target Image (applies to raster data only), or native resolution if missing",
+          "options": [
+            null
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Download_selectedBands",
+      "value": {
+        "description": {
+          "id": "selectedBands",
+          "title": "selectedBands",
+          "reference": false,
+          "type": "literal",
+          "description": "Band Selection Indices",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Download_writeParameters",
+      "value": {
+        "description": {
+          "id": "writeParameters",
+          "title": "writeParameters",
+          "type": "complex",
+          "description": "Optional writing parameters",
+          "format": "text/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/geoserver/riesgos/wps_gs:Download_result",
+      "value": {
+        "description": {
+          "id": "result",
+          "title": "result",
+          "reference": true,
+          "type": "complex",
+          "format": "application/zip"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.JTSConvexHullAlgorithm_data",
+      "value": {
+        "description": {
+          "id": "data",
+          "title": "data",
+          "type": "complex",
+          "format": "application/vnd.geo+json"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.JTSConvexHullAlgorithm_result",
+      "value": {
+        "description": {
+          "id": "result",
+          "title": "result",
+          "reference": true,
+          "type": "complex",
+          "format": "application/wkt"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://tsunami-wps.awi.de/wps_get_tsunamap_lat",
+      "value": {
+        "description": {
+          "id": "lat",
+          "title": "Latitude",
+          "reference": false,
+          "type": "literal",
+          "description": "",
+          "options": [
+            "<property object at 0x7f538e52af98>"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://tsunami-wps.awi.de/wps_get_tsunamap_lon",
+      "value": {
+        "description": {
+          "id": "lon",
+          "title": "Longitude",
+          "reference": false,
+          "type": "literal",
+          "description": "",
+          "options": [
+            "<property object at 0x7f538e52af98>"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://tsunami-wps.awi.de/wps_get_tsunamap_mag",
+      "value": {
+        "description": {
+          "id": "mag",
+          "title": "Magnitude",
+          "reference": false,
+          "type": "literal",
+          "description": "",
+          "defaultValue": "8.5",
+          "options": [
+            "<property object at 0x7f538e52af98>"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://tsunami-wps.awi.de/wps_get_tsunamap_tsunamap",
+      "value": {
+        "description": {
+          "id": "tsunamap",
+          "title": "inundation-shakemap",
+          "reference": true,
+          "type": "complex",
+          "format": "application/xml"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.LongRunningDummyTestClass_ComplexInputData",
+      "value": {
+        "description": {
+          "id": "ComplexInputData",
+          "title": "ComplexInputData",
+          "type": "complex",
+          "format": "application/dbase"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.LongRunningDummyTestClass_LiteralInputData",
+      "value": {
+        "description": {
+          "id": "LiteralInputData",
+          "title": "LiteralInputData",
+          "reference": false,
+          "type": "literal",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.LongRunningDummyTestClass_BBOXInputData",
+      "value": {
+        "description": {
+          "id": "BBOXInputData",
+          "title": "BBOXInputData",
+          "reference": false,
+          "type": "bbox",
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.LongRunningDummyTestClass_ComplexOutputData",
+      "value": {
+        "description": {
+          "id": "ComplexOutputData",
+          "title": "ComplexOutputData",
+          "reference": true,
+          "type": "complex",
+          "format": "application/dbase"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.LongRunningDummyTestClass_LiteralOutputData",
+      "value": {
+        "description": {
+          "id": "LiteralOutputData",
+          "title": "LiteralOutputData",
+          "reference": false,
+          "type": "literal"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://91.250.85.221/wps/WebProcessingService_org.n52.wps.server.algorithm.test.LongRunningDummyTestClass_BBOXOutputData",
+      "value": {
+        "description": {
+          "id": "BBOXOutputData",
+          "title": "BBOXOutputData",
+          "reference": false,
+          "type": "bbox"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://tsunami-wps.awi.de/wps_get_scenario_lat",
+      "value": {
+        "description": {
+          "id": "lat",
+          "title": "Latitude",
+          "reference": false,
+          "type": "literal",
+          "description": "",
+          "options": [
+            "<property object at 0x7f538e529f98>"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://tsunami-wps.awi.de/wps_get_scenario_lon",
+      "value": {
+        "description": {
+          "id": "lon",
+          "title": "Longitude",
+          "reference": false,
+          "type": "literal",
+          "description": "",
+          "options": [
+            "<property object at 0x7f538e529f98>"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://tsunami-wps.awi.de/wps_get_scenario_mag",
+      "value": {
+        "description": {
+          "id": "mag",
+          "title": "Magnitude",
+          "reference": false,
+          "type": "literal",
+          "description": "",
+          "defaultValue": "8.5",
+          "options": [
+            "<property object at 0x7f538e529f98>"
+          ],
+          "format": "text/plain"
+        },
+        "value": null
+      }
+    },
+    {
+      "uid": "http://tsunami-wps.awi.de/wps_get_scenario_epiCenter",
+      "value": {
+        "description": {
+          "id": "epiCenter",
+          "title": "application/WMS",
+          "reference": false,
+          "type": "literal"
+        },
+        "value": null
+      }
+    }
+  ]
+}

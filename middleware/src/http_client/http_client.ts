@@ -9,12 +9,14 @@ export class HttpClient implements WpsHttpClient {
     public get(url: string, paras?: WpsHttpClientRequestParameters): Observable<string> {
         const getObservable = new Observable<any>(subscriber => {
             const urlObj = new URL(url);
-            const host = urlObj.host;
+            const host = urlObj.hostname;
+            const port = urlObj.port;
             const path = urlObj.pathname;
             const search = urlObj.search;
 
             const getOptions: https.RequestOptions = {
                 host: host,
+                port: port,
                 path: path + search,
                 method: 'GET',
                 headers: {
@@ -33,7 +35,7 @@ export class HttpClient implements WpsHttpClient {
             const req = engine.request(getOptions, (resp) => {
                 let responseDataString = '';
     
-                // A chunk of data has been recieved.
+                // A chunk of data has been received.
                 resp.on('data', (chunk) => {
                     responseDataString += chunk;
                 });
@@ -44,7 +46,7 @@ export class HttpClient implements WpsHttpClient {
                     subscriber.complete();
                 });
     
-            }).on("error", (err) => {
+            }).on('error', (err) => {
                 subscriber.error(err);
             });
 
@@ -61,12 +63,14 @@ export class HttpClient implements WpsHttpClient {
     public post(url: string, data: string, paras?: WpsHttpClientRequestParameters): Observable<string> {
         const postObservable = new Observable<any>(subscriber => {
             const urlObj = new URL(url);
-            const host = urlObj.host;
+            const host = urlObj.hostname;
+            const port = urlObj.port;
             const path = urlObj.pathname;
             const search = urlObj.search;
 
             const postOptions = {
                 host: host,
+                port: port,
                 path: path + search,
                 method: 'POST',
                 headers: {

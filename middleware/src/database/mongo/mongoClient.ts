@@ -1,6 +1,5 @@
 import { Observable } from "rxjs";
-import { Process, Product } from "../../riesgos/datatypes/riesgos.datatypes";
-import { RiesgosScenarioMetadata, RiesgosScenarioData } from "../../riesgos/scenario_service/riesgos.service";
+import { Process, Product, RiesgosScenarioMetaData, RiesgosScenarioMetadata } from "../../model/datatypes/riesgos.datatypes";
 import { RiesgosDatabase } from "../db";
 import { MongoClient, Db } from 'mongodb';
 import { map, tap } from "rxjs/operators";
@@ -37,21 +36,21 @@ export class MongoDbRiesgosDatabase implements RiesgosDatabase {
 
     constructor(private db: Db) {}
 
-    getScenarioMetaData(id: string): Observable<RiesgosScenarioMetadata> {
+    getScenarioMetaData(id: string): Observable<RiesgosScenarioMetadata[]> {
         throw new Error("Method not implemented.");
     }
 
-    getScenarioData(id: string): Observable<RiesgosScenarioData> {
+    getScenarioData(id: string): Observable<RiesgosScenarioMetaData> {
         const collection = this.db.collection('scenarios');
 
-        const results$ = new Observable<RiesgosScenarioData>((s) => {
+        const results$ = new Observable<RiesgosScenarioMetaData>((s) => {
             collection.find({});
         });
 
         return results$;
     }
 
-    addScenario(data: RiesgosScenarioData): Observable<boolean> {
+    addScenario(data: RiesgosScenarioMetaData): Observable<boolean> {
         const collection = this.db.collection('scenarios');
 
         const results$ = new Observable<boolean>((s) => {
