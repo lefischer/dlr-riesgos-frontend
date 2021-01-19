@@ -17,8 +17,8 @@
     display: block; /* or inline-block, at least its a block element */
     max-width: 360px; /* or width is certain by parent element */
     height: auto; /* height cannot be defined */
-    word-break: break-all; /*  */
-    word-wrap: break-word; /* if you want to cut the complete word */
+    word-break: normal; /*  */
+    word-wrap: normal; /* if you want to cut the complete word */
     white-space: normal; /* be sure its not 'nowrap'! ! ! :/ */
     margin-bottom: 0px;
     margin-top: 10px;
