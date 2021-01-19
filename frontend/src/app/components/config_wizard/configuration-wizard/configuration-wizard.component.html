@@ -10,9 +10,46 @@
                     {{process.name | translate}}
             </div>
             <div class="clr-col-3">
-                    <span class="label" [ngClass]="getClassForLabel(process.state.type)">
+                <clr-signpost>
+
+                    <span class="label" [ngClass]="getClassForLabel(process.state.type)" clrSignpostTrigger>
                         {{processStateForTranslate(process.state.type) | translate}}
                     </span>
+
+                    <clr-signpost-content>
+                            <p class="signpost-content-body-paragraph">
+                                <span class="label" [ngClass]="getClassForLabel('unavailable')">
+                                    {{processStateForTranslate('unavailable') | translate}}
+                                </span>
+                                {{ "UnavailableStateDescription" | translate }}
+                                </p>
+                            <p class="signpost-content-body-paragraph">
+                                <span class="label" [ngClass]="getClassForLabel('available')">
+                                    {{processStateForTranslate('available') | translate}}
+                                </span>
+                                {{ "AvailableStateDescription" | translate }}
+                                </p>
+                            <p class="signpost-content-body-paragraph">
+                                <span class="label" [ngClass]="getClassForLabel('running')">
+                                    {{processStateForTranslate('running') | translate}}
+                                </span>
+                                {{ "RunningStateDescription" | translate }}
+                                </p>
+                            <p class="signpost-content-body-paragraph">
+                                <span class="label" [ngClass]="getClassForLabel('completed')">
+                                    {{processStateForTranslate('completed') | translate}}
+                                </span>
+                                {{ "CompletedStateDescription" | translate }}
+                                </p>
+                            <p class="signpost-content-body-paragraph">
+                                <span class="label" [ngClass]="getClassForLabel('error')">
+                                    {{processStateForTranslate('error') | translate}}
+                                </span>
+                                {{ "ErrorStateDescription" | translate }}
+                            </p>
+                    </clr-signpost-content>
+
+                </clr-signpost>
             </div>
         </div>
         

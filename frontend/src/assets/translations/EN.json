@@ -217,6 +217,12 @@
     "nr_buildings": "# buildings",
     "damage_classification": "Damage classification",
 
-    "geomerFloodDescription": "This service provides the option to simulate a break of a lake created by a lahar. <b>Note</b>: Only works with lahars moving north of Cotopaxi."
+    "geomerFloodDescription": "This service provides the option to simulate a break of a lake created by a lahar. <b>Note</b>: Only works with lahars moving north of Cotopaxi.",
+
+    "UnavailableStateDescription": "This service cannot be executed yet because another service must be run first.",
+    "AvailableStateDescription": "This service is ready to be executed.",
+    "RunningStateDescription": "This service is currently being executed.",
+    "CompletedStateDescription": "This service has already been executed and all its products are now provided.",
+    "ErrorStateDescription": "An error has occurred. There is more information in the red info-box."
 
 }

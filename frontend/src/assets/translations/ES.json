@@ -428,5 +428,11 @@
 
     "taxonomy_DX": "Taxonomía/clase de daño",
     "nr_buildings": "# edificios",
-    "damage_classification": "Clasificación de daños"
+    "damage_classification": "Clasificación de daños",
+
+    "UnavailableStateDescription": "Este servicio aún no se puede ejecutar porque primero se debe ejecutar otro servicio.",
+    "AvailableStateDescription": "Este servicio está listo para ejecutarse.",
+    "RunningStateDescription": "Este servicio se está ejecutando actualmente.",
+    "CompletedStateDescription": "Este servicio ya se ha ejecutado y ahora se proporcionan todos sus productos.",
+    "ErrorStateDescription": "Se ha producido un error. Hay más información en el cuadro de información rojo."
 }

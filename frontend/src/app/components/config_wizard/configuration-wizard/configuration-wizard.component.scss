@@ -1,0 +1,26 @@
+
+/** 
+ This just negates all the styling that clarity automatically adds to signpost-triggers.
+ (Why would they style custom triggers in the first place?)
+*/
+.signpost-trigger {
+    margin: 0 0.25rem 0.25rem 0;
+    padding: 0 0.6rem 0.05rem;
+    display: inline-flex;
+}
+
+.signpost-content {
+    max-width: none;
+}
+
+.signpost-content-body-paragraph {
+    display: block; /* or inline-block, at least its a block element */
+    max-width: 360px; /* or width is certain by parent element */
+    height: auto; /* height cannot be defined */
+    word-break: break-all; /*  */
+    word-wrap: break-word; /* if you want to cut the complete word */
+    white-space: normal; /* be sure its not 'nowrap'! ! ! :/ */
+    margin-bottom: 0px;
+    margin-top: 10px;
+
+}
