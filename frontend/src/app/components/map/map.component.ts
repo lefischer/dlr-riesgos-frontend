@@ -10,6 +10,7 @@ import { MapOlService } from '@dlr-eoc/map-ol';
 import TileGrid from 'ol/tilegrid/TileGrid';
 import {click, noModifierKeys} from 'ol/events/condition';
 import Select from 'ol/interaction/Select';
+import {bbox as bboxStrategy} from 'ol/loadingstrategy';
 import { MapStateService } from '@dlr-eoc/services-map-state';
 import { OsmTileLayer } from '@dlr-eoc/base-layers-raster';
 import { Store, select } from '@ngrx/store';
@@ -20,7 +21,7 @@ import { InteractionCompleted } from 'src/app/interactions/interactions.actions'
 import { BehaviorSubject, forkJoin, Observable, of, Subscription } from 'rxjs';
 import { InteractionState, initialInteractionState } from 'src/app/interactions/interactions.state';
 import { LayerMarshaller } from './layer_marshaller';
-import { Layer, LayersService, RasterLayer, CustomLayer, LayerGroup } from '@dlr-eoc/services-layers';
+import { Layer, LayersService, RasterLayer, CustomLayer, LayerGroup, VectorLayer } from '@dlr-eoc/services-layers';
 import { getFocussedProcessId } from 'src/app/focus/focus.selectors';
 import { Graph } from 'graphlib';
 import { ProductLayer, ProductRasterLayer } from './map.types';
@@ -309,23 +310,26 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
         if (scenario === 'c1') {
 
-            const powerlineLayer = new RasterLayer({
-                id: 'powerlines',
+            // const powerlineLayer = new VectorLayer({
+            //     id: 'powerlines',
+            //     name: 'Powerlines',
+            //     type: 'geojson',
+            //     url: 'assets/data/geojson/powerlines_chile.geojson',
+            // });
+            const powerlineLayer = new CustomLayer({
+                custom_layer: new olVectorLayer({
+                    source: new olVectorSource({
+                        url: 'assets/data/geojson/powerlines_chile.geojson',
+                        format: new GeoJSON,
+                        // @ts-ignore
+                        crossOrigin: 'anonymous'
+                    })
+                }),
                 name: 'Powerlines',
-                type: 'wms',
-                url: 'http://energiamaps.cne.cl/geoserver/cne-sigcra-new/wms?',
-                params: {
-                    LAYERS: 'sic_20181016234835'
-                },
-                description: 'Línea de Transmisión SIC',
-                attribution: '&copy, <a href="http://energiamaps.cne.cl">energiamaps.cne.cl/</a>',
-                legendImg: 'http://energiamaps.cne.cl/geoserver/cne-sigcra-new/wms?service=wms&request=GetLegendGraphic&LAYER=sic_20181016234835&FORMAT=image/png',
-                opacity: 0.3,
-                // bbox: [-92.270, -44.104, -48.017, -24.388],
+                id: 'powerlines',
+                type: 'custom',
                 visible: false,
-                removable: true,
-                // @ts-ignore
-                crossOrigin: 'anonymous'
+                popup: true
             });
             layers.push(powerlineLayer);
 
@@ -407,160 +411,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
         if (scenario === 'p1') {
-
-            // To make the IDEP-layers display labels in the same way as on ...
-            // http://mapas.geoidep.gob.pe/mapasperu/?config=viewer_wms&wmsuri=http://sigr.regioncajamarca.gob.pe:6080/arcgis/rest/services/Map/Informacion_Base/MapServer&wmstitle=Informaci%C3%B3n%20Base&t=1
-            // ... we need to adjust the wms-tilegrid.
-            const tileWidth = 1920;
-            const tileHeight = 948;
-            const view = this.mapSvc.map.getView();
-            const startZoom = view.getMinZoom();
-            const endZoom = view.getMaxZoom();
-            const resolutions = new Array(endZoom + 1);
-            const projExtent = getProjection(mapProjection).getExtent();
-            const startResolution = getWidth(projExtent) / tileWidth;
-            for (let z = startZoom; z <= endZoom; z++) {
-                resolutions[z] = startResolution / Math.pow(2, z); // view.getResolutionForZoom(z);
-            }
-
-            const idepTileGrid = new TileGrid({
-                extent: [-86, -21, -68, 1],
-                resolutions,
-                tileSize: [tileWidth, tileHeight]
-            });
-
-            const administrativeLayers = new LayerGroup({
-                filtertype: 'Layers',
-                id: 'administrativeLayers',
-                name: 'Administrative layers',
-                layers: [
-                    new CustomLayer({
-                        custom_layer: new TileLayer({
-                            source: new TileWMS({
-                                url: 'http://mapas.geoidep.gob.pe/geoidep/services/Demarcacion_Territorial/MapServer/WMSServer?',
-                                params: {
-                                    layers: '2',
-                                    tiled: true
-                                },
-                                tileGrid: idepTileGrid,
-                                crossOrigin: 'anonymous'
-                            })
-                        }),
-                        name: 'Departementos',
-                        id: 'departementos_idep',
-                        type: 'custom',
-                        visible: false,
-                        opacity: 0.6,
-                        attribution: '&copy, <a href="http://mapas.geoidep.gob.pe/">Instituto Geográfico Nacional</a>',
-                        popup: true
-                    }),
-                    new CustomLayer({
-                        custom_layer: new TileLayer({
-                            source: new TileWMS({
-                                url: 'http://mapas.geoidep.gob.pe/geoidep/services/Demarcacion_Territorial/MapServer/WMSServer?',
-                                params: {
-                                    layers: '1',
-                                    tiled: true
-                                },
-                                tileGrid: idepTileGrid,
-                                crossOrigin: 'anonymous'
-                            })
-                        }),
-                        name: 'Provincias',
-                        id: 'provincias_idep',
-                        type: 'custom',
-                        visible: false,
-                        opacity: 0.6,
-                        attribution: '&copy, <a href="http://mapas.geoidep.gob.pe/">Instituto Geográfico Nacional</a>',
-                        popup: true,
-                    }),
-                    new CustomLayer({
-                        custom_layer: new TileLayer({
-                            source: new TileWMS({
-                                url: 'http://mapas.geoidep.gob.pe/geoidep/services/Demarcacion_Territorial/MapServer/WMSServer?',
-                                params: {
-                                    layers: '0',
-                                    tiled: true
-                                },
-                                tileGrid: idepTileGrid,
-                                crossOrigin: 'anonymous'
-                            })
-                        }),
-                        name: 'Distritos',
-                        id: 'distritos_idep',
-                        type: 'custom',
-                        visible: false,
-                        opacity: 0.6,
-                        attribution: '&copy, <a href="http://mapas.geoidep.gob.pe/">Instituto Geográfico Nacional</a>',
-                        popup: true
-                    })
-                ]
-            });
-            layers.push(administrativeLayers);
-
-            const infrastructureLayers = new LayerGroup({
-                filtertype: 'Layers',
-                id: 'infrastructureLayers',
-                name: 'Infrastructure layer',
-                layers: [
-                    new ProductRasterLayer({
-                        id: 'distribPeru',
-                        name: 'distribución',
-                        description: 'Concesiones de Distribución',
-                        attribution: 'http://mapas.geoidep.gob.pe',
-                        url: 'http://mapas.geoidep.gob.pe/geoidep/services/Electricidad/MapServer/WMSServer?',
-                        type: 'wms',
-                        params: {
-                            LAYERS: '0'
-                        },
-                        legendImg: 'http://mapas.geoidep.gob.pe/geoidep/services/Electricidad/MapServer/WMSServer?service=wms&request=GetLegendGraphic&LAYER=0&FORMAT=image/png',
-                        opacity: 0.3,
-                        visible: false,
-                        // @ts-ignore
-                        crossOrigin: 'anonymous',
-                        hasFocus: false,
-                        productId: 'distribPeru'
-                    }),
-                    new ProductRasterLayer({
-                        id: 'generacionPeru',
-                        name: 'generación',
-                        description: 'Concesiones de Generación',
-                        attribution: 'http://mapas.geoidep.gob.pe',
-                        url: 'http://mapas.geoidep.gob.pe/geoidep/services/Electricidad/MapServer/WMSServer?',
-                        type: 'wms',
-                        params: {
-                            LAYERS: '1'
-                        },
-                        legendImg: 'http://mapas.geoidep.gob.pe/geoidep/services/Electricidad/MapServer/WMSServer?service=wms&request=GetLegendGraphic&LAYER=1&FORMAT=image/png',
-                        opacity: 0.3,
-                        visible: false,
-                        // @ts-ignore
-                        crossOrigin: 'anonymous',
-                        hasFocus: false,
-                        productId: 'generacionPeru'
-                    }),
-                    new ProductRasterLayer({
-                        id: 'transmissionPeru',
-                        name: 'transmisión',
-                        description: 'Concesiones de Transmisión',
-                        attribution: 'http://mapas.geoidep.gob.pe',
-                        url: 'http://mapas.geoidep.gob.pe/geoidep/services/Electricidad/MapServer/WMSServer?',
-                        type: 'wms',
-                        params: {
-                            LAYERS: '3'
-                        },
-                        legendImg: 'http://mapas.geoidep.gob.pe/geoidep/services/Electricidad/MapServer/WMSServer?service=wms&request=GetLegendGraphic&LAYER=3&FORMAT=image/png',
-                        opacity: 0.3,
-                        visible: false,
-                        // @ts-ignore
-                        crossOrigin: 'anonymous',
-                        hasFocus: false,
-                        productId: 'transmissionPeru'
-                    }),
-                ]
-            });
-            layers.push(infrastructureLayers);
-
         }
 
         if (scenario === 'e1') {

@@ -113,6 +113,7 @@ export class RiesgosService {
     switch (scenario) {
       case 'c1':
         processes = [
+          // new MySimpleService(this.httpClient),
           new QuakeLedger(this.httpClient, cache),
           EqSelection,
           new Shakyground(this.httpClient, cache),
@@ -124,6 +125,7 @@ export class RiesgosService {
           // new PhysicalImpactAssessment(this.httpClient)
         ];
         products = [
+          // convexHullInput, convexHullOutput,
           modelChoice,
           lonmin, lonmax, latmin, latmax, assettype, schema, querymode,
           assetcategory, losscategory, taxonomies,

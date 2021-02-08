@@ -12,6 +12,18 @@ export function weightedDamage(damageStates: number[]) {
 }
 
 
+export function greenYellowRedRange(startVal: number, endVal: number, currentVal): [number, number, number] {
+  const halfwayPoint = startVal + ((endVal - startVal) / 2);
+  if (currentVal < halfwayPoint) {
+    const degree = (currentVal - startVal) / (halfwayPoint - startVal);
+    return [degree * 255, 255, 0];
+  } else {
+    const degree = (currentVal - halfwayPoint) / (endVal - halfwayPoint);
+    return [255, (1 - degree) * 255, 0];
+  }
+}
+
+
 export function greenRedRange(startVal: number, endVal: number, currentVal: number): [number, number, number] {
     const degree = (currentVal - startVal) / (endVal - startVal);
     const degreeTop = Math.max(Math.min(degree, 1), 0);

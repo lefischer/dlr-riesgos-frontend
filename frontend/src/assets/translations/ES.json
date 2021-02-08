@@ -434,5 +434,7 @@
     "AvailableStateDescription": "Este servicio está listo para ejecutarse.",
     "RunningStateDescription": "Este servicio se está ejecutando actualmente.",
     "CompletedStateDescription": "Este servicio ya se ha ejecutado y ahora se proporcionan todos sus productos.",
-    "ErrorStateDescription": "Se ha producido un error. Hay más información en el cuadro de información rojo."
+    "ErrorStateDescription": "Se ha producido un error. Hay más información en el cuadro de información rojo.",
+
+    "quakeledger": "terremotos"
 }
