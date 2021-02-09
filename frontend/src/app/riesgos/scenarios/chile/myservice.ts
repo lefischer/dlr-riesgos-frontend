@@ -1,9 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { WizardableProcess, WizardProperties } from '../../../components/config_wizard/wizardable_processes';
 import { VectorLayerProduct } from '../../riesgos.datatypes.mappable';
-import { ProcessStateUnavailable, WpsProcess } from '../../riesgos.datatypes';
+import { ProcessStateUnavailable, WpsProcess, Product } from '../../riesgos.datatypes';
 import { WpsData } from '@dlr-eoc/services-ogc';
-
+import { Feature } from '@turf/helpers';
+import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
+import { Observable } from 'rxjs';
+import { eqShakemapRef } from './shakyground';
 
 
 export const ConvexHullInput: VectorLayerProduct & WpsData = {
@@ -15,45 +18,51 @@ export const ConvexHullInput: VectorLayerProduct & WpsData = {
         type: 'complex',
         icon: 'dot-circle',
         reference: false,
-    },
-    value: {
-        "type": "FeatureCollection",
-        "features": [
-          {
-            "type": "Feature",
-            "properties": {},
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -72.0703125,
-                -3.864254615721396
-              ]
-            }
-          },
-          {
-            "type": "Feature",
-            "properties": {},
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -60.46875,
-                -7.01366792756663
-              ]
-            }
-          },
-          {
-            "type": "Feature",
-            "properties": {},
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -68.5546875,
-                -10.141931686131018
-              ]
-            }
+        vectorLayerAttributes: {
+          style: (f: Feature, r: number, selected: boolean) => {
+            return new Style({
+              stroke: new Stroke({
+                color: '#666666',
+                width: 1,
+              }),
+            });
           }
-        ]
-      }
+        }
+    },
+    value: [{
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "properties": {},
+          "geometry": {
+            "type": "LineString",
+            "coordinates": [
+              [
+                -68.90625,
+                -17.644022027872712
+              ],
+              [
+                -75.9375,
+                -23.88583769986199
+              ],
+              [
+                -63.6328125,
+                -22.593726063929296
+              ],
+              [
+                -76.2890625,
+                -30.751277776257812
+              ],
+              [
+                -68.5546875,
+                -30.751277776257812
+              ]
+            ]
+          }
+        }
+      ]
+    }]
 };
 
 export const ConvexHullOutput: VectorLayerProduct & WpsData = {
@@ -65,6 +74,16 @@ export const ConvexHullOutput: VectorLayerProduct & WpsData = {
         type: 'complex',
         icon: 'dot-circle',
         reference: false,
+        vectorLayerAttributes: {
+          style: (f: Feature, r: number, selected: boolean) => {
+            return new Style({
+              stroke: new Stroke({
+                color: '#666666',
+                width: 1,
+              }),
+            });
+          }
+        }
     },
     value: null
 };
@@ -90,5 +109,24 @@ export class MySimpleService extends WpsProcess implements WizardableProcess {
             http,
             new ProcessStateUnavailable()
         );
+    }
+
+    execute(
+        inputProducts: Product[],
+        outputProducts?: Product[],
+        doWhileExecuting?: (response: any, counter: number) => void): Observable<Product[]> {
+
+        const newInputs = inputProducts.map(p => {
+            if (p.uid === ConvexHullInput.uid) {
+                return {
+                    ... p,
+                    value: p.value[0].features[0].geometry
+                };
+            } else {
+                return p;
+            }
+        });
+
+        return super.execute(newInputs, outputProducts, doWhileExecuting);
     }
 }

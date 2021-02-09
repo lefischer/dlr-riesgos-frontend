@@ -310,17 +310,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
         if (scenario === 'c1') {
 
-            // const powerlineLayer = new VectorLayer({
-            //     id: 'powerlines',
-            //     name: 'Powerlines',
-            //     type: 'geojson',
-            //     url: 'assets/data/geojson/powerlines_chile.geojson',
-            // });
             const powerlineLayer = new CustomLayer({
                 custom_layer: new olVectorLayer({
                     source: new olVectorSource({
                         url: 'assets/data/geojson/powerlines_chile.geojson',
-                        format: new GeoJSON,
+                        format: new GeoJSON(),
                         // @ts-ignore
                         crossOrigin: 'anonymous'
                     })
