@@ -209,7 +209,7 @@ export const selectedEqsPeru: VectorLayerProduct & WpsData = {
             text: (properties) => {
                 let text = `<h3>{{ Available_earthquakes }}</h3>`;
                 const selectedProperties = {
-                    '{{ Magnitude }}': toDecimalPlaces(properties['e.mag.value'] as number, 1),
+                    '{{ Magnitude }}': toDecimalPlaces(properties['magnitude.mag.value'] as number, 1),
                     '{{ Depth }}': toDecimalPlaces(properties['origin.depth.value'] as number, 1) + ' km',
                     Id: properties['origin.publicID'],
                 };
