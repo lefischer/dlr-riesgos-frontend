@@ -71,10 +71,6 @@ export class LayerentryGroupComponent implements OnInit {
     this.layersSvc.updateLayerGroup(this.group);
   }
 
-  removeLayerGroup(group: LayerGroup) {
-    this.layersSvc.removeLayerGroup(group);
-  }
-
 
   zoomTo(group: LayerGroup) {
     if (this.mapState && group.bbox && group.bbox.length >= 4) {

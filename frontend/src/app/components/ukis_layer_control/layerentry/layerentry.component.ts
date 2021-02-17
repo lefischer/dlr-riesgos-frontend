@@ -165,17 +165,6 @@ export class LayerentryComponent implements OnInit {
     }
   }
 
-  /**
-   * remove the Layer if possible
-   */
-  removeLayer(group: LayerGroup, selectedLayer: Layer) {
-    if (group) {
-      this.layersSvc.removeLayerFromGroup(selectedLayer, group);
-    } else {
-      // console.log('delete single layer');
-      this.layersSvc.removeLayer(selectedLayer, selectedLayer.filtertype);
-    }
-  }
 
   zoomTo(layer: Layer) {
     if (this.mapState && layer.bbox && layer.bbox.length >= 4) {

@@ -41,7 +41,7 @@
 
   </div>
   <div *ngIf="expandable && expanded" class="body">
-    <!-- tools: zoomTo, remove, switch Tab -->
+    <!-- tools: zoomTo, switch Tab -->
     <div class="tools">
       <clr-icon *ngIf="!checkBaselayer(layer, group)" title="Layer settings" shape="cog" class="iconButton"
         [ngClass]="{'active': activeTabs['settings']}" (click)="switchTab('settings')"></clr-icon>
@@ -62,8 +62,6 @@
       <span></span>
       <clr-icon *ngIf="canZoomToLayer" shape="zoom-in" class="iconButton" title="Zoom to layer" (click)="zoomTo(layer)">
       </clr-icon>
-      <clr-icon *ngIf="layer.removable" shape="trash" class="iconButton" (click)="removeLayer(group, layer)"
-        title="Remove layer"></clr-icon>
     </div>
     <div class="tabsbody">
       <div *ngIf="activeTabs.settings" class="layersettings">

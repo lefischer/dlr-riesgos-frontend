@@ -34,7 +34,7 @@
   </div>
 
   <div *ngIf="group.expanded" class="body">
-    <!-- tools: zoomTo, remove, open all Tabs -->
+    <!-- tools: zoomTo, open all Tabs -->
     <div class="tools">
       <span></span>
       <clr-icon *ngFor="let item of group.actions" [attr.shape]="item.icon" class="iconButton"
@@ -48,8 +48,6 @@
         title="{{!openAllLayersProperties?'Show all layers details': 'Hide all layers details'}}"></clr-icon>
       <clr-icon *ngIf="canZoomToGroup" shape="zoom-in" class="iconButton" (click)="zoomTo(group)" title="Zoom to group">
       </clr-icon>
-      <clr-icon *ngIf="group.removable" shape="trash" class="iconButton" (click)="removeLayerGroup(group)"
-        title="Remove group"></clr-icon>
     </div>
 
     <div class="info" *ngIf="showInfo">
