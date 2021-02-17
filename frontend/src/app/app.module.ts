@@ -46,7 +46,7 @@ import { LicensesComponent } from './views/licenses/licenses.component';
 import { BlogentryComponent } from './components/blogentry/blogentry.component';
 import { RiesgosLayerControlComponent } from './components/ukis_layer_control/layer-control/layer-control.component';
 import { BaseLayerControlComponent } from './components/ukis_layer_control/base-layer-control/base-layer-control.component';
-import { LayerentryComponent } from './components/ukis_layer_control/layerentry/layerentry.component';
+import { RiesgosLayerentryComponent } from './components/ukis_layer_control/layerentry/layerentry.component';
 import { LayerentryGroupComponent } from './components/ukis_layer_control/layerentry-group/layerentry-group.component';
 import { VectorLegendComponent } from './components/dynamic/vector-legend/vector-legend.component';
 import { CanvasComponent } from './components/dynamic/vector-legend/canvas/canvas.component';
@@ -119,7 +119,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     DndDirective,
     RiesgosLayerControlComponent,
     BaseLayerControlComponent,
-    LayerentryComponent,
+    RiesgosLayerentryComponent,
     LayerentryGroupComponent,
     VectorLegendComponent,
     CanvasComponent,

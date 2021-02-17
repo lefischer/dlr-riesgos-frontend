@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LayerentryComponent } from './layerentry.component';
+import { RiesgosLayerentryComponent } from './layerentry.component';
 import { ClarityModule } from '@clr/angular';
 import { FormsModule } from '@angular/forms';
 import { Layer, LayerGroup } from '@dlr-eoc/services-layers';
@@ -8,21 +8,21 @@ import { LayersService } from '@dlr-eoc/services-layers';
 import { MapStateService } from '@dlr-eoc/services-map-state';
 
 describe('LayerentryComponent', () => {
-  let component: LayerentryComponent;
-  let fixture: ComponentFixture<LayerentryComponent>;
+  let component: RiesgosLayerentryComponent;
+  let fixture: ComponentFixture<RiesgosLayerentryComponent>;
   let layersSvc: LayersService;
   let mapStateSvc: MapStateService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ClarityModule, FormsModule],
-      declarations: [LayerentryComponent],
+      declarations: [RiesgosLayerentryComponent],
       providers: [LayersService, MapStateService]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LayerentryComponent);
+    fixture = TestBed.createComponent(RiesgosLayerentryComponent);
     component = fixture.componentInstance;
     layersSvc = TestBed.inject(LayersService);
     mapStateSvc = TestBed.inject(MapStateService);

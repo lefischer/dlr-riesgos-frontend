@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, HostBinding } from '@angular/core';
-
-// imports only for typings...
+import { Graph } from 'graphlib';
 import {
   LayerGroup, Layer, RasterLayer, isRasterLayertype, WmsLayertype, WmtsLayertype, isRasterLayer,
   isVectorLayer, LayersService
@@ -8,13 +7,36 @@ import {
 import { MapStateService } from '@dlr-eoc/services-map-state';
 import {  } from '@dlr-eoc/services-layers';
 import { ProductLayer } from '../../map/map.types';
+import { Store, select } from '@ngrx/store';
+import { State } from 'src/app/ngrx_register';
+import { withLatestFrom } from 'rxjs/operators';
+import { getFocussedProcessId } from 'src/app/focus/focus.selectors';
+import { getGraph } from 'src/app/riesgos/riesgos.selectors';
+import { state, style, transition, animate, trigger } from '@angular/animations';
 
 @Component({
   selector: 'riesgos-layerentry',
   templateUrl: './layerentry.component.html',
-  styleUrls: ['./layerentry.component.scss']
+  styleUrls: ['./layerentry.component.scss'],
+  animations: [
+    trigger('focusUnfocus', [
+      state('focussed', style({
+        'color': 'var(--clr-color-action-700)',
+        'font-weight': 'bolder',
+        'background-color': 'var(--clr-color-neutral-50)'
+      })),
+      state('unfocussed', style({
+        'color': 'var(--clr-color-neutral-700)',
+        'font-weight': 'normal',
+        'background-color': 'var(--clr-color-neutral-200)'
+      })),
+      transition('focussed <=> unfocussed', [
+        animate('0.5s')
+      ])
+    ]),
+  ]
 })
-export class LayerentryComponent implements OnInit {
+export class RiesgosLayerentryComponent implements OnInit {
   @HostBinding('class.layer-visible') get visible() { return this.layer.visible; }
   @HostBinding('class') get cssClass() { return this.layer.cssClass; }
 
@@ -52,8 +74,16 @@ export class LayerentryComponent implements OnInit {
   };
 
 
-  constructor() {
+  constructor(
+    //private store: Store<State>
+    ) {}
 
+  getFocusState(): 'focussed' | 'unfocussed' {
+    if (this.layer.hasFocus) {
+      return 'focussed';
+    } else {
+      return 'unfocussed';
+    }
   }
 
   /**
@@ -102,6 +132,15 @@ export class LayerentryComponent implements OnInit {
     if (this.layer.bbox && this.layer.bbox.length >= 4) {
       this.canZoomToLayer = true;
     }
+
+    // this.store.pipe(
+    //   select(getFocussedProcessId),
+    //   withLatestFrom(
+    //       this.store.pipe(select(getGraph)),
+    //       this.layersSvc.getOverlays()),
+    //   ).subscribe(([focussedProcessId, graph, currentOverlays]: [string, Graph, ProductLayer[]]) => {
+    //     console.log(focussedProcessId, graph);
+    //   });
   }
 
   /**

@@ -1,18 +1,14 @@
 <div class="layer">
-  <div class="head">
+  <div class="head" [@focusUnfocus]="getFocusState()">
     <!-- layer expand icon -->
-    <clr-icon [ngStyle]="getExpandShape()" [attr.shape]="layer.icon || 'angle right'" class="iconButton" [style.color]="layer.hasFocus ? '#004c8a': '#575757'"
+    <clr-icon [ngStyle]="getExpandShape()" [attr.shape]="layer.icon || 'angle right'" class="iconButton"
     [ngClass]="{'disabled': is_expandable()}" (click)="showProperties()" title="Details"></clr-icon>
 
     <!-- layer title -->
-    <div #ref class="item-title-replacement title" (click)="showProperties()" [title]="getLayerName(layer) | regexTranslate | translate" 
-      [style.color]="layer.hasFocus ? '#004c8a': '#575757'"
-      [style.font-weight]="layer.hasFocus? 'bolder' : 'normal'">
+    <div #ref class="item-title-replacement title" (click)="showProperties()" [title]="getLayerName(layer) | regexTranslate | translate">
       <ng-content></ng-content>
     </div>
-    <span *ngIf="ref.children.length == 0" class="title" [title]="getLayerName(layer) | regexTranslate | translate" (click)="showProperties()" 
-      [style.color]="layer.hasFocus ? '#004c8a': '#575757'"
-      [style.font-weight]="layer.hasFocus? 'bolder' : 'normal'">
+    <span *ngIf="ref.children.length == 0" class="title" [title]="getLayerName(layer) | regexTranslate | translate" (click)="showProperties()">
       {{ getLayerName(layer) | regexTranslate | translate }}
     </span>
 

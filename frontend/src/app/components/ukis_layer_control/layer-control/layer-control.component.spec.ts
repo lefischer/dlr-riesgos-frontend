@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RiesgosLayerControlComponent } from '../layer-control/layer-control.component';
 
 import { LayerentryGroupComponent } from '../layerentry-group/layerentry-group.component';
-import { LayerentryComponent } from '../layerentry/layerentry.component';
+import { RiesgosLayerentryComponent } from '../layerentry/layerentry.component';
 
 import { ClarityModule } from '@clr/angular';
 import { FormsModule } from '@angular/forms';
@@ -22,7 +22,7 @@ describe('LayerControlComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ClarityModule, FormsModule],
-      declarations: [RiesgosLayerControlComponent, LayerentryGroupComponent, LayerentryComponent, ObjTypePipe, ReversePipe],
+      declarations: [RiesgosLayerControlComponent, LayerentryGroupComponent, RiesgosLayerentryComponent, ObjTypePipe, ReversePipe],
       providers: [LayersService, MapStateService]
     }).compileComponents();
   }));
