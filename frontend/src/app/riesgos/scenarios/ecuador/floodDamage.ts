@@ -1,6 +1,6 @@
 import { WpsProcess, ProcessStateUnavailable, Product, ProductTransformingProcess } from 'src/app/riesgos/riesgos.datatypes';
 import { WizardableProcess, WizardProperties } from 'src/app/components/config_wizard/wizardable_processes';
-import { WpsData } from '@dlr-eoc/services-ogc';
+import { WpsData } from '@dlr-eoc/utils-ogc';
 import { durationTiff, velocityTiff, depthTiff } from './geomerHydrological';
 import { VectorLayerProduct } from 'src/app/riesgos/riesgos.datatypes.mappable';
 import { Style as olStyle, Fill as olFill, Stroke as olStroke, Circle as olCircle, Text as olText } from 'ol/style';
@@ -10,7 +10,7 @@ import proj4 from 'proj4';  // requires "allowSyntheticDefaultImports": true
 import { HttpClient } from '@angular/common/http';
 import { greenRedRange } from 'src/app/helpers/colorhelpers';
 import { BarData, createBarchart } from 'src/app/helpers/d3charts';
-import { Cache } from '@dlr-eoc/services-ogc';
+import { Cache } from '@dlr-eoc/utils-ogc';
 
 
 proj4.defs('EPSG:32717', '+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs');
@@ -21,6 +21,7 @@ export const damageManzanas: WpsData & Product = {
     uid: 'FlooddamageProcess_damageManzanas',
     description: {
         id: 'damage_manzanas',
+        title: 'damage_manzanas',
         reference: false,
         type: 'complex',
         format: 'application/json',
@@ -33,6 +34,7 @@ export const damageBuildings: WpsData & Product = {
     uid: 'FlooddamageProcess_damageBuildings',
     description: {
         id: 'damage_buildings',
+        title: 'damage_buildings',
         reference: false,
         type: 'complex',
         format: 'application/json',
@@ -75,6 +77,7 @@ export const damageManzanasGeojson: VectorLayerProduct & WpsData & Product = {
     uid: 'damageManzanasGeojson',
     description: {
         id: 'damage_manzanas',
+        title: 'damage_manzanas',
         icon: 'tsunami',
         reference: false,
         type: 'complex',

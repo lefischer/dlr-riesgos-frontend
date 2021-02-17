@@ -1,4 +1,4 @@
-import { WpsDataDescription, WpsVerion, ProductId, WpsData, WpsClient, FakeCache, Cache } from '@dlr-eoc/services-ogc';
+import { WpsDataDescription, WpsVersion, ProductId, WpsData, WpsClient, FakeCache, Cache } from '@dlr-eoc/utils-ogc';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
@@ -110,7 +110,7 @@ export class WpsProcess implements ExecutableProcess {
         readonly id: string,
         readonly description: string,
         readonly url: string,
-        readonly wpsVersion: WpsVerion,
+        readonly wpsVersion: WpsVersion,
         httpClient: HttpClient,
         public state = new ProcessStateUnavailable(),
         cache: Cache = new FakeCache()

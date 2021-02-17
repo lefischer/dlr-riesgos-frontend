@@ -28,7 +28,7 @@ import { ProductLayer, ProductRasterLayer } from './map.types';
 import { map, withLatestFrom, switchMap } from 'rxjs/operators';
 import { featureCollection as tFeatureCollection } from '@turf/helpers';
 import { parse } from 'url';
-import { WpsBboxValue } from '@dlr-eoc/services-ogc';
+import { WpsBboxValue } from '@dlr-eoc/utils-ogc';
 import { WMTSLayerFactory } from './wmts';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 

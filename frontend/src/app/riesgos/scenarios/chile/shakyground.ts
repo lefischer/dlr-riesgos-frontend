@@ -1,6 +1,6 @@
 import { WpsProcess, ProcessStateUnavailable, Product } from '../../riesgos.datatypes';
 import { WizardableProcess, WizardProperties } from 'src/app/components/config_wizard/wizardable_processes';
-import { WpsData, Cache } from '@dlr-eoc/services-ogc';
+import { WpsData, Cache } from '@dlr-eoc/utils-ogc';
 import { WmsLayerProduct } from 'src/app/riesgos/riesgos.datatypes.mappable';
 import { selectedEq } from './eqselection';
 import { HttpClient } from '@angular/common/http';

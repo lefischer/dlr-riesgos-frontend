@@ -43,8 +43,8 @@ import { assetcategoryEcuador, losscategoryEcuador, taxonomiesEcuador } from './
 import { HttpClient } from '@angular/common/http';
 import { RiesgosScenarioMetadata } from './riesgos.state';
 import { ConfigService, Config } from '../services/config/config.service';
-import { Cache } from '@dlr-eoc/services-ogc';
-import { FakeCache } from '@dlr-eoc/services-ogc';
+import { Cache } from '@dlr-eoc/utils-ogc';
+import { FakeCache } from '@dlr-eoc/utils-ogc';
 import { IndexDbCache } from '../services/cache/indexDbCache';
 import { RemoteCache } from '../services/cache/remoteCache';
 

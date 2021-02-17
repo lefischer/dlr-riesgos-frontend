@@ -1,5 +1,5 @@
 import { VectorLayerProduct } from 'src/app/riesgos/riesgos.datatypes.mappable';
-import { WpsData, Cache } from '@dlr-eoc/services-ogc';
+import { WpsData, Cache } from '@dlr-eoc/utils-ogc';
 import { Product, ProcessStateUnavailable, ExecutableProcess, ProcessState } from 'src/app/riesgos/riesgos.datatypes';
 import { ninetyPercentLowerThan, toDecimalPlaces, greenRedRange, weightedDamage } from 'src/app/helpers/colorhelpers';
 import { BarData, createGroupedBarchart } from 'src/app/helpers/d3charts';

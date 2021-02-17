@@ -1,4 +1,4 @@
-import { Cache } from '@dlr-eoc/services-ogc';
+import { Cache } from '@dlr-eoc/utils-ogc';
 import { set, get, del } from 'idb-keyval';
 import { Observable, from } from 'rxjs';
 import md5 from 'md5';

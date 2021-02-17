@@ -1,6 +1,6 @@
 import { WpsProcess, ProcessStateUnavailable, Product, ExecutableProcess, ProcessState } from 'src/app/riesgos/riesgos.datatypes';
 import { schema, initialExposure} from './exposure';
-import { WpsData } from '@dlr-eoc/services-ogc';
+import { WpsData } from '@dlr-eoc/utils-ogc';
 import { WizardableProcess, WizardProperties } from 'src/app/components/config_wizard/wizardable_processes';
 import { VectorLayerProduct, MultiVectorLayerProduct, VectorLayerProperties } from 'src/app/riesgos/riesgos.datatypes.mappable';
 import { Style as olStyle, Fill as olFill, Stroke as olStroke, Circle as olCircle, Text as olText } from 'ol/style';
@@ -15,7 +15,7 @@ import { Deus } from './deus';
 import { switchMap } from 'rxjs/operators';
 import { FeatureCollection, Feature } from '@turf/helpers';
 import { createKeyValueTableHtml, createHeaderTableHtml, createTableHtml, zeros, filledMatrix } from 'src/app/helpers/others';
-import { Cache } from '@dlr-eoc/services-ogc';
+import { Cache } from '@dlr-eoc/utils-ogc';
 import { InfoTableComponentComponent } from 'src/app/components/dynamic/info-table-component/info-table-component.component';
 
 

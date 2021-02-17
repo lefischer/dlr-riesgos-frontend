@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { WizardableProcess, WizardProperties } from '../../../components/config_wizard/wizardable_processes';
 import { VectorLayerProduct } from '../../riesgos.datatypes.mappable';
 import { ProcessStateUnavailable, WpsProcess, Product } from '../../riesgos.datatypes';
-import { WpsData } from '@dlr-eoc/services-ogc';
+import { WpsData } from '@dlr-eoc/utils-ogc';
 import { Feature } from '@turf/helpers';
 import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
 import { Observable } from 'rxjs';

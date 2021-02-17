@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LayerControlComponent } from '../layer-control/layer-control.component';
+import { RiesgosLayerControlComponent } from '../layer-control/layer-control.component';
 
 import { LayerentryGroupComponent } from '../layerentry-group/layerentry-group.component';
 import { LayerentryComponent } from '../layerentry/layerentry.component';
@@ -14,21 +14,21 @@ import { MapStateService } from '@dlr-eoc/services-map-state';
 import { ReversePipe } from '../utils/array-reverse.pipe';
 
 describe('LayerControlComponent', () => {
-  let component: LayerControlComponent;
-  let fixture: ComponentFixture<LayerControlComponent>;
+  let component: RiesgosLayerControlComponent;
+  let fixture: ComponentFixture<RiesgosLayerControlComponent>;
   let layersSvc: LayersService;
   let mapStateSvc: MapStateService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ClarityModule, FormsModule],
-      declarations: [LayerControlComponent, LayerentryGroupComponent, LayerentryComponent, ObjTypePipe, ReversePipe],
+      declarations: [RiesgosLayerControlComponent, LayerentryGroupComponent, LayerentryComponent, ObjTypePipe, ReversePipe],
       providers: [LayersService, MapStateService]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LayerControlComponent);
+    fixture = TestBed.createComponent(RiesgosLayerControlComponent);
     component = fixture.componentInstance;
     layersSvc = TestBed.inject(LayersService);
     mapStateSvc = TestBed.inject(MapStateService);

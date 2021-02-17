@@ -44,7 +44,7 @@ import { DisclaimerpopupComponent } from './components/disclaimerpopup/disclaime
 import { InteractionstatemonitorComponent } from './components/interactionstatemonitor/interactionstatemonitor.component';
 import { LicensesComponent } from './views/licenses/licenses.component';
 import { BlogentryComponent } from './components/blogentry/blogentry.component';
-import { LayerControlComponent } from './components/ukis_layer_control/layer-control/layer-control.component';
+import { RiesgosLayerControlComponent } from './components/ukis_layer_control/layer-control/layer-control.component';
 import { BaseLayerControlComponent } from './components/ukis_layer_control/base-layer-control/base-layer-control.component';
 import { LayerentryComponent } from './components/ukis_layer_control/layerentry/layerentry.component';
 import { LayerentryGroupComponent } from './components/ukis_layer_control/layerentry-group/layerentry-group.component';
@@ -117,7 +117,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LicensesComponent,
     BlogentryComponent,
     DndDirective,
-    LayerControlComponent,
+    RiesgosLayerControlComponent,
     BaseLayerControlComponent,
     LayerentryComponent,
     LayerentryGroupComponent,

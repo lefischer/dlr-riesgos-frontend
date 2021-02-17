@@ -8,7 +8,7 @@ import { LayersService } from '@dlr-eoc/services-layers';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
-  selector: 'ukis-layerentry-group',
+  selector: 'riesgos-layerentry-group',
   templateUrl: './layerentry-group.component.html',
   styleUrls: ['./layerentry-group.component.scss']
 })

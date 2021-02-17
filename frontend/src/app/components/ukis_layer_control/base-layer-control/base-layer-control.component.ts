@@ -6,7 +6,7 @@ import { LayerGroup, Layer } from '@dlr-eoc/services-layers';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'ukis-base-layer-control',
+  selector: 'riesgos-base-layer-control',
   templateUrl: './base-layer-control.component.html',
   styleUrls: ['./base-layer-control.component.scss']
 })

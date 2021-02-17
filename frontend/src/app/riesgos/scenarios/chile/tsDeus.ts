@@ -1,5 +1,5 @@
 import { VectorLayerProduct } from 'src/app/riesgos/riesgos.datatypes.mappable';
-import { WpsData } from '@dlr-eoc/services-ogc';
+import { WpsData } from '@dlr-eoc/utils-ogc';
 import { Product, ProcessStateUnavailable, ExecutableProcess, ProcessState } from 'src/app/riesgos/riesgos.datatypes';
 import { redGreenRange, ninetyPercentLowerThan, toDecimalPlaces, greenRedRange, weightedDamage } from 'src/app/helpers/colorhelpers';
 import { BarData, createBarchart, createGroupedBarchart } from 'src/app/helpers/d3charts';
@@ -16,7 +16,7 @@ import { Deus } from './deus';
 import { map, switchMap } from 'rxjs/operators';
 import { FeatureCollection } from '@turf/helpers';
 import { createHeaderTableHtml, createTableHtml, zeros, filledMatrix } from 'src/app/helpers/others';
-import { Cache } from '@dlr-eoc/services-ogc';
+import { Cache } from '@dlr-eoc/utils-ogc';
 import { InfoTableComponentComponent } from 'src/app/components/dynamic/info-table-component/info-table-component.component';
 
 

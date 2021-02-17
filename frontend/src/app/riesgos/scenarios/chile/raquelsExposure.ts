@@ -1,7 +1,7 @@
 import { WpsProcess, ProcessStateUnavailable } from 'src/app/riesgos/riesgos.datatypes';
 import { latmax, initialExposure, lonmin, lonmax, latmin, querymode, schema, assettype } from './exposure';
 import { HttpClient } from '@angular/common/http';
-import { Cache } from '@dlr-eoc/services-ogc';
+import { Cache } from '@dlr-eoc/utils-ogc';
 
 
 export class RaquelsExposureModel extends WpsProcess {

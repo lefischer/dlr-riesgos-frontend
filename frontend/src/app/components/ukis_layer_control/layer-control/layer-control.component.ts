@@ -8,11 +8,11 @@ import { Subscription } from 'rxjs';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
-  selector: 'ukis-layer-control',
+  selector: 'riesgos-layer-control',
   templateUrl: './layer-control.component.html',
   styleUrls: ['./layer-control.component.scss']
 })
-export class LayerControlComponent implements OnInit, OnDestroy {
+export class RiesgosLayerControlComponent implements OnInit, OnDestroy {
   @Input('layersSvc') layersSvc: LayersService;
   @Input('mapStateSvc') mapStateSvc?: MapStateService;
   @Input('layerfilter') layerfilter: Layer['filtertype'] = 'Layers';

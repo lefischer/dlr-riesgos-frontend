@@ -1,6 +1,6 @@
 import { WpsProcess, ProcessStateUnavailable, Product, ExecutableProcess, ProcessState } from 'src/app/riesgos/riesgos.datatypes';
 import { schemaPeru, initialExposurePeru } from './exposure';
-import { WpsData, Cache } from '@dlr-eoc/services-ogc';
+import { WpsData, Cache } from '@dlr-eoc/utils-ogc';
 import { WizardableProcess, WizardProperties } from 'src/app/components/config_wizard/wizardable_processes';
 import { VectorLayerProduct, VectorLayerProperties, MultiVectorLayerProduct } from 'src/app/riesgos/riesgos.datatypes.mappable';
 import { Style as olStyle, Fill as olFill, Stroke as olStroke, Circle as olCircle, Text as olText } from 'ol/style';
@@ -396,6 +396,7 @@ export const eqUpdatedExposureRefPeru: WpsData & Product = {
     uid: 'updated_exposure_ref_peru',
     description: {
         id: 'updated_exposure',
+        title: 'Updated exposure',
         reference: true,
         type: 'complex',
         format: 'application/json',

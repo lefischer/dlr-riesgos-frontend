@@ -1,7 +1,7 @@
 import { FeatureSelectUconfProduct } from 'src/app/components/config_wizard/userconfigurable_wpsdata';
 import { ProductTransformingProcess, ProcessStateTypes, Product, ExecutableProcess } from 'src/app/riesgos/riesgos.datatypes';
 import { WizardableProcess } from 'src/app/components/config_wizard/wizardable_processes';
-import { WpsData } from '@dlr-eoc/services-ogc';
+import { WpsData } from '@dlr-eoc/utils-ogc';
 import { Observable, of } from 'rxjs';
 import { VectorLayerProduct } from 'src/app/riesgos/riesgos.datatypes.mappable';
 import { Style as olStyle, Fill as olFill, Stroke as olStroke, Circle as olCircle, Text as olText } from 'ol/style';
@@ -104,7 +104,7 @@ export const EqSelectionPeru: WizardableProcess & ExecutableProcess & ProductTra
         switch (newProduct.uid) {
 
             case selectedEqsPeru.uid:
-                const options = {};
+                const options: {[key: string]: FeatureCollection} = {};
                 for (const feature of newProduct.value[0].features) {
                     options[feature.id] = featureCollection([feature]);
                 }

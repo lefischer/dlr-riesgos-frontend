@@ -1,6 +1,6 @@
 import { FeatureCollection } from '@turf/helpers';
 import { Product, ProductDescription } from 'src/app/riesgos/riesgos.datatypes';
-import { WpsBboxData, WpsBboxValue } from '@dlr-eoc/services-ogc';
+import { WpsBboxData, WpsBboxValue } from '@dlr-eoc/utils-ogc';
 
 
 

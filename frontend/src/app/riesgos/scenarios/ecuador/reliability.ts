@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { WpsData, Cache } from '@dlr-eoc/services-ogc';
+import { WpsData, Cache } from '@dlr-eoc/utils-ogc';
 import { Product, WpsProcess, ProcessStateUnavailable } from 'src/app/riesgos/riesgos.datatypes';
 import { VectorLayerProduct } from 'src/app/riesgos/riesgos.datatypes.mappable';
 import { WizardableProcess, WizardProperties } from 'src/app/components/config_wizard/wizardable_processes';

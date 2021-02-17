@@ -10,7 +10,7 @@ import {  } from '@dlr-eoc/services-layers';
 import { ProductLayer } from '../../map/map.types';
 
 @Component({
-  selector: 'ukis-layerentry',
+  selector: 'riesgos-layerentry',
   templateUrl: './layerentry.component.html',
   styleUrls: ['./layerentry.component.scss']
 })

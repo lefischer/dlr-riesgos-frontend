@@ -1,4 +1,4 @@
-import { Cache, WpsData } from '@dlr-eoc/services-ogc';
+import { Cache, WpsData } from '@dlr-eoc/utils-ogc';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';

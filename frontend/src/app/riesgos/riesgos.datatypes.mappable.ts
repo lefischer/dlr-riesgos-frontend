@@ -1,5 +1,5 @@
 import { ProductDescription, Product } from 'src/app/riesgos/riesgos.datatypes';
-import { WpsBboxValue } from '@dlr-eoc/services-ogc';
+import { WpsBboxValue } from '@dlr-eoc/utils-ogc';
 import { shape } from '../components/config_wizard/wizardable_processes';
 import { FeatureCollection, Feature } from '@turf/helpers';
 import { LegendElement } from '../components/dynamic/vector-legend/vector-legend.component';
