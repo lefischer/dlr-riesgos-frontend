@@ -9,34 +9,75 @@ import {  } from '@dlr-eoc/services-layers';
 import { ProductLayer } from '../../map/map.types';
 import { Store, select } from '@ngrx/store';
 import { State } from 'src/app/ngrx_register';
-import { withLatestFrom } from 'rxjs/operators';
+import { withLatestFrom, map } from 'rxjs/operators';
 import { getFocussedProcessId } from 'src/app/focus/focus.selectors';
 import { getGraph } from 'src/app/riesgos/riesgos.selectors';
 import { state, style, transition, animate, trigger } from '@angular/animations';
+import { ThemeService, ThemeMetadata } from 'src/app/services/theme/theme.service';
 
 @Component({
   selector: 'riesgos-layerentry',
   templateUrl: './layerentry.component.html',
   styleUrls: ['./layerentry.component.scss'],
   animations: [
+
     trigger('focusUnfocus', [
       state('focussed', style({
-        'color': 'var(--clr-color-action-700)',
+        'color': 'var(--clr-forms-focused-color)',
         'font-weight': 'bolder',
-        'background-color': 'var(--clr-color-neutral-50)'
+        'background-color': 'var(--clr-accordion-header-background-color)'
       })),
       state('unfocussed', style({
-        'color': 'var(--clr-color-neutral-700)',
+        'color': 'var(--clr-forms-subtext-color)',
         'font-weight': 'normal',
-        'background-color': 'var(--clr-color-neutral-200)'
+        'background-color': 'var(--clr-accordion-header-hover-background-color)'
       })),
       transition('focussed <=> unfocussed', [
+        animate('0.5s')
+      ]),
+
+      state('focussedDark', style({
+        'color': 'var(--clr-color-neutral-0)',
+        'font-weight': 'bolder',
+        'background-color': 'var(--clr-color-action-900)'
+      })),
+      state('unfocussedDark', style({
+        'color': 'var(--clr-color-neutral-400)',
+        'font-weight': 'normal',
+        'background-color': '#17242b'
+      })),
+      transition('focussedDark <=> unfocussedDark', [
+        animate('0.5s')
+      ]),
+
+    ]),
+
+    trigger('focusUnfocusBG', [
+      state('focussed', style({
+        'background-color': 'var(--clr-accordion-header-background-color)'
+      })),
+      state('unfocussed', style({
+        'background-color': 'var(--clr-accordion-header-hover-background-color)'
+      })),
+      transition('focussed <=> unfocussed', [
+        animate('0.5s')
+      ]),
+
+      state('focussedDark', style({
+        'background-color': 'var(--clr-color-action-900)'
+      })),
+      state('unfocussedDark', style({
+        'background-color': '#17242b'
+      })),
+      transition('focussedDark <=> unfocussedDark', [
         animate('0.5s')
       ])
     ]),
   ]
 })
 export class RiesgosLayerentryComponent implements OnInit {
+  private theme: string;
+
   @HostBinding('class.layer-visible') get visible() { return this.layer.visible; }
   @HostBinding('class') get cssClass() { return this.layer.cssClass; }
 
@@ -76,14 +117,24 @@ export class RiesgosLayerentryComponent implements OnInit {
 
   constructor(
     //private store: Store<State>
-    ) {}
-
-  getFocusState(): 'focussed' | 'unfocussed' {
-    if (this.layer.hasFocus) {
-      return 'focussed';
-    } else {
-      return 'unfocussed';
+    private themeService: ThemeService
+    ) {
+      this.themeService.getActiveTheme().subscribe((tm: ThemeMetadata) => {
+        this.theme = tm.name;
+    });
     }
+
+  getFocusState(): string {
+    let out = '';
+    if (this.layer.hasFocus) {
+      out += 'focussed';
+    } else {
+      out += 'unfocussed';
+    }
+    if (this.theme === 'dark') {
+      out += 'Dark';
+    }
+    return out;
   }
 
   /**

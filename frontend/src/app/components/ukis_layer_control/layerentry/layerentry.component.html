@@ -59,7 +59,7 @@
       <clr-icon *ngIf="canZoomToLayer" shape="zoom-in" class="iconButton" title="Zoom to layer" (click)="zoomTo(layer)">
       </clr-icon>
     </div>
-    <div class="tabsbody">
+    <div class="tabsbody"  [@focusUnfocusBG]="getFocusState()">
       <div *ngIf="activeTabs.settings" class="layersettings">
 
         <!-- setLayerOpacity -->
