@@ -343,7 +343,7 @@ const eqUpdatedExposurePeruProps: VectorLayerProperties = {
                     }
                 }
 
-                const anchorUpdated = createGroupedBarchart(anchor, data, 400, 300, '{{ taxonomy_DX }}', '{{ nr_buildings }}');
+                const anchorUpdated = createGroupedBarchart(anchor, data, 400, 400, '{{ taxonomy_DX }}', '{{ nr_buildings }}');
 
                 const legend = `
                     <ul>

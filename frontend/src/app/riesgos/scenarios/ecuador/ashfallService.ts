@@ -117,7 +117,7 @@ export const ashfall: WpsData & Product & VectorLayerProduct = {
                     const load = thickness * (1250 / 1250);
 
                     const selectedProperties = {
-                        '{{ Depth }}': thicknessText,
+                        '{{ Thickness }}': thicknessText,
                         VEI: toDecimalPlaces(properties['vei'] as number, 1),
                         '{{ Expected_load }}': `${load} kPa`,
                         '{{ Probability }}': properties['prob'] + ' %'
