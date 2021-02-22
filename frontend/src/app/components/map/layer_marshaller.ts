@@ -282,7 +282,7 @@ export class LayerMarshaller  {
                     return {
                         id: l.id,
                         tickValue: index,
-                        displayText: l.name.match(/(\d+)$/)[0] + 's'
+                        displayText: l.name.match(/(\d+)$/)[0] + 'min'
                     };
                 });
 
