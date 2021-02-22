@@ -223,6 +223,8 @@
     "AvailableStateDescription": "This service is ready to be executed.",
     "RunningStateDescription": "This service is currently being executed.",
     "CompletedStateDescription": "This service has already been executed and all its products are now provided.",
-    "ErrorStateDescription": "An error has occurred. There is more information in the red info-box."
+    "ErrorStateDescription": "An error has occurred. There is more information in the red info-box.",
+
+    "ClassificationMavrouli": "Clasificaction according to Mavrouli et al. 2014 (DOI 10.1007/s10064-014-0573-0)"
 
 }

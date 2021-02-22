@@ -9,4 +9,4 @@
     </tr>
 </table>
 
-<p *ngIf="bottomText">{{ bottomText | translate }}</p>
+<p *ngIf="bottomText" [innerHTML]="bottomText | translate"></p>

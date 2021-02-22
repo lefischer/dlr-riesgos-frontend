@@ -38,19 +38,19 @@ export const latminEcuador: Product & WpsData = {
     id: 'latmin',
     type: 'literal',
     reference: false,
-    defaultValue:  '-1'
+    defaultValue: '-1'
   },
-  value:   '-1'
+  value: '-1'
 };
 
 export const latmaxEcuador: Product & WpsData = {
-    uid: 'lahar_latmax',
-    description: {
-        id: 'latmax',
-        type: 'literal',
-        reference: false,
-        defaultValue: '-0.4'
-    },
+  uid: 'lahar_latmax',
+  description: {
+    id: 'latmax',
+    type: 'literal',
+    reference: false,
+    defaultValue: '-0.4'
+  },
   value: '-0.4'
 };
 
@@ -115,17 +115,17 @@ export const initialExposureAshfall: VectorLayerProduct & WpsData & Product = {
 
         const expo = props.expo;
         const counts = {
-            'D0': 0,
-            'D1': 0,
-            'D2': 0,
-            'D3': 0
+          'D0': 0,
+          'D1': 0,
+          'D2': 0,
+          'D3': 0
         };
         let total = 0;
         for (let i = 0; i < expo.Damage.length; i++) {
-            const damageClass = expo.Damage[i];
-            const nrBuildings = expo.Buildings[i];
-            counts[damageClass] += nrBuildings;
-            total += nrBuildings;
+          const damageClass = expo.Damage[i];
+          const nrBuildings = expo.Buildings[i];
+          counts[damageClass] += nrBuildings;
+          total += nrBuildings;
         }
 
         const dr = weightedDamage(Object.values(counts));
@@ -134,9 +134,9 @@ export const initialExposureAshfall: VectorLayerProduct & WpsData & Product = {
         let g: number;
         let b: number;
         if (total === 0) {
-            r = b = g = 0;
+          r = b = g = 0;
         } else {
-            [r, g, b] = greenRedRange(0, 1, dr);
+          [r, g, b] = greenRedRange(0, 1, dr);
         }
 
         return new olStyle({
@@ -167,26 +167,20 @@ export const initialExposureAshfall: VectorLayerProduct & WpsData & Product = {
         const anchorUpdated = createBarchart(anchor, barchartData, 300, 200, '{{ Taxonomy }}', '{{ Buildings }}');
         return `<h4>{{ Exposure }}</h4>${anchor.innerHTML}`;
       },
-      legendEntries: [{
-        feature: {
-          "type": "Feature",
-          "properties": {
-            'expo': {
-              Damage: ['D0', 'D1', 'D2', 'D3'],
-              Buildings: [0, 0, 0, 0]
-            }
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [ [
-                [ 5.627918243408203, 50.963075942052164 ],
-                [ 5.627875328063965, 50.958886259879264 ],
-                [ 5.635471343994141, 50.95634523633128 ],
-                [ 5.627918243408203, 50.963075942052164 ] ] ]
-          }
-        },
-        text: 'Exposure'
-      }],
+      summary: (value: any) => {
+        const legend = `
+            <p>{{ ClassificationMavrouli }}</p>
+            <ul>
+                <li>{{ LegendMavrouli_RCLD }}</li>
+                <li>{{ LegendMavrouli_RCSHD }}</li>
+                <li>{{ LegendMavrouli_RCMD }}</li>
+                <li>{{ LegendMavrouli_WMRLD }}</li>
+                <li>{{ LegendMavrouli_WMRMD }}</li>
+                <li>{{ LegendMavrouli_WMRHD }}</li>
+            </ul>
+        `;
+        return legend;
+      }
     }
   },
   value: null
@@ -194,16 +188,47 @@ export const initialExposureAshfall: VectorLayerProduct & WpsData & Product = {
 
 
 export const initialExposureLahar = {
-  ... initialExposureAshfall,
+  ...initialExposureAshfall,
   uid: 'initial_Exposure_Lahar',
   description: {
-    ... initialExposureAshfall.description,
+    ...initialExposureAshfall.description,
+    vectorLayerAttributes: {
+      ... initialExposureAshfall.description.vectorLayerAttributes,
+      text: (props: object) => {
+        const taxonomies = props['expo']['Taxonomy'];
+        const buildings = props['expo']['Buildings'];
+        const keys = Object.keys(taxonomies);
+        const barchartData: BarData[] = [];
+        for (const key of keys) {
+          barchartData.push({
+            label: taxonomies[key],
+            value: buildings[key]
+          });
+        }
+
+        const anchor = document.createElement('div');
+        const anchorUpdated = createBarchart(anchor, barchartData, 300, 200, '{{ Taxonomy }}', '{{ Buildings }}');
+        const legend = `
+            <p>{{ ClassificationMavrouli }}</p>
+            <ul>
+                <li>{{ LegendMavrouli_RCLD }}</li>
+                <li>{{ LegendMavrouli_RCSHD }}</li>
+                <li>{{ LegendMavrouli_RCMD }}</li>
+                <li>{{ LegendMavrouli_WMRLD }}</li>
+                <li>{{ LegendMavrouli_WMRMD }}</li>
+                <li>{{ LegendMavrouli_WMRHD }}</li>
+            </ul>
+        `;
+
+        return `<h4>{{ Exposure }}</h4>${anchor.innerHTML} ${legend}`;
+      },
+    },
     name: 'Exposure Lahar'
   }
 };
 
 export const initialExposureLaharRef = {
-  ... initialExposureAshfallRef,
+  ...initialExposureAshfallRef,
   uid: 'inital_exposure_lahar_ref'
 };
 
@@ -227,9 +252,9 @@ export class AshfallExposureModel extends WpsProcess implements WizardableProces
       cache
     );
     this.wizardProperties = {
-        shape: 'building',
-        providerName: 'GFZ',
-        providerUrl: 'https://www.gfz-potsdam.de/en/'
+      shape: 'building',
+      providerName: 'GFZ',
+      providerUrl: 'https://www.gfz-potsdam.de/en/'
     };
   }
 
@@ -237,7 +262,7 @@ export class AshfallExposureModel extends WpsProcess implements WizardableProces
     const newInputs = inputs.map(i => {
       if (i.uid === schemaEcuador.uid) {
         return {
-          ... i,
+          ...i,
           value: 'Torres_Corredor_et_al_2017',
         };
       } else {
@@ -250,7 +275,7 @@ export class AshfallExposureModel extends WpsProcess implements WizardableProces
 }
 
 
-export class LaharExposureModel  extends WpsProcess implements WizardableProcess {
+export class LaharExposureModel extends WpsProcess implements WizardableProcess {
 
   wizardProperties: WizardProperties;
 
@@ -269,9 +294,9 @@ export class LaharExposureModel  extends WpsProcess implements WizardableProcess
       cache
     );
     this.wizardProperties = {
-        shape: 'building',
-        providerName: 'GFZ',
-        providerUrl: 'https://www.gfz-potsdam.de/en/'
+      shape: 'building',
+      providerName: 'GFZ',
+      providerUrl: 'https://www.gfz-potsdam.de/en/'
     };
   }
 
@@ -279,7 +304,7 @@ export class LaharExposureModel  extends WpsProcess implements WizardableProcess
     const newInputs = inputs.map(i => {
       if (i.uid === schemaEcuador.uid) {
         return {
-          ... i,
+          ...i,
           value: 'Mavrouli_et_al_2014',
         };
       } else {

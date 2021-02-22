@@ -333,8 +333,27 @@ export const laharUpdatedExposureProps: VectorLayerProperties = {
                     }
                 }
 
+                const legend = `
+                    <p>{{ ClassificationMavrouli }}</p>
+                    <ul>
+                        <li>{{ LegendMavrouli_RCLD }}</li>
+                        <li>{{ LegendMavrouli_RCSHD }}</li>
+                        <li>{{ LegendMavrouli_RCMD }}</li>
+                        <li>{{ LegendMavrouli_WMRLD }}</li>
+                        <li>{{ LegendMavrouli_WMRMD }}</li>
+                        <li>{{ LegendMavrouli_WMRHD }}</li>
+                    </ul>
+                    <ul>
+                        <li><b>D0:</b>{{ DamagePostLaharD0 }}</li>
+                        <li><b>D1:</b>{{ DamagePostLaharD1 }}</li>
+                        <li><b>D2:</b>{{ DamagePostLaharD2 }}</li>
+                        <li><b>D3:</b>{{ DamagePostLaharD3 }}</li>
+                        <li><b>D4:</b>{{ DamagePostLaharD4 }}</li>
+                    </ul>
+                `;
+
                 const anchorUpdated = createGroupedBarchart(anchor, data, 400, 400, '{{ taxonomy_DX }}', '{{ nr_buildings }}');
-                return `<h4 style="color: var(--clr-p1-color, #666666);">Lahar: {{ damage_classification }}</h4>${anchor.innerHTML}`;
+                return `<h4 style="color: var(--clr-p1-color, #666666);">Lahar: {{ damage_classification }}</h4>${anchor.innerHTML} ${legend}`;
             },
             summary: (value: [FeatureCollection]) => {
                 const counts = {
@@ -359,12 +378,34 @@ export const laharUpdatedExposureProps: VectorLayerProperties = {
                     });
                     data[1].push({
                         value: toDecimalPlaces(counts[dc], 0)
-                    })
+                    });
                 }
+
+                const legend = `
+                    <p>{{ ClassificationMavrouli }}</p>
+                    <ul>
+                        <li>{{ LegendMavrouli_RCLD }}</li>
+                        <li>{{ LegendMavrouli_RCSHD }}</li>
+                        <li>{{ LegendMavrouli_RCMD }}</li>
+                        <li>{{ LegendMavrouli_WMRLD }}</li>
+                        <li>{{ LegendMavrouli_WMRMD }}</li>
+                        <li>{{ LegendMavrouli_WMRHD }}</li>
+                    </ul>
+                    <ul>
+                        <li><b>D0:</b>{{ DamagePostLaharD0 }}</li>
+                        <li><b>D1:</b>{{ DamagePostLaharD1 }}</li>
+                        <li><b>D2:</b>{{ DamagePostLaharD2 }}</li>
+                        <li><b>D3:</b>{{ DamagePostLaharD3 }}</li>
+                        <li><b>D4:</b>{{ DamagePostLaharD4 }}</li>
+                    </ul>
+                `;
 
                 return {
                     component: InfoTableComponentComponent,
-                    inputs: {data: data}
+                    inputs: {
+                        data: data,
+                        bottomText: legend
+                    }
                 };
             }
         }
