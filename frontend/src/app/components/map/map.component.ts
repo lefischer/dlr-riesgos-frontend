@@ -89,10 +89,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
                     const outputs = outEdges.map(edge => edge.w);
                     for (const layer of currentOverlays) {
                         if (inputs.includes((layer as ProductLayer).productId) || outputs.includes((layer as ProductLayer).productId)) {
-                            layer.opacity = 0.6;
+                            // layer.opacity = 0.6;
                             layer.hasFocus = true;
                         } else {
-                            layer.opacity = 0.1;
+                            // layer.opacity = 0.1;
                             layer.hasFocus = false;
                         }
                         this.layersSvc.updateLayer(layer, 'Overlays');
