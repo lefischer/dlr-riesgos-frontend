@@ -1,36 +1,36 @@
 import { Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy } from '@angular/core';
+import { BehaviorSubject, forkJoin, Observable, of, Subscription } from 'rxjs';
+import { map, withLatestFrom, switchMap } from 'rxjs/operators';
+import { Graph } from 'graphlib';
+import { featureCollection as tFeatureCollection } from '@turf/helpers';
+import { parse } from 'url';
+import { Store, select } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
+
 import { DragBox } from 'ol/interaction';
 import { Vector as olVectorLayer, Tile as TileLayer } from 'ol/layer';
 import { Vector as olVectorSource, TileWMS } from 'ol/source';
 import { GeoJSON, KML } from 'ol/format';
 import { get as getProjection } from 'ol/proj';
 import Feature from 'ol/Feature';
-import {getWidth} from 'ol/extent';
-import { MapOlService } from '@dlr-eoc/map-ol';
-import TileGrid from 'ol/tilegrid/TileGrid';
 import {click, noModifierKeys} from 'ol/events/condition';
 import Select from 'ol/interaction/Select';
-import {bbox as bboxStrategy} from 'ol/loadingstrategy';
+
+import { MapOlService } from '@dlr-eoc/map-ol';
 import { MapStateService } from '@dlr-eoc/services-map-state';
 import { OsmTileLayer } from '@dlr-eoc/base-layers-raster';
-import { Store, select } from '@ngrx/store';
+import { Layer, LayersService, RasterLayer, CustomLayer, LayerGroup } from '@dlr-eoc/services-layers';
+import { WpsBboxValue } from '@dlr-eoc/utils-ogc';
+
 import { State } from 'src/app/ngrx_register';
 import { getMapableProducts, getScenario, getGraph } from 'src/app/riesgos/riesgos.selectors';
 import { Product } from 'src/app/riesgos/riesgos.datatypes';
 import { InteractionCompleted } from 'src/app/interactions/interactions.actions';
-import { BehaviorSubject, forkJoin, Observable, of, Subscription } from 'rxjs';
 import { InteractionState, initialInteractionState } from 'src/app/interactions/interactions.state';
-import { LayerMarshaller } from './layer_marshaller';
-import { Layer, LayersService, RasterLayer, CustomLayer, LayerGroup, VectorLayer } from '@dlr-eoc/services-layers';
 import { getFocussedProcessId } from 'src/app/focus/focus.selectors';
-import { Graph } from 'graphlib';
-import { ProductLayer, ProductRasterLayer } from './map.types';
-import { map, withLatestFrom, switchMap } from 'rxjs/operators';
-import { featureCollection as tFeatureCollection } from '@turf/helpers';
-import { parse } from 'url';
-import { WpsBboxValue } from '@dlr-eoc/utils-ogc';
 import { WMTSLayerFactory } from './wmts';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { LayerMarshaller } from './layer_marshaller';
+import { ProductLayer } from './map.types';
 
 const mapProjection = 'EPSG:4326';
 
@@ -181,7 +181,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         const clickInteraction = new Select({
             condition: (mapBrowserEvent) => {
                 return click(mapBrowserEvent) && noModifierKeys(mapBrowserEvent);
-            }
+            },
+            style: null // we don't want ol to automatically apply another style on selected items.
         });
         clickInteraction.on('select', (e) => {
                 const features = e.target.getFeatures().getArray();
