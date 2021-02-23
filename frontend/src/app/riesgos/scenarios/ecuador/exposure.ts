@@ -164,22 +164,11 @@ export const initialExposureAshfall: VectorLayerProduct & WpsData & Product = {
         }
 
         const anchor = document.createElement('div');
-        const anchorUpdated = createBarchart(anchor, barchartData, 300, 200, '{{ Taxonomy }}', '{{ Buildings }}');
-        return `<h4>{{ Exposure }}</h4>${anchor.innerHTML}`;
+        const anchorUpdated = createBarchart(anchor, barchartData, 400, 400, '{{ Taxonomy }}', '{{ Buildings }}');
+        return `<h4>{{ Exposure }}</h4>${anchor.innerHTML} {{ BuildingTypesTorres }}`;
       },
       summary: (value: any) => {
-        const legend = `
-            <p>{{ ClassificationMavrouli }}</p>
-            <ul>
-                <li>{{ LegendMavrouli_RCLD }}</li>
-                <li>{{ LegendMavrouli_RCSHD }}</li>
-                <li>{{ LegendMavrouli_RCMD }}</li>
-                <li>{{ LegendMavrouli_WMRLD }}</li>
-                <li>{{ LegendMavrouli_WMRMD }}</li>
-                <li>{{ LegendMavrouli_WMRHD }}</li>
-            </ul>
-        `;
-        return legend;
+        return 'BuildingTypesTorres';
       }
     }
   },
@@ -207,21 +196,12 @@ export const initialExposureLahar = {
         }
 
         const anchor = document.createElement('div');
-        const anchorUpdated = createBarchart(anchor, barchartData, 300, 200, '{{ Taxonomy }}', '{{ Buildings }}');
-        const legend = `
-            <p>{{ ClassificationMavrouli }}</p>
-            <ul>
-                <li>{{ LegendMavrouli_RCLD }}</li>
-                <li>{{ LegendMavrouli_RCSHD }}</li>
-                <li>{{ LegendMavrouli_RCMD }}</li>
-                <li>{{ LegendMavrouli_WMRLD }}</li>
-                <li>{{ LegendMavrouli_WMRMD }}</li>
-                <li>{{ LegendMavrouli_WMRHD }}</li>
-            </ul>
-        `;
-
-        return `<h4>{{ Exposure }}</h4>${anchor.innerHTML} ${legend}`;
+        const anchorUpdated = createBarchart(anchor, barchartData, 400, 400, '{{ Taxonomy }}', '{{ Buildings }}');
+        return `<h4>{{ Exposure }}</h4>${anchor.innerHTML} {{ BuildingTypesMavrouli }}`;
       },
+      summary: (value: any) => {
+        return 'BuildingTypesMavrouli';
+      }
     },
     name: 'Exposure Lahar'
   }

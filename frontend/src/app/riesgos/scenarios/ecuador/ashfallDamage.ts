@@ -16,7 +16,7 @@ import { weightedDamage, greenRedRange, toDecimalPlaces, ninetyPercentLowerThan 
 import { createHeaderTableHtml, createTableHtml, zeros, filledMatrix } from 'src/app/helpers/others';
 import { Style as olStyle, Fill as olFill, Stroke as olStroke } from 'ol/style';
 import { Feature as olFeature } from 'ol/Feature';
-import { InfoTableComponentComponent } from 'src/app/components/dynamic/info-table-component/info-table-component.component';
+import { InfoTableComponentComponent, TableEntry } from 'src/app/components/dynamic/info-table-component/info-table-component.component';
 
 
 
@@ -336,10 +336,8 @@ const ashfallUpdatedExposureProps: VectorLayerProperties = {
                     }
                 }
 
-                
-
                 const anchorUpdated = createGroupedBarchart(anchor, data, 400, 400, '{{ taxonomy_DX }}', '{{ nr_buildings }}');
-                return `<h4 style="color: var(--clr-p1-color, #666666);">{{ Ashfall }}: {{ damage_classification }}</h4>${anchor.innerHTML}`;
+                return `<h4 style="color: var(--clr-p1-color, #666666);">{{ Ashfall }}: {{ damage_classification }}</h4>${anchor.innerHTML} {{ DamageStatesTorres }}`;
             },
             summary: (value: [FeatureCollection]) => {
                 const counts = {
@@ -356,8 +354,23 @@ const ashfallUpdatedExposureProps: VectorLayerProperties = {
                     }
                 }
 
+                const data: TableEntry[][] = [[], []];
+                for (const dc in counts) {
+                    data[0].push({
+                        value: dc
+                    });
+                    data[1].push({
+                        value: toDecimalPlaces(counts[dc], 0)
+                    });
+                }
 
-                return createHeaderTableHtml(Object.keys(counts), [Object.values(counts).map(c => toDecimalPlaces(c, 0))], 'medium');
+                return {
+                    component: InfoTableComponentComponent,
+                    inputs: {
+                        data: data,
+                        bottomText: 'DamageStatesTorres'
+                    }
+                };
             }
         }
 };

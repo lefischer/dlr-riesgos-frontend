@@ -94,7 +94,7 @@
           <ukis-dynamic-component [(dynamicComponent)]="layer.description"></ukis-dynamic-component>
         </ng-container>
         <ng-template #descriptionPlaintext>
-          <span innerHTML="{{ layer.description | translate}}"></span>
+          <span [innerHTML]="layer.description | translate"></span>
         </ng-template>
       </div>
 
