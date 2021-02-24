@@ -290,6 +290,7 @@ export class LayerMarshaller  {
                     hasFocus: false,
                     filtertype: 'Overlays',
                     productId: laharProduct.uid,
+                    removable: true,
                     custom_layer: layerGroup,
                     id: laharProduct.uid,
                     name: laharProduct.uid,

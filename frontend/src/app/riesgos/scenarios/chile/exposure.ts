@@ -134,7 +134,7 @@ export const initialExposure: VectorLayerProduct & WpsData & Product = {
             total += nrBuildings;
         }
 
-        const dr = weightedDamage(Object.values(counts));
+        const dr = weightedDamage(Object.values(counts)) / 4;
 
         let r: number;
         let g: number;

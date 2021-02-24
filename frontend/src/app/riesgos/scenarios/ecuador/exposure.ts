@@ -128,7 +128,7 @@ export const initialExposureAshfall: VectorLayerProduct & WpsData & Product = {
           total += nrBuildings;
         }
 
-        const dr = weightedDamage(Object.values(counts));
+        const dr = weightedDamage(Object.values(counts)) / 3;
 
         let r: number;
         let g: number;
