@@ -2,13 +2,12 @@
   "name": "riesgos_middleware",
   "version": "0.0.1",
   "description": "Riesgos business logic",
-  "main": "index.js",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watchAll",
     "build": "tsc",
     "run": "node build/index.js",
-    "run:dev": "nodemon"
+    "run:dev": "ts-node src/run.ts"
   },
   "keywords": [
     "riesgos"

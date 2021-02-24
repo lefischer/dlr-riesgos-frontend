@@ -20,14 +20,3 @@ Frontend:
     Abstract processes
     Concrete current products
     Concrete current scenario-state <== The backend cannot maintain a current scenario-state for every currently connected user.
-
-
-
-
-TODOs
-=====
-
-Server-side:
-    in the backend, no process-state or do-while-executing is required
-    really, the Product-Interface does not really need to have a value-field, either
-    pass all errors that occur on to the frontend

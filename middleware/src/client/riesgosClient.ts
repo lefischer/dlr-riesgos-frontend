@@ -1,10 +1,15 @@
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { HttpClient } from "./http_client/http_client";
-import { Process, Product, RiesgosScenarioData, RiesgosScenarioMetaData } from "./model/datatypes/riesgos.datatypes";
+import { HttpClient } from "../http_client/http_client";
+import { Process, Product, RiesgosScenarioData, RiesgosScenarioMetaData } from "../model/datatypes/riesgos.datatypes";
 import WebSocket from 'ws';
 
 
+/**
+ * A client that calls server/server's API.
+ * May be used by any frontend to abstract away concrete calls to the server.
+ * (Mostly so that user doesn't have to make REST- and WS-calls himself)
+ */
 export class RiesgosClient {
     constructor(
         private url: string,
@@ -41,19 +46,3 @@ export class RiesgosClient {
 }
 
 
-const client = new RiesgosClient('localhost:3000', new HttpClient());
-
-client.getScenarios().subscribe(scenarios => {
-    const s0 = scenarios[0];
-    client.getScenario(s0.id).subscribe(scenario => {
-        
-        const p0 = scenario.processes[0];
-        const inputs = scenario.products.filter(p => p0.requiredProducts.includes(p.uid));
-        const outputs = scenario.products.filter(p => p0.providedProducts.includes(p.uid));
-        
-        client.executeProcess(p0, inputs, outputs).subscribe((results: Product[]) => {
-            console.log('frontend execution results: ', results);
-        }, (error) => console.log('error: ', error));
-    })
-
-});
