@@ -9,7 +9,13 @@ beforeAll(() => {
 });
 
 describe('riesgos-client test-suite', () => {
-    it('running all services and processes with default values', (done) => {
+
+
+    it('creating a test-scenario', () => {
+        
+    });
+
+    it('Integration-test: running all scenarios and processes with default values', (done) => {
 
         const client = new RiesgosClient('localhost:3000', new HttpClient());
         client.getScenarios().subscribe(scenarios => {
