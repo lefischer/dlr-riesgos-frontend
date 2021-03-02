@@ -6,7 +6,7 @@ import { EqSelection, userinputSelectedEq, selectedEq } from './scenarios/chile/
 import { Shakyground, shakemapWmsOutput, eqShakemapRef } from './scenarios/chile/shakyground';
 import { EqDeus, loss, eqDamageM, eqUpdatedExposureRef } from './scenarios/chile/eqDeus';
 import { TsService, tsWms, tsShakemap } from './scenarios/chile/tsService';
-import { MySimpleService, ConvexHullInput, ConvexHullOutput } from './scenarios/chile/myservice';
+// import { MySimpleService, ConvexHullInput, ConvexHullOutput } from './scenarios/chile/myservice';
 import { TsDeus, tsDamage, tsTransition, tsUpdatedExposure } from './scenarios/chile/tsDeus';
 import { EqReliability, countryChile, hazardEq, damageConsumerAreas } from './scenarios/chile/reliability';
 import { lonmin, lonmax, latmin, latmax, assettype, schema, querymode, initialExposure } from './scenarios/chile/exposure';
