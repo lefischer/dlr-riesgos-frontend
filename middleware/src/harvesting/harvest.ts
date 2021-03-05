@@ -1,8 +1,8 @@
-import { HttpClient } from "../../http_client/http_client";
-import { WpsServerDescription } from "../../wps/public-api";
-import { LowdbClient } from "../lowdb/lowdbClient";
-import { createMongoDbInterface, MongoDbRiesgosDatabase } from "../mongo/mongoClient";
-import { TextFileRiesgosDatabase } from "../textFile/textFileClient";
+import { HttpClient } from "../http_client/http_client";
+import { WpsServerDescription } from "../wps/public-api";
+import { LowdbClient } from "../database/lowdb/lowdbClient";
+import { createMongoDbInterface, MongoDbRiesgosDatabase } from "../database/mongo/mongoClient";
+import { TextFileRiesgosDatabase } from "../database/textFile/textFileClient";
 import { WpsHarvester } from "./harvester";
 
 

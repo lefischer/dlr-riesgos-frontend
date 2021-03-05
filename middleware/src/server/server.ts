@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { LowdbClient } from '../database/lowdb/lowdbClient';
 import { HttpClient } from '../http_client/http_client';
 import { RiesgosService } from '../model/riesgos.service';
-import { Product } from '../model/datatypes/riesgos.datatypes';
+import { RiesgosProduct } from '../model/datatypes/riesgos.datatypes';
 import { FakeCache } from '../wps/lib/cache';
 import { Server as WsServer } from 'ws';
 const url = require('url');
@@ -40,7 +40,7 @@ export function setUpServer(port = 3000) {
             
             const parsed = JSON.parse(message.toString());
     
-            riesgosService.executeService(parsed.process, parsed.inputs, parsed.outputs).subscribe((results: Product[]) => {
+            riesgosService.executeService(parsed.process, parsed.inputs, parsed.outputs).subscribe((results: RiesgosProduct[]) => {
                 console.log('Server: execution results', results);
                 socket.send(JSON.stringify(results));
                 socket.close();

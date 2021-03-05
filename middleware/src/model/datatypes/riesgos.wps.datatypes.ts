@@ -4,15 +4,15 @@ import { HttpClient } from '../../http_client/http_client';
 import { Cache, FakeCache } from '../../wps/lib/cache';
 import { WpsClient } from '../../wps/lib/wpsclient';
 import { WpsData, WpsVersion } from '../../wps/lib/wps_datatypes';
-import { Product, Process, Executable } from './riesgos.datatypes';
+import { RiesgosProduct, RiesgosProcess, Executable } from './riesgos.datatypes';
 
 
-export interface WpsProduct extends Product {
+export interface RiesgosWpsProduct extends RiesgosProduct {
     readonly value: WpsData;
 }
 
 
-export interface WpsProcess extends Process {
+export interface RiesgosWpsProcess extends RiesgosProcess {
     readonly id: string;
     readonly description: string;
     readonly url: string;
@@ -21,7 +21,7 @@ export interface WpsProcess extends Process {
 };
 
 
-export class ExecutableWpsProcess implements WpsProcess, Executable {
+export class RiesgosExecutableWpsProcess implements RiesgosWpsProcess, Executable {
 
     concreteClassName = 'ExecutableWpsProcess';
     private wpsClient: WpsClient;
@@ -45,15 +45,15 @@ export class ExecutableWpsProcess implements WpsProcess, Executable {
 
 
     public execute(
-        inputProducts: WpsProduct[],
-        outputProducts: WpsProduct[]): Observable<Product[]> {
+        inputProducts: RiesgosWpsProduct[],
+        outputProducts: RiesgosWpsProduct[]): Observable<RiesgosProduct[]> {
 
             const wpsInputs = inputProducts.map(prod => prod.value);
             const wpsOutputDescriptions = outputProducts.map(prod => prod.value.description);
 
             return this.wpsClient.executeAsync(this.url, this.id, wpsInputs, wpsOutputDescriptions, 2000).pipe(
                 map((outputs: WpsData[]) => {
-                    const outputProductsWithValues: WpsProduct[] = [];
+                    const outputProductsWithValues: RiesgosWpsProduct[] = [];
                     for (const output of outputs) {
                         const associatedProduct = outputProducts.find(p => p.value.description.id === output.description.id);
                         if (associatedProduct) {
@@ -70,6 +70,6 @@ export class ExecutableWpsProcess implements WpsProcess, Executable {
     }
 }
 
-export const isWpsProcess = (p: Process): p is WpsProcess => {
+export const isWpsProcess = (p: RiesgosProcess): p is RiesgosWpsProcess => {
     return p.hasOwnProperty('url') && p.hasOwnProperty('state') && p.hasOwnProperty('wpsVersion');
 };

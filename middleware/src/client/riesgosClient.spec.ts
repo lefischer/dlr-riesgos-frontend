@@ -1,5 +1,5 @@
 import { HttpClient } from "../http_client/http_client";
-import { Product } from "../model/datatypes/riesgos.datatypes";
+import { RiesgosProduct } from "../model/datatypes/riesgos.datatypes";
 import { RiesgosClient } from "./riesgosClient";
 import { setUpServer } from "../server/server";
 
@@ -26,7 +26,7 @@ describe('riesgos-client test-suite', () => {
                     expect(scenario).toBeTruthy();
 
                     for (const process of scenario.processes) {
-                        const inputs = scenario.products.filter(p => process.requiredProducts.includes(p.uid));
+                        const inputs = scenario.products.filter(p => process.requiredProducts.includes(p.uid)); // 
                         inputs.map(i => {
                             // if (i instanceof WpsProduct) {
                                 if (i.value.value === undefined) {
@@ -36,7 +36,7 @@ describe('riesgos-client test-suite', () => {
                         });
                         const outputs = scenario.products.filter(p => process.providedProducts.includes(p.uid));
                         
-                        client.executeProcess(process, inputs, outputs).subscribe((results: Product[]) => {
+                        client.executeProcess(process, inputs, outputs).subscribe((results: RiesgosProduct[]) => {
                             
                             for (const result of results) {
                                 expect(result.value).toBeTruthy();

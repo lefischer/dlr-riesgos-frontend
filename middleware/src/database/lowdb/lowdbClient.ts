@@ -1,7 +1,7 @@
 import lowdb from 'lowdb';
 import FileSync from 'lowdb/adapters/FileSync';
 import { Observable, of } from 'rxjs';
-import { Process, Product, RiesgosScenarioData, RiesgosScenarioMetaData } from '../../model/datatypes/riesgos.datatypes';
+import { RiesgosProcess, RiesgosProduct, RiesgosScenarioData, RiesgosScenarioMetaData } from '../../model/datatypes/riesgos.datatypes';
 import { RiesgosDatabase } from '../db';
 
 
@@ -45,13 +45,13 @@ export class LowdbClient implements RiesgosDatabase {
         return of(true);
     }
 
-    addProcess(data: Process): Observable<boolean> {
+    addProcess(data: RiesgosProcess): Observable<boolean> {
         // @ts-ignore
         this.db.get('processes').push(data).write();
         return of(true);
     }
 
-    addProduct(data: Product): Observable<boolean> {
+    addProduct(data: RiesgosProduct): Observable<boolean> {
         // @ts-ignore
         this.db.get('products').push(data).write();
         return of(true);

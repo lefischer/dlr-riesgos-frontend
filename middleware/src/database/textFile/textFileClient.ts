@@ -1,5 +1,5 @@
 import { Observable, of } from "rxjs";
-import { Process, Product, RiesgosScenarioMetaData, RiesgosScenarioMetadata } from "../../model/datatypes/riesgos.datatypes";
+import { RiesgosProcess, RiesgosProduct, RiesgosScenarioMetaData, RiesgosScenarioMetadata } from "../../model/datatypes/riesgos.datatypes";
 import { RiesgosDatabase } from "../db";
 const fs = require('fs');
 
@@ -20,7 +20,7 @@ export class TextFileRiesgosDatabase implements RiesgosDatabase {
         return of(false);
     }
 
-    addProcess(process: Process): Observable<boolean> {
+    addProcess(process: RiesgosProcess): Observable<boolean> {
         const path = `${this.baseDir}/processes/`
         const fileName = `${this.cleanString(process.uid)}.json`;
         const body = JSON.stringify(process, null, 4);
@@ -28,7 +28,7 @@ export class TextFileRiesgosDatabase implements RiesgosDatabase {
         return of(true);
     }
 
-    addProduct(product: Product): Observable<boolean> {
+    addProduct(product: RiesgosProduct): Observable<boolean> {
         const path = `${this.baseDir}/products/`;
         const fileName = `${this.cleanString(product.uid)}.json`;
         const body = JSON.stringify(product, null, 4);

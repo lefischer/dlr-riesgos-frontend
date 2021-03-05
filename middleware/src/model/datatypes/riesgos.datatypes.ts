@@ -2,16 +2,16 @@ import { Observable } from 'rxjs';
 
 
 
-export interface Product {
+export interface RiesgosProduct {
     readonly uid: string;
     readonly value: any;
 }
 
-export type ProcessId = string;
+export type RiesgosProcessId = string;
 
 
-export interface Process {
-    readonly uid: ProcessId;
+export interface RiesgosProcess {
+    readonly uid: RiesgosProcessId;
     readonly concreteClassName: string;
     readonly name: string;
     readonly requiredProducts: string[];
@@ -23,13 +23,13 @@ export interface Process {
 export interface Executable {
     
     execute(
-        inputs: Product[],
-        outputs: Product[]):
-        Observable<Product[]>;
+        inputs: RiesgosProduct[],
+        outputs: RiesgosProduct[]):
+        Observable<RiesgosProduct[]>;
 }
 
 
-export interface ExecutableProcess extends Process, Executable {};
+export interface ExecutableProcess extends RiesgosProcess, Executable {};
 
 
 
@@ -46,6 +46,6 @@ export interface RiesgosScenarioMetaData {
 
 export interface RiesgosScenarioData {
     metaData: RiesgosScenarioMetaData,
-    processes: Process[],
-    products: Product[]
+    processes: RiesgosProcess[],
+    products: RiesgosProduct[]
 }

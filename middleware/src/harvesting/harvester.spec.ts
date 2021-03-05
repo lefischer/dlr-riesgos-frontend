@@ -1,6 +1,6 @@
-import { HttpClient } from "../../http_client/http_client";
-import { WpsClient } from "../../wps/lib/wpsclient";
-import { WpsProcessDescription } from "../../wps/lib/wps_datatypes";
+import { HttpClient } from "../http_client/http_client";
+import { WpsClient } from "../wps/lib/wpsclient";
+import { WpsProcessDescription } from "../wps/lib/wps_datatypes";
 import { WpsHarvester } from "./harvester";
 
 describe('harvester test-suite', () => {

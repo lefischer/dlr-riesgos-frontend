@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { Process, Product, RiesgosScenarioMetaData, RiesgosScenarioMetadata } from "../../model/datatypes/riesgos.datatypes";
+import { RiesgosProcess, RiesgosProduct, RiesgosScenarioMetaData, RiesgosScenarioMetadata } from "../../model/datatypes/riesgos.datatypes";
 import { RiesgosDatabase } from "../db";
 import { MongoClient, Db } from 'mongodb';
 import { map, tap } from "rxjs/operators";
@@ -67,7 +67,7 @@ export class MongoDbRiesgosDatabase implements RiesgosDatabase {
         return results$;
     }
 
-    addProcess(data: Process): Observable<boolean> {
+    addProcess(data: RiesgosProcess): Observable<boolean> {
         const collection = this.db.collection('processes');
 
         const results$ = new Observable<boolean>((s) => {
@@ -84,7 +84,7 @@ export class MongoDbRiesgosDatabase implements RiesgosDatabase {
         return results$;
     }
 
-    addProduct(data: Product): Observable<boolean> {
+    addProduct(data: RiesgosProduct): Observable<boolean> {
         const collection = this.db.collection('products');
 
         const results$ = new Observable<boolean>((s) => {

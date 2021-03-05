@@ -1,5 +1,5 @@
 import { Observable, of } from "rxjs";
-import { ExecutableProcess, Process, ProcessState, ProcessStateUnavailable, Product } from "../model/datatypes/riesgos.datatypes";
+import { ExecutableProcess, RiesgosProcess, ProcessState, ProcessStateUnavailable, RiesgosProduct } from "../model/datatypes/riesgos.datatypes";
 
 
 /**
@@ -26,8 +26,8 @@ export class Renamer implements ExecutableProcess {
         this.state = new ProcessStateUnavailable();
     }
 
-    execute(inputs: Product[], outputs: Product[], doWhileExecuting?: (response: any, counter: number) => void): Observable<Product[]> {
-        const input = inputs.find(i => i.uid === this.requiredProducts[0]) as Product;
+    execute(inputs: RiesgosProduct[], outputs: RiesgosProduct[], doWhileExecuting?: (response: any, counter: number) => void): Observable<RiesgosProduct[]> {
+        const input = inputs.find(i => i.uid === this.requiredProducts[0]) as RiesgosProduct;
         let output = {... input};
         output.value[this.newPropertyName] = input.value[this.oldPropertyName];
         return of([output]);
@@ -59,11 +59,11 @@ export class Selector implements ExecutableProcess {
     }
 
 
-    execute(inputs: Product[], outputs: Product[], doWhileExecuting?: (response: any, counter: number) => void): Observable<Product[]> {
+    execute(inputs: RiesgosProduct[], outputs: RiesgosProduct[], doWhileExecuting?: (response: any, counter: number) => void): Observable<RiesgosProduct[]> {
         const selectionList = inputs[0].value;
         const selectedIndex = inputs[1].value;
         const output = outputs[0];
-        const newOutput: Product = {
+        const newOutput: RiesgosProduct = {
             ... output,
             value: selectionList[selectedIndex]
         };

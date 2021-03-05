@@ -7,7 +7,9 @@
     "test:watch": "jest --watchAll",
     "build": "tsc",
     "run": "node build/index.js",
-    "run:dev": "ts-node src/run.ts"
+    "run:dev": "ts-node src/run.ts",
+    "harvest": "ts-node src/harvesting/harvest.ts",
+    "createScenarios": "ts-node src/scenarios/createScenario.ts"
   },
   "keywords": [
     "riesgos"
