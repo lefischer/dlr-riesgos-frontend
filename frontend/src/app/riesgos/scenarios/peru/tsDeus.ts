@@ -178,7 +178,7 @@ export const tsTransitionPeru: VectorLayerProduct & WpsData & Product = {
                         } else if (c === 0) {
                             labeledMatrix[r][c] = `<b>${r - 1}</b>`;
                         } else if (r > 0 && c > 0) {
-                            labeledMatrix[r][c] = toDecimalPlaces(matrix[r-1][c-1], 2);
+                            labeledMatrix[r][c] = toDecimalPlaces(matrix[r-1][c-1], 0);
                         }
                     }
                 }
@@ -336,7 +336,7 @@ export const tsUpdatedExposurePeru: VectorLayerProduct & WpsData & Product = {
                 const data: {[groupName: string]: BarData[]} = {};
                 for (let i = 0; i < expo['Taxonomy'].length; i++) {
                     const dmg = expo['Damage'][i];
-                    const tax = expo['Taxonomy'][i];
+                    const tax = expo['Taxonomy'][i].match(/^[a-zA-Z]*/)[0];
                     const bld = expo['Buildings'][i];
                     if (!data[tax]) {
                         data[tax] = [];

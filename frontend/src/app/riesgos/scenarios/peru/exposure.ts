@@ -148,19 +148,24 @@ export const initialExposurePeru: VectorLayerProduct & WpsData & Product = {
       },
       text: (props: object) => {
 
-        const taxonomies = props['expo']['Taxonomy'];
-        const buildings = props['expo']['Buildings'];
-        const keys = Object.keys(taxonomies);
-        const barchartData: BarData[] = [];
-        for (const key of keys) {
-          barchartData.push({
-            label: taxonomies[key],
-            value: buildings[key]
-          });
+        const expo = props['expo'];
+
+        const data: BarData[] = [];
+        for (let i = 0; i < Object.values(expo.Taxonomy).length; i++) {
+            const tax = expo['Taxonomy'][i].match(/^[a-zA-Z]*/)[0];
+            const bld = expo['Buildings'][i];
+            if (!data.map(dp => dp.label).includes(tax)) {
+                data.push({
+                  label: tax,
+                  value: bld
+                });
+            } else {
+              data.find(dp => dp.label === tax).value += bld;
+            }
         }
 
         const anchor = document.createElement('div');
-        const anchorUpdated = createBigBarchart(anchor, barchartData, 400, 300, '{{ Taxonomy }}', '{{ Buildings }}');
+        const anchorUpdated = createBigBarchart(anchor, data, 400, 300, '{{ Taxonomy }}', '{{ Buildings }}');
         return `<h4>{{ Exposure }}</h4>${anchor.innerHTML}`;
       },
       legendEntries: [{

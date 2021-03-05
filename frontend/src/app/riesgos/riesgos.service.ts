@@ -6,7 +6,6 @@ import { EqSelection, userinputSelectedEq, selectedEq } from './scenarios/chile/
 import { Shakyground, shakemapWmsOutput, eqShakemapRef } from './scenarios/chile/shakyground';
 import { EqDeus, loss, eqDamageM, eqUpdatedExposureRef } from './scenarios/chile/eqDeus';
 import { TsService, tsWms, tsShakemap } from './scenarios/chile/tsService';
-// import { MySimpleService, ConvexHullInput, ConvexHullOutput } from './scenarios/chile/myservice';
 import { TsDeus, tsDamage, tsTransition, tsUpdatedExposure } from './scenarios/chile/tsDeus';
 import { EqReliability, countryChile, hazardEq, damageConsumerAreas } from './scenarios/chile/reliability';
 import { lonmin, lonmax, latmin, latmax, assettype, schema, querymode, initialExposure } from './scenarios/chile/exposure';
@@ -114,7 +113,6 @@ export class RiesgosService {
     switch (scenario) {
       case 'c1':
         processes = [
-          // new MySimpleService(this.httpClient),
           new QuakeLedger(this.httpClient, cache),
           EqSelection,
           new Shakyground(this.httpClient, cache),
@@ -126,7 +124,6 @@ export class RiesgosService {
           // new PhysicalImpactAssessment(this.httpClient)
         ];
         products = [
-          // ConvexHullInput, ConvexHullOutput,
           modelChoice,
           lonmin, lonmax, latmin, latmax, assettype, schema, querymode,
           assetcategory, losscategory, taxonomies,
