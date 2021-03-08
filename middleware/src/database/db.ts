@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { RiesgosProcess, RiesgosProduct, RiesgosScenarioData, RiesgosScenarioMetaData } from "../model/datatypes/riesgos.datatypes";
+import { ExecutableProcess, RiesgosProcess, RiesgosProduct, RiesgosScenarioData, RiesgosScenarioMetaData } from "../model/datatypes/riesgos.datatypes";
 
 
 export interface RiesgosDatabase {
@@ -8,4 +8,5 @@ export interface RiesgosDatabase {
     addScenario(data: RiesgosScenarioMetaData): Observable<boolean>;
     addProcess(data: RiesgosProcess): Observable<boolean>;
     addProduct(data: RiesgosProduct): Observable<boolean>;
+    getExecutableProcess(id: string): Observable<ExecutableProcess>;
 };

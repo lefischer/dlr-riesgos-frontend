@@ -1,21 +1,16 @@
 import express from 'express';
 import { Request, Response } from 'express';
-import { LowdbClient } from '../database/lowdb/lowdbClient';
-import { HttpClient } from '../http_client/http_client';
 import { RiesgosService } from '../model/riesgos.service';
 import { RiesgosProduct } from '../model/datatypes/riesgos.datatypes';
-import { FakeCache } from '../wps/lib/cache';
 import { Server as WsServer } from 'ws';
+import { RiesgosDatabase } from '../database/db';
 const url = require('url');
 
 
-export function setUpServer(port = 3000) {
+export function setUpServer(port = 3000, db: RiesgosDatabase) {
     const app = express();
     
-    const http = new HttpClient();
-    const db = new LowdbClient();
-    const cache = new FakeCache();
-    const riesgosService = new RiesgosService(db, http, cache);
+    const riesgosService = new RiesgosService(db);
     
     
     app.get('/getScenarioMetaData', (req: Request, res: Response) => {

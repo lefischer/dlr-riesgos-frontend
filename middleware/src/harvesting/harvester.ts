@@ -1,5 +1,5 @@
 import { HttpClient } from "../http_client/http_client";
-import { RiesgosWpsProcess, RiesgosWpsProduct } from "../model/datatypes/riesgos.wps.datatypes";
+import { RiesgosWpsProcess, RiesgosWpsProduct } from "../model/datatypes/processors/riesgos.wps.datatypes";
 import { WpsProcessDescription, WpsServerDescription, WpsClient, WpsData, WpsCapability } from "../wps/public-api";
 import { RiesgosDatabase } from "../database/db";
 
@@ -59,15 +59,15 @@ export class WpsHarvester {
     private getWpsProcess (server: WpsServerDescription, description: WpsProcessDescription, inputs: RiesgosWpsProduct[], outputs: RiesgosWpsProduct[]): RiesgosWpsProcess {
 
         return {
-            uid: this.createProcesssUID(server, description),
+            uid: this.createProcessUID(server, description),
             concreteClassName: 'ExecutableWpsProcess',
             id: description.id,
             autoRunning: false,
             description: description.description || '',
             name: description.id,
             processVersion: description.processVersion,
-            requiredProducts: inputs.map(i => i.uid),
-            providedProducts: outputs.map(o => o.uid),
+            inputSlots: inputs.map(i => i.uid),
+            outputSlots: outputs.map(o => o.uid),
             url: server.serverUrl,
             wpsVersion: server.serverVersion,
         };
@@ -77,7 +77,7 @@ export class WpsHarvester {
         return `${server.serverUrl}_${process.id}_${product.description.id}`;
     }
 
-    private createProcesssUID(server: WpsServerDescription, process: WpsProcessDescription) {
+    private createProcessUID(server: WpsServerDescription, process: WpsProcessDescription) {
         return `${server.serverUrl}_${process.id}`;
     }
 }

@@ -4,26 +4,20 @@ import { LowdbClient } from "../database/lowdb/lowdbClient";
 
 
 const db = new LowdbClient();
-db.addScenario({
-    id: 'Chile',
-    title: 'Chile',
-    description: 'Earthquake and tsunami',
-    preview: '',
-    processes: [
-        'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess',
-        'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.ShakygroundProcess'
-    ],
-    products: [
-        'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_input-boundingbox',
-        'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_mmin',
-        'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_mmax',
-        'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_zmin',
-        'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_zmax',
-        'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_p',
-        'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_etype',
-        'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_tlon',
-        'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_tlat',
-        'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.QuakeledgerProcess_selectedRows',
-        'http://rz-vm140.gfz-potsdam.de/wps/WebProcessingService_org.n52.gfz.riesgos.algorithm.impl.ShakygroundProcess_quakeMLFile'
-    ]
-});
+// db.addScenario({
+//     id: 'Ecuador',
+//     title: 'Ecuador',
+//     description: 'Sample scenario Ecuador',
+//     preview: '',
+//     processes: [
+//         "http://91.250.85.221/geoserver/riesgos/wps_gs:LaharModel",
+//         "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.dlr.riesgos.algorithm.CotopaxiAshfall"
+//     ],
+//     connections: [{
+//         from: "global_vei",
+//         to: "http://riesgos.dlr.de/wps/WebProcessingService_org.n52.dlr.riesgos.algorithm.CotopaxiAshfall_vei",
+//     }, {
+//         from: "global_vei",
+//         to: "http://91.250.85.221/geoserver/riesgos/wps_gs:LaharModel_intensity"
+//     }]
+// });
