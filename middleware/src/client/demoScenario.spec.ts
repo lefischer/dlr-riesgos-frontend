@@ -153,58 +153,18 @@ describe('Demo-Scenario Test-Suite', () => {
                 client.getScenario(scenario.id).subscribe(scenario => {
                     expect(scenario).toBeTruthy();
 
-                    function callProcess(call: Call, scenario: RiesgosScenarioData) {
-                        console.log(`Calling ${call.process}(${call.inputs.map(i => i.product).join(', ')}) = [${call.outputs.map(o => o.product).join(', ')}]`);
-
-                        const process = scenario.processes.find(p => p.uid === call.process) as RiesgosProcess;
-
-                        // Finding inputs. Input-values come from what has already been obtained in previous steps (in `scenarioProductData`),
-                        // or, alternatively, from default values.
-                        const inputs: ProcessData[] = call.inputs.map(i => {
-                            const existingEntry = scenario.products.find(prod => prod.uid === i.product);
-                            if (!existingEntry) throw new Error(`Could not find existing data for ${i.product}`);
-
-                            if (!existingEntry.value) {
-                                if (existingEntry.options?.length) {
-                                    //@ts-ignore
-                                    existingEntry.value = existingEntry.options[0];
-                                }
-                            }
-
-                            return {
-                                slotId: i.slot,
-                                value: existingEntry
-                            };
-                        })
-
-                        // Finding outputs.
-                        const outputs: ProcessData[] = call.outputs.map(o => {
-                            const existingEntry = scenario.products.find(prod => prod.uid === o.product);
-                            if (!existingEntry) throw new Error(`Could not find existing data for ${o.product}`);
-                            return {
-                                slotId: o.slot,
-                                value: existingEntry
-                            };
-                        });
-
-                        // Executing. Results are being stored in `scenarioProductData` to be used in future steps.
-                        return client.executeProcess(process, inputs, outputs).pipe(
-                            map((results: ProcessData[]) => {
-                                for (const result of results) {
-                                    for (const product of scenario.products) {
-                                        if (product.uid === result.value.uid) {
-                                            // @ts-ignore
-                                            product.value = result.value.value;
-                                        }
-                                    }
-                                }
-                                return scenario;
-                            })
-                        );
-                    }
-
                     const ops = scenario.metaData.calls.map(call =>
-                        mergeMap((scenario: RiesgosScenarioData) => callProcess(call, scenario))
+                        mergeMap((scenario: RiesgosScenarioData) => {
+                            const inputs = scenario.products.filter(p => call.inputs.map(i => i.product).includes(p.uid));
+                            // If no value set, using default value. This is something that usually the user has to do.
+                            inputs.map(i => {
+                                if (i.value === null && i.options?.length) {
+                                    // @ts-ignore
+                                    i.value = i.options[0];
+                                }
+                            });
+                            return client.executeCall(call, scenario);
+                        })
                     );
 
                     pipeFromArray(ops)(of(scenario)).subscribe((val: RiesgosScenarioData) => {

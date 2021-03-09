@@ -1,7 +1,7 @@
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { HttpClient } from "../http_client/http_client";
-import { ProcessData, RiesgosProcess, RiesgosProduct, RiesgosScenarioData, RiesgosScenarioMetaData } from "../model/datatypes/riesgos.datatypes";
+import { Call, ProcessData, RiesgosProcess, RiesgosProduct, RiesgosScenarioData, RiesgosScenarioMetaData } from "../model/datatypes/riesgos.datatypes";
 import WebSocket from 'ws';
 
 
@@ -42,6 +42,54 @@ export class RiesgosClient {
         });
 
         return data$;
+    }
+
+    /**
+     * A wrapper around `executeProcess` that handles the conversion of `RiesgosProduct` to `ProcessData` and back for us.
+     * @param call 
+     * @param scenario 
+     */
+    executeCall(call: Call, scenario: RiesgosScenarioData): Observable<RiesgosScenarioData> {
+
+        const process = scenario.processes.find(p => p.uid === call.process) as RiesgosProcess;
+
+        // Finding inputs.
+        const inputs: ProcessData[] = call.inputs.map(i => {
+            const existingEntry = scenario.products.find(prod => prod.uid === i.product);
+            if (!existingEntry) throw new Error(`Could not find existing data for ${i.product}`);
+            if (!existingEntry.value) throw new Error(`No value given for entry ${i.product}`);
+
+            return {
+                slotId: i.slot,
+                value: existingEntry
+            };
+        })
+
+        // Finding outputs.
+        const outputs: ProcessData[] = call.outputs.map(o => {
+            const existingEntry = scenario.products.find(prod => prod.uid === o.product);
+            if (!existingEntry) throw new Error(`Could not find existing data for ${o.product}`);
+            return {
+                slotId: o.slot,
+                value: existingEntry
+            };
+        });
+
+        // Executing. Results are being stored in `scenarioProductData` to be used in future steps.
+        return this.executeProcess(process, inputs, outputs).pipe(
+            map((results: ProcessData[]) => results.map(r => r.value)),
+            map((results: RiesgosProduct[]) => {
+                for (const result of results) {
+                    const original = scenario.products.find(p => p.uid === result.uid);
+                    if (original) {
+                        // @ts-ignore
+                        original.value = result.value;
+                    }
+                }
+                return scenario;
+            })
+        );
+
     }
 }
 
