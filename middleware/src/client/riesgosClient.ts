@@ -1,7 +1,7 @@
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { HttpClient } from "../http_client/http_client";
-import { RiesgosProcess, RiesgosProduct, RiesgosScenarioData, RiesgosScenarioMetaData } from "../model/datatypes/riesgos.datatypes";
+import { ProcessData, RiesgosProcess, RiesgosProduct, RiesgosScenarioData, RiesgosScenarioMetaData } from "../model/datatypes/riesgos.datatypes";
 import WebSocket from 'ws';
 
 
@@ -27,9 +27,9 @@ export class RiesgosClient {
         );
     }
 
-    executeProcess(process: RiesgosProcess, inputs: RiesgosProduct[], outputs: RiesgosProduct[]): Observable<RiesgosProduct[]> {
+    executeProcess(process: RiesgosProcess, inputs: ProcessData[], outputs: ProcessData[]): Observable<ProcessData[]> {
         
-        const data$ = new Observable<RiesgosProduct[]>((listener) => {
+        const data$ = new Observable<ProcessData[]>((listener) => {
             const client = new WebSocket('ws://' + this.url + '/executeProcess');
             client.on('open', () => {
                 client.send(JSON.stringify({process, inputs, outputs}));

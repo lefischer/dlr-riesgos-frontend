@@ -1,7 +1,7 @@
 import { Observable, throwError } from "rxjs";
 import { map, switchMap, tap } from "rxjs/operators";
 import { RiesgosDatabase } from "../database/db";
-import { ExecutableProcess, RiesgosProcess, RiesgosProduct, RiesgosScenarioData, RiesgosScenarioMetaData } from "./datatypes/riesgos.datatypes";
+import { ExecutableProcess, ProcessData, RiesgosProcess, RiesgosProduct, RiesgosScenarioData, RiesgosScenarioMetaData } from "./datatypes/riesgos.datatypes";
 
 
 /**
@@ -31,10 +31,10 @@ export class RiesgosService {
         );
     }
 
-    public executeService(process: RiesgosProcess, inputs: RiesgosProduct[], outputs: RiesgosProduct[]): Observable<RiesgosProduct[]> {
+    public executeService(process: RiesgosProcess, inputs: ProcessData[], outputs: ProcessData[]): Observable<ProcessData[]> {
         for (const input of inputs) {
-            if (input.value === undefined || input.value === null || input.value.value === undefined || input.value.value === null) {
-                throw new Error(`No value given for input ${input.uid}`);
+            if (input.value.value === null) {
+                throw new Error(`No value given for input ${input.value.uid} on slot ${input.slotId}`);
             }
         }
 

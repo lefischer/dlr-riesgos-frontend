@@ -1,5 +1,5 @@
 import { HttpClient } from "../http_client/http_client";
-import { RiesgosWpsProcess, RiesgosWpsProduct } from "../model/datatypes/processors/riesgos.wps.datatypes";
+import { RiesgosWpsProcess, WpsProcessData } from "../model/datatypes/processors/riesgos.wps.datatypes";
 import { WpsProcessDescription, WpsServerDescription, WpsClient, WpsData, WpsCapability } from "../wps/public-api";
 import { RiesgosDatabase } from "../database/db";
 
@@ -29,7 +29,7 @@ export class WpsHarvester {
         const wpsClient = new WpsClient(server.serverVersion, this.httpClient);
         wpsClient.describeProcess(server.serverUrl, processId).subscribe((result: WpsProcessDescription) => {
 
-            const inputs: RiesgosWpsProduct[] = [];
+            const inputs: WpsProcessData[] = [];
             for (const input of result.inputs) {
                 const uid = this.createProductUID(server, result, input);
                 const product = this.getWpsProduct(uid, input);
@@ -37,7 +37,7 @@ export class WpsHarvester {
                 inputs.push(product);
             }
             
-            const outputs: RiesgosWpsProduct[] = [];
+            const outputs: WpsProcessData[] = [];
             for (const output of result.outputs) {
                 const uid = this.createProductUID(server, result, output);
                 const product = this.getWpsProduct(uid, output);
@@ -50,13 +50,13 @@ export class WpsHarvester {
         });
     }
 
-    private getWpsProduct(uid: string, wpsData: WpsData): RiesgosWpsProduct {
+    private getWpsProduct(uid: string, wpsData: WpsData): WpsProcessData {
         return {
             uid, value: wpsData
         };
     }
     
-    private getWpsProcess (server: WpsServerDescription, description: WpsProcessDescription, inputs: RiesgosWpsProduct[], outputs: RiesgosWpsProduct[]): RiesgosWpsProcess {
+    private getWpsProcess (server: WpsServerDescription, description: WpsProcessDescription, inputs: WpsProcessData[], outputs: WpsProcessData[]): RiesgosWpsProcess {
 
         return {
             uid: this.createProcessUID(server, description),

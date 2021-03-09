@@ -4,11 +4,14 @@ import { HttpClient } from '../../../http_client/http_client';
 import { Cache, FakeCache } from '../../../wps/lib/cache';
 import { WpsClient } from '../../../wps/lib/wpsclient';
 import { WpsData, WpsVersion } from '../../../wps/lib/wps_datatypes';
-import { RiesgosProduct, ExecutableProcess } from '../riesgos.datatypes';
+import { RiesgosProduct, ExecutableProcess, ProcessData } from '../riesgos.datatypes';
 
+interface WpsRiesgosProduct extends RiesgosProduct {
+    value: WpsData;
+}
 
-export interface RiesgosWpsProduct extends RiesgosProduct {
-    readonly value: WpsData;
+export interface WpsProcessData extends ProcessData {
+    readonly value: WpsRiesgosProduct; 
 }
 
 
@@ -28,21 +31,24 @@ export class ExecutableWpsProcess implements ExecutableProcess {
 
 
     public execute(
-        inputProducts: RiesgosWpsProduct[],
-        outputProducts: RiesgosWpsProduct[]): Observable<RiesgosProduct[]> {
+        inputProducts: WpsProcessData[],
+        outputProducts: WpsProcessData[]): Observable<WpsProcessData[]> {
 
-            const wpsInputs = inputProducts.map(prod => prod.value);
-            const wpsOutputDescriptions = outputProducts.map(prod => prod.value.description);
+            const wpsInputs = inputProducts.map(prod => prod.value.value);
+            const wpsOutputDescriptions = outputProducts.map(prod => prod.value.value.description);
 
             return this.wpsClient.executeAsync(this.serverUrl, this.wpsProcessId, wpsInputs, wpsOutputDescriptions, 2000).pipe(
                 map((outputs: WpsData[]) => {
-                    const outputProductsWithValues: RiesgosWpsProduct[] = [];
+                    const outputProductsWithValues: WpsProcessData[] = [];
                     for (const output of outputs) {
-                        const associatedProduct = outputProducts.find(p => p.value.description.id === output.description.id);
+                        const associatedProduct = outputProducts.find(p => p.value.value.description.id === output.description.id);
                         if (associatedProduct) {
                             outputProductsWithValues.push({
-                                uid: associatedProduct.uid,
-                                value: output
+                                slotId: associatedProduct.slotId,
+                                value: {
+                                    ... associatedProduct.value,
+                                    value: output
+                                }
                             });
                         }
                     }

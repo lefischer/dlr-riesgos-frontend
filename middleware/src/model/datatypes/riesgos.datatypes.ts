@@ -11,16 +11,12 @@ import { Observable } from 'rxjs';
  * RiesgosProcess:
  *  - 
  */
-
-
 export interface RiesgosProduct {
     readonly uid: string;
     readonly scenario: string;
     readonly options?: any[];
     readonly value: any;
 }
-
-
 
 
 /**
@@ -31,10 +27,24 @@ export interface RiesgosProduct {
  *  - because that is only required on the backend-side
  *  - because it cannot be saved in a database.
  */
-export interface RiesgosProcess {
+ export interface RiesgosProcess {
     readonly uid: string;
     readonly inputSlots: string[];
     readonly outputSlots: string[];
+}
+
+
+
+
+/**
+ * Whereas a `RiesgosProduct` contains all information required for the frontend,
+ * this `ProcessData` contains all the information required for the backend-service.
+ * Note that `RiesgosProduct.uid` and `ProcessData.slotId` are distinct:
+ * Multiple `RiesgosProduct`s may be inserted into a `slotId`.
+ */
+export interface ProcessData {
+    readonly slotId: string;
+    value: RiesgosProduct;
 }
 
 
@@ -47,7 +57,7 @@ export interface RiesgosProcess {
  * not care about graph-structure, dependencies etc.
  */
 export interface ExecutableProcess {
-    execute( inputs: RiesgosProduct[], outputs: RiesgosProduct[]): Observable<RiesgosProduct[]>;
+    execute( inputs: ProcessData[], outputs: ProcessData[]): Observable<ProcessData[]>;
 };
 
 

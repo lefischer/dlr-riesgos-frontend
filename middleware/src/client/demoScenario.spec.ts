@@ -1,9 +1,12 @@
 import { unlinkSync } from 'fs';
 import { Server } from 'http';
+import { of } from 'rxjs';
+import { pipeFromArray } from 'rxjs/internal/util/pipe';
+import { map, mergeMap, tap } from 'rxjs/operators';
 import { RiesgosDatabase } from "../database/db";
 import { LowdbClient } from "../database/lowdb/lowdbClient";
 import { HttpClient } from '../http_client/http_client';
-import { RiesgosProcess, RiesgosProduct } from '../model/datatypes/riesgos.datatypes';
+import { Call, ProcessData, RiesgosProcess, RiesgosProduct, RiesgosScenarioData } from '../model/datatypes/riesgos.datatypes';
 import { setUpServer } from '../server/server';
 import { RiesgosClient } from './riesgosClient';
 
@@ -150,66 +153,76 @@ describe('Demo-Scenario Test-Suite', () => {
                 client.getScenario(scenario.id).subscribe(scenario => {
                     expect(scenario).toBeTruthy();
 
-                    /**
-                     * @TODO @TODO @TODO @TODO @TODO @TODO @TODO :
-                     * Wait until one call is done before starting work on the next one.
-                     */
-
-                    const scenarioProductData = scenario.products;
-
-                    // Executing all calls in scenario.
-                    for (const call of scenario.metaData.calls) {
+                    function callProcess(call: Call, scenario: RiesgosScenarioData) {
+                        console.log(`Calling ${call.process}(${call.inputs.map(i => i.product).join(', ')}) = [${call.outputs.map(o => o.product).join(', ')}]`);
 
                         const process = scenario.processes.find(p => p.uid === call.process) as RiesgosProcess;
 
                         // Finding inputs. Input-values come from what has already been obtained in previous steps (in `scenarioProductData`),
                         // or, alternatively, from default values.
-                        const inputs: RiesgosProduct[] = call.inputs.map(match => match.product).map(inputId => {
-                            const existingValue = scenarioProductData.find(prod => prod.uid === inputId);
+                        const inputs: ProcessData[] = call.inputs.map(i => {
+                            const existingEntry = scenario.products.find(prod => prod.uid === i.product);
+                            if (!existingEntry) throw new Error(`Could not find existing data for ${i.product}`);
 
-                            if (existingValue?.value) {
-                                return existingValue;
-                            }  else if (existingValue?.options) {
-                                return {
-                                    ...existingValue,
-                                    value: existingValue.options[0]
+                            if (!existingEntry.value) {
+                                if (existingEntry.options?.length) {
+                                    //@ts-ignore
+                                    existingEntry.value = existingEntry.options[0];
                                 }
-                            } else {
-                                throw Error(`Could not find a value for input ${existingValue?.uid}`);
                             }
-                        });
+
+                            return {
+                                slotId: i.slot,
+                                value: existingEntry
+                            };
+                        })
 
                         // Finding outputs.
-                        const outputs: RiesgosProduct[] = call.outputs
-                            .map(match => match.product)
-                            .map(productId => scenarioProductData.find(prod => prod.uid === productId) as RiesgosProduct);
-
-                        // Executing. Results are being stored in `scenarioProductData` to be used in future steps.
-                        client.executeProcess(process, inputs, outputs).subscribe((results: RiesgosProduct[]) => {
-                            for (const result of results) {
-                                const entry = scenarioProductData.find(prod => prod.uid === result.uid);
-                                if (entry) {
-                                    // @ts-ignore
-                                    entry.value = result.value;
-                                }
-                            }
+                        const outputs: ProcessData[] = call.outputs.map(o => {
+                            const existingEntry = scenario.products.find(prod => prod.uid === o.product);
+                            if (!existingEntry) throw new Error(`Could not find existing data for ${o.product}`);
+                            return {
+                                slotId: o.slot,
+                                value: existingEntry
+                            };
                         });
 
+                        // Executing. Results are being stored in `scenarioProductData` to be used in future steps.
+                        return client.executeProcess(process, inputs, outputs).pipe(
+                            map((results: ProcessData[]) => {
+                                for (const result of results) {
+                                    for (const product of scenario.products) {
+                                        if (product.uid === result.value.uid) {
+                                            // @ts-ignore
+                                            product.value = result.value.value;
+                                        }
+                                    }
+                                }
+                                return scenario;
+                            })
+                        );
                     }
 
+                    const ops = scenario.metaData.calls.map(call =>
+                        mergeMap((scenario: RiesgosScenarioData) => callProcess(call, scenario))
+                    );
 
-                    setTimeout(() => {
-                        const unsetData = scenarioProductData.filter(p => p.value === null);
-                        expect(unsetData.length).toEqual(0);
-                    }, 10);
+                    pipeFromArray(ops)(of(scenario)).subscribe((val: RiesgosScenarioData) => {
+                       const unsetData = val.products.filter(p => p.value === null);
+                       expect(unsetData.length).toEqual(0);
+                       const soupData = val.products.find(p => p.uid === 'Soup') as RiesgosProduct;
+                       expect(soupData.value).toEqual('cooked chopped zucchini, blended chopped tomato, vegetable broth');
+                       console.log(`Completed scenario ${scenario.metaData.id}`);
+                   });
+
                 });
             }
 
-        });
+            setTimeout(() => {
+                done();
+            }, 9500);
 
-        setTimeout(() => {
-            done();
-        }, 1000);
+        });
 
     }, 10000);
 
