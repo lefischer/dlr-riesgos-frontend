@@ -208,7 +208,9 @@ export class AshfallService extends WpsProcess implements WizardableProcess {
 
         const newOutputProducts = outputProducts.find(p => p.uid === ashfall.uid);
 
-        const obs1$ = super.execute(newInputProducts, [newOutputProducts], doWhileExecuting);
+        // service temporarily out of commission
+        // const obs1$ = super.execute(newInputProducts, [newOutputProducts], doWhileExecuting);
+        const obs1$ = this.loadAshfallPpolygonFromFile(ashfall, veiV.value, probV.value);
         const obs2$ = this.loadAshfallPointFromFile(ashfallPoint, veiV.value, probV.value);
         return forkJoin(obs1$, obs2$).pipe(
             map((results: Product[][]) => {
@@ -223,11 +225,21 @@ export class AshfallService extends WpsProcess implements WizardableProcess {
         );
     }
 
-    private loadAshfallPointFromFile(ashfallPoint: Product, vei: string, prob: string): Observable<Product[]> {
+    private loadAshfallPointFromFile(ashfall: Product, vei: string, prob: string): Observable<Product[]> {
         if (parseInt(prob) === 1) {
             prob = '01';
         }
         const url = `assets/data/geojson/VEI_${vei}_${prob}percent.geojson`;
+        return this.http.get(url).pipe(map((val) => {
+            return [{
+                ... ashfall,
+                value: [val]
+            }];
+        }));
+    }
+
+    private loadAshfallPpolygonFromFile(ashfallPoint: Product, vei: string, prob: string): Observable<Product[]> {
+        const url = `assets/data/geojson/ashfall/ash_prob${prob}_vei${vei}.geojson`;
         return this.http.get(url).pipe(map((val) => {
             return [{
                 ... ashfallPoint,
