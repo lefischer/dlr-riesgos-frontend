@@ -27,7 +27,9 @@
     "Showcase Ecuador": "Volcán Cotopaxi y alrededores",
     "Showcase Peru": "Lima Metropolitana y Callao",
 
-    
+    "Data licenses": "Licencias data",
+    "Data licenses disclaimer": "Esta aplicación web permite el procesamiento, la visualización y la descarga de datos de varios autores. La licencia de estos datos y las condiciones de uso son siempre responsabilidad de los autores de los mismos.",
+    "Code licenses": "Licencias codigo",
     "Licenses": "Licencias",
     "Licenses disclaimer": "Se usaron muchas bibliotecas de terceros para crear este proyecto. Sus licencias se enumeran aquí.",
     "Library name": "Nombre de biblioteca",

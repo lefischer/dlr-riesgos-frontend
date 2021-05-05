@@ -4,7 +4,7 @@
     "p1": "Peru", 
     "e1": "Ecuador",
 
-    "GFZ": "GFZ: German Research Center for Geosciences",
+    "GFZ": "GFZ: German Research Centre for Geosciences",
     "AWI": "AWI: Alfred Wegener Institute",
     "DLR": "DLR: German Aerospace Center",
     "TUM": "TUM: Technical University of Munich",
@@ -19,6 +19,9 @@
     "Showcase Ecuador": "Cotopaxi volcano and surroundings",
     "Showcase Peru": "Metropolitan Lima and Callao",
 
+    "Data licenses": "Data Licenses",
+    "Data licenses disclaimer": "This web application allows the processing, visualization and download of data from various authors. The licensing of this data and terms of use is always the responsibility of the authors of the data.",
+    "Code licenses": "Code licenses",
     "Licenses disclaimer": "A lot of third party libraries were used to create this project. Their licenses are listed here.",
 
     "TS-Service": "Tsunami Simulation",
