@@ -202,6 +202,8 @@ export class WebGlPolygonRenderer extends LayerRenderer<VectorLayer> {
         return this.canvas;
     }
 
+    renderDeclutter(frameState) {}
+
 
     /**
      * @param pixel Pixel.
@@ -256,4 +258,6 @@ export class WebGlPolygonLayer extends VectorLayer {
         delete(this.webGlData);
         return renderer;
     }
+
+    renderDeclutter(frameState) {}
 }
