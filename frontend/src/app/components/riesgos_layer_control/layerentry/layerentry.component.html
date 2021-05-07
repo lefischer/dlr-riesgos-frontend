@@ -47,6 +47,8 @@
         [ngClass]="{'active': activeTabs['styleLegend']}" (click)="switchTab('styleLegend')"></clr-icon>
       <clr-icon *ngIf="layer.description" title="Layer info" shape="info-standard" class="iconButton"
         [ngClass]="{'active': activeTabs['description']}" (click)="switchTab('description')"></clr-icon>
+        <clr-icon *ngIf="layer.dynamicDescription" title="Layer info" shape="info-standard" class="iconButton"
+        [ngClass]="{'active': activeTabs['dynamicDescription']}" (click)="switchTab('dynamicDescription')"></clr-icon>
       <clr-icon *ngIf="layer.styles?.length > 1" title="Change style" shape="cloud-chart" class="iconButton"
         [ngClass]="{'active': activeTabs['changeStyle']}" (click)="switchTab('changeStyle')"></clr-icon>
 
@@ -90,12 +92,11 @@
 
       <!-- show Description -->
       <div *ngIf="activeTabs.description && layer.description">
-        <ng-container *ngIf="checkIsComponentItem(layer.description, layer); else descriptionPlaintext">
-          <ukis-dynamic-component [(dynamicComponent)]="layer.description"></ukis-dynamic-component>
-        </ng-container>
-        <ng-template #descriptionPlaintext>
-          <span [innerHTML]="layer.description | translate"></span>
-        </ng-template>
+        <span [innerHTML]="layer.description | translate"></span>
+      </div>
+
+      <div *ngIf="activeTabs.dynamicDescription && layer.dynamicDescription">
+        <ukis-dynamic-component [(dynamicComponent)]="layer.dynamicDescription"></ukis-dynamic-component>
       </div>
 
       <!-- show style-switcher -->

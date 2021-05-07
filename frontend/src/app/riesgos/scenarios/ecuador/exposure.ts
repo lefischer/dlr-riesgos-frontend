@@ -8,6 +8,8 @@ import { VectorLayerProduct } from 'src/app/riesgos/riesgos.datatypes.mappable';
 import { weightedDamage, greenRedRange } from 'src/app/helpers/colorhelpers';
 import { Style as olStyle, Fill as olFill, Stroke as olStroke } from 'ol/style';
 import { Feature as olFeature } from 'ol/Feature';
+import { IDynamicComponent } from 'src/app/components/dynamic-component/dynamic-component.component';
+import { TranslatableStringComponent } from 'src/app/components/dynamic/translatable-string/translatable-string.component';
 
 
 export const lonminEcuador: Product & WpsData = {
@@ -168,7 +170,13 @@ export const initialExposureAshfall: VectorLayerProduct & WpsData & Product = {
         return `<h4>{{ Exposure }}</h4>${anchor.innerHTML} {{ BuildingTypesTorres }}`;
       },
       summary: (value: any) => {
-        return 'BuildingTypesTorres';
+        const comp: IDynamicComponent = {
+          component: TranslatableStringComponent,
+          inputs: {
+            text: 'BuildingTypesTorres'
+          }
+        };
+        return comp;
       }
     }
   },

@@ -78,6 +78,7 @@ import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
 import { environment } from '../environments/environment';
+import { TranslatableStringComponent } from './components/dynamic/translatable-string/translatable-string.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -135,7 +136,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     GroupSliderComponent,
     DynamicComponentComponent,
     ViewRefDirective,
-    InfoTableComponentComponent
+    InfoTableComponentComponent,
+    TranslatableStringComponent
   ],
   imports: [
     BrowserModule,

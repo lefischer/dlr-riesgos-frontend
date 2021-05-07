@@ -16,6 +16,8 @@ import { switchMap } from 'rxjs/operators';
 import { FeatureCollection } from '@turf/helpers';
 import { createKeyValueTableHtml, createHeaderTableHtml, createTableHtml, zeros, filledMatrix } from 'src/app/helpers/others';
 import { InfoTableComponentComponent } from 'src/app/components/dynamic/info-table-component/info-table-component.component';
+import { IDynamicComponent } from 'src/app/components/dynamic-component/dynamic-component.component';
+import { TranslatableStringComponent } from 'src/app/components/dynamic/translatable-string/translatable-string.component';
 
 
 
@@ -372,7 +374,14 @@ const eqUpdatedExposurePeruProps: VectorLayerProperties = {
                         counts[damageClass] += nrBuildings;
                     }
                 }
-                return createHeaderTableHtml(Object.keys(counts), [Object.values(counts).map(c => toDecimalPlaces(c, 0))]);
+                const html = createHeaderTableHtml(Object.keys(counts), [Object.values(counts).map(c => toDecimalPlaces(c, 0))]);
+                const comp: IDynamicComponent = {
+                    component: TranslatableStringComponent,
+                    inputs: {
+                      text: html
+                    }
+                  };
+                  return comp;
             }
         },
         description: 'Number of goods exposed to a threat'

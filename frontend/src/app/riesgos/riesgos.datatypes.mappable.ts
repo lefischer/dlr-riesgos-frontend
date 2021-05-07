@@ -34,7 +34,7 @@ export interface VectorLayerProperties {
     vectorLayerAttributes: {
         style?: (feature: Feature, resolution: number, selected: boolean) => any;
         text?: any;
-        summary?: (value: any) => IDynamicComponent | string,
+        summary?: (value: any) => IDynamicComponent,
         sldFile?: string,
         legendEntries?: LegendElement[]
     };

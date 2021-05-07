@@ -111,6 +111,7 @@ export class RiesgosLayerentryComponent implements OnInit {
     legend: true,
     styleLegend: false,
     description: false,
+    dynamicDescription: false,
     changeStyle: false
   };
 

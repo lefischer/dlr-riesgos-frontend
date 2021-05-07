@@ -206,7 +206,6 @@ export class LayerMarshaller  {
             visible: true,
             attribution: '',
             type: 'custom',
-            description: product.description.vectorLayerAttributes.summary ? product.description.vectorLayerAttributes.summary(product.value) : undefined,
             removable: true,
             continuousWorld: true,
             time: null,
@@ -232,8 +231,10 @@ export class LayerMarshaller  {
                         downloadJson(data, `data_${theLayer.name}.json`);
                     }
                 }
-            }]
+            }],
+            dynamicDescription: product.description.vectorLayerAttributes.summary ? product.description.vectorLayerAttributes.summary(product.value) : undefined
         });
+
 
         // Ugly hack: a custom layer is not supposed to have an 'options' property.
         // We set it here anyway, because we need options.style to be able to create a custom legend.
@@ -369,7 +370,6 @@ export class LayerMarshaller  {
                 visible: true,
                 attribution: '',
                 type: 'custom',
-                description: vectorLayerProps.vectorLayerAttributes.summary(product.value),
                 removable: true,
                 continuousWorld: true,
                 time: null,
@@ -395,7 +395,8 @@ export class LayerMarshaller  {
                             downloadJson(data, `data_${theLayer.name}.json`);
                         }
                     }
-                }]
+                }],
+                dynamicDescription: vectorLayerProps.vectorLayerAttributes.summary(product.value)
             });
             productLayer.productId = product.uid;
 
@@ -443,7 +444,6 @@ export class LayerMarshaller  {
                     id: `${product.uid}_${product.description.id}_result_layer`,
                     name: `${product.description.name}`,
                     attribution: '',
-                    description: product.description.vectorLayerAttributes.summary ? product.description.vectorLayerAttributes.summary(data) : '',
                     opacity: 1.0,
                     removable: true,
                     type: 'geojson',
@@ -472,7 +472,8 @@ export class LayerMarshaller  {
                                 downloadJson(data, `data_${theLayer.name}.json`);
                             }
                         }
-                    }]
+                    }],
+                    dynamicDescription: product.description.vectorLayerAttributes.summary ? product.description.vectorLayerAttributes.summary(data) : undefined,
                 });
                 layer.productId = product.uid;
 

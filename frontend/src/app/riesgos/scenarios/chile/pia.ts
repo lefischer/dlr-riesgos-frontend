@@ -3,7 +3,7 @@ import { ProcessStateAvailable, WpsProcess } from 'src/app/riesgos/riesgos.datat
 import { VectorLayerProduct, WmsLayerProduct } from 'src/app/riesgos/riesgos.datatypes.mappable';
 import { eqShakemapRef } from './shakyground';
 import { HttpClient } from '@angular/common/http';
-import { WpsData } from '@dlr-eoc/utils-ogc/src/public-api';
+import { WpsData } from '@dlr-eoc/utils-ogc';
 import { Style as OlStye, Fill as OlFill } from 'ol/style';
 
 
