@@ -13,6 +13,7 @@ export const shakemapWmsOutput: WpsData & WmsLayerProduct = {
     uid: 'Shakyground_wms',
     description: {
         id: 'shakeMapFile',
+        title: 'shakeMapFile',
         icon: 'earthquake',
         name: 'shakemap',
         type: 'complex',
@@ -34,6 +35,7 @@ export const eqShakemapRef: WpsData & Product = {
     uid: 'Shakyground_shakemap',
     description: {
         id: 'shakeMapFile',
+        title: 'shakeMapFile',
         type: 'complex',
         reference: true,
         format: 'text/xml',
