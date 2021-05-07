@@ -20,6 +20,7 @@ export class InputBoundingbox implements BboxUconfProduct, BboxLayerProduct, Wps
     constructor() {
         this.description = {
             id: 'input-boundingbox',
+            title: '',
             name: 'eq-selection: boundingbox',
             type: 'bbox',
             icon: 'earthquake',
@@ -43,6 +44,7 @@ export const mmin: StringUconfProduct & WpsData = {
     uid: 'mmin',
     description: {
         id: 'mmin',
+        title: '',
         type: 'literal',
         wizardProperties: {
             name: 'mmin',
@@ -60,6 +62,7 @@ export const mmax: StringUconfProduct & WpsData = {
     uid: 'mmax',
     description: {
         id: 'mmax',
+        title: '',
         type: 'literal',
         wizardProperties: {
             name: 'mmax',
@@ -77,6 +80,7 @@ export const zmin: StringUconfProduct & WpsData = {
     uid: 'zmin',
     description: {
         id: 'zmin',
+        title: '',
         defaultValue: '0',
         type: 'literal',
         wizardProperties: {
@@ -93,6 +97,7 @@ export const zmax: StringUconfProduct & WpsData = {
     uid: 'zmax',
     description: {
         id: 'zmax',
+        title: '',
         defaultValue: '100',
         type: 'literal',
         wizardProperties: {
@@ -110,6 +115,7 @@ export const p: Product & WpsData = {
     uid: 'p',
     description: {
         id: 'p',
+        title: '',
         description: 'p',
         type: 'literal',
         reference: false,
@@ -123,6 +129,7 @@ export const etype: StringSelectUconfProduct & WpsData = {
     uid: 'etype',
     description: {
         id: 'etype',
+        title: '',
         description: 'etype',
         defaultValue: 'expert', // 'deaggregation',
         reference: false,
@@ -142,6 +149,7 @@ export const tlon: Product & WpsData = {
     uid: 'tlon',
     description: {
         id: 'tlon',
+        title: '',
         description: 'longitude [decimal degrees]',
         defaultValue: '-71.5',
         reference: false,
@@ -155,6 +163,7 @@ export const tlat: Product & WpsData = {
     uid: 'tlat',
     description: {
         id: 'tlat',
+        title: '',
         description: 'latitude [decimal degrees]',
         defaultValue: '-33.1',
         reference: false,
@@ -169,6 +178,7 @@ export const selectedEqs: VectorLayerProduct & WpsData = {
     uid: 'QuakeledgerProcess_selectedRows',
     description: {
         id: 'selectedRows',
+        title: '',
         icon: 'earthquake',
         name: 'available earthquakes',
         description: 'Catalog data',

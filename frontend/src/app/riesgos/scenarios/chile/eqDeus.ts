@@ -27,6 +27,7 @@ export const loss: WpsData & Product = {
     uid: 'loss',
     description: {
         id: 'loss',
+        title: '',
         reference: false,
         type: 'literal'
     },
@@ -393,6 +394,7 @@ export const eqDamageM: WpsData & MultiVectorLayerProduct = {
     uid: 'eq_deus_output_values',
     description: {
         id: 'merged_output',
+        title: '',
         reference: false,
         defaultValue: null,
         format: 'application/json',
@@ -407,6 +409,7 @@ export const eqUpdatedExposureRef: WpsData & Product = {
     uid: 'updated_exposure_ref',
     description: {
         id: 'updated_exposure',
+        title: '',
         reference: true,
         type: 'complex',
         format: 'application/json',

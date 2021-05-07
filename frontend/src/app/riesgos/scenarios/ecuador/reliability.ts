@@ -16,6 +16,7 @@ export const countryEcuador: WpsData & Product = {
     uid: 'systemreliability_country_ecuador',
     description: {
         id: 'country',
+        title: '',
         defaultValue: 'ecuador',
         description: 'What country are we working in?',
         reference: false,
@@ -30,6 +31,7 @@ export const hazardLahar: WpsData & Product = {
     uid: 'systemreliability_hazard_lahar',
     description: {
         id: 'hazard',
+        title: '',
         defaultValue: 'lahar',
         description: 'What hazard are we dealing with?',
         reference: false,
@@ -43,6 +45,7 @@ export const damageConsumerAreasEcuador: WpsData & Product & VectorLayerProduct 
     uid: 'systemreliability_damage_consumerareas',
     description: {
         id: 'damage_consumer_areas',
+        title: '',
         icon: 'router',
         format: 'application/vnd.geo+json',
         name: 'Damage to consumer areas',

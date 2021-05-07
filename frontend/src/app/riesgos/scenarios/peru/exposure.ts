@@ -13,6 +13,7 @@ export const lonminPeru: Product & WpsData = {
   uid: 'lonmin',
   description: {
     id: 'lonmin',
+    title: 'lonmin',
     type: 'literal',
     reference: false,
     defaultValue: '-88'
@@ -25,6 +26,7 @@ export const lonmaxPeru: Product & WpsData = {
   uid: 'lonmax',
   description: {
     id: 'lonmax',
+    title: 'lonmax',
     type: 'literal',
     reference: false,
     defaultValue: '-66'
@@ -37,6 +39,7 @@ export const latminPeru: Product & WpsData = {
   uid: 'latmin',
   description: {
     id: 'latmin',
+    title: '',
     type: 'literal',
     reference: false,
     defaultValue: '-21'
@@ -49,6 +52,7 @@ export const latmaxPeru: Product & WpsData = {
   uid: 'latmax',
   description: {
     id: 'latmax',
+    title: '',
     type: 'literal',
     reference: false,
     defaultValue: '-0'
@@ -61,6 +65,7 @@ export const schemaPeru: Product & WpsData = {
   uid: 'schema',
   description: {
     id: 'schema',
+    title: '',
     defaultValue: 'SARA_v1.0',
     reference: false,
     type: 'literal'
@@ -74,6 +79,7 @@ export const assettypePeru: Product & WpsData = {
   uid: 'assettype',
   description: {
     id: 'assettype',
+    title: '',
     defaultValue: 'res',
     reference: false,
     type: 'literal',
@@ -86,6 +92,7 @@ export const querymodePeru: Product & WpsData = {
   uid: 'querymode',
   description: {
     id: 'querymode',
+    title: '',
     // options: ['intersects', 'within'],
     defaultValue: 'intersects',
     reference: false,
@@ -99,6 +106,7 @@ export const initialExposurePeru: VectorLayerProduct & WpsData & Product = {
   uid: 'AssetmasterProcess_Exposure_Peru',
   description: {
     id: 'selectedRowsGeoJson',
+    title: '',
     icon: 'building',
     type: 'complex',
     reference: false,

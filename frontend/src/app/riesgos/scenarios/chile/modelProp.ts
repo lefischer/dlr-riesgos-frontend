@@ -10,6 +10,7 @@ export const assetcategory: Product & WpsData = {
     uid: 'assetcategory',
     description: {
         id: 'assetcategory',
+        title: '',
         defaultValue: 'buildings',
         reference: false,
         type: 'literal'
@@ -21,6 +22,7 @@ export const losscategory: Product & WpsData = {
     uid: 'losscategory',
     description: {
         id: 'losscategory',
+        title: '',
         defaultValue: 'structural',
         reference: false,
         type: 'literal'
@@ -32,6 +34,7 @@ export const taxonomies: Product & WpsData = {
     uid: 'taxonomies',
     description: {
         id: 'taxonomies',
+        title: '',
         reference: false,
         type: 'literal',
         defaultValue: 'none'
@@ -44,6 +47,7 @@ export const fragilityRef: WpsData & Product = {
     uid: 'ModelpropProcess_Fragility',
     description: {
       id: 'selectedRows',
+      title: '',
       type: 'complex',
       reference: true,
       format: 'application/json'

@@ -379,6 +379,7 @@ export const ashfallDamageM: WpsData & MultiVectorLayerProduct = {
     uid: 'ashfall_damage_output_values',
     description: {
         id: 'merged_output',
+        title: '',
         reference: false,
         defaultValue: null,
         format: 'application/json',
@@ -393,6 +394,7 @@ export const ashfallUpdatedExposureRef: WpsData & Product = {
     uid: 'ashfallExposureRef',
     description: {
         id: 'updated_exposure',
+        title: '',
         reference: true,
         type: 'complex',
         format: 'application/json'

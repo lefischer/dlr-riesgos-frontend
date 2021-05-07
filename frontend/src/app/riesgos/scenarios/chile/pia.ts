@@ -33,6 +33,7 @@ export const physicalImpact: WmsLayerProduct & WpsData = {
     uid: 'pia_physicalImpact',
     description: {
         id: 'physicalImpact',
+        title: 'physicalImpact',
         name: 'Physical Impact',
         type: 'complex',
         icon: 'dot-circle',

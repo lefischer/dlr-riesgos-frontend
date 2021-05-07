@@ -16,8 +16,9 @@ export const userinputSelectedEqPeru: FeatureSelectUconfProduct & VectorLayerPro
     uid: 'selectedRowPeru',
     description: {
         id: 'selectedRow',
+        title: 'selectedRow',
         icon: 'earthquake',
-        options: {},
+        featureSelectionOptions: {},
         defaultValue: null,
         reference: false,
         type: 'complex',
@@ -71,6 +72,7 @@ export const selectedEqPeru: WpsData & Product = {
     uid: 'EqSelection_quakeMLFilePeru',
     description: {
         id: 'quakeMLFile',
+        title: '',
         format: 'application/vnd.geo+json',
         reference: false,
         type: 'complex'
@@ -109,7 +111,7 @@ export const EqSelectionPeru: WizardableProcess & ExecutableProcess & ProductTra
                     options[feature.id] = featureCollection([feature]);
                 }
 
-                userinputSelectedEqPeru.description.options = options;
+                userinputSelectedEqPeru.description.featureSelectionOptions = options;
                 userinputSelectedEqPeru.description.defaultValue = [Object.values(options)[0]];
 
                 return [userinputSelectedEqPeru];

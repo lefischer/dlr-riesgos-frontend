@@ -16,6 +16,7 @@ export const lonminEcuador: Product & WpsData = {
   uid: 'lonmin',
   description: {
     id: 'lonmin',
+    title: '',
     type: 'literal',
     reference: false,
     defaultValue: '-79'
@@ -27,6 +28,7 @@ export const lonmaxEcuador: Product & WpsData = {
   uid: 'lahar_lonmax',
   description: {
     id: 'lonmax',
+    title: '',
     type: 'literal',
     reference: false,
     defaultValue: '-78'
@@ -38,6 +40,7 @@ export const latminEcuador: Product & WpsData = {
   uid: 'lahar_latmin',
   description: {
     id: 'latmin',
+    title: '',
     type: 'literal',
     reference: false,
     defaultValue: '-1'
@@ -49,6 +52,7 @@ export const latmaxEcuador: Product & WpsData = {
   uid: 'lahar_latmax',
   description: {
     id: 'latmax',
+    title: '',
     type: 'literal',
     reference: false,
     defaultValue: '-0.4'
@@ -60,6 +64,7 @@ export const schemaEcuador: Product & WpsData = {
   uid: 'ecuador_schema',
   description: {
     id: 'schema',
+    title: '',
     defaultValue: 'Torres_Corredor_et_al_2017',
     reference: false,
     type: 'literal'
@@ -71,6 +76,7 @@ export const assettypeEcuador: Product & WpsData = {
   uid: 'ecuador_assettype',
   description: {
     id: 'assettype',
+    title: '',
     defaultValue: 'res',
     reference: false,
     type: 'literal',
@@ -82,6 +88,7 @@ export const querymodeEcuador: Product & WpsData = {
   uid: 'ecuador_querymode',
   description: {
     id: 'querymode',
+    title: '',
     // options: ['intersects', 'within'],
     defaultValue: 'intersects',
     reference: false,
@@ -95,6 +102,7 @@ export const initialExposureAshfallRef: WpsData & Product = {
   uid: 'initial_Exposure_Ref',
   description: {
     id: 'selectedRowsGeoJson',
+    title: '',
     type: 'complex',
     reference: true,
     format: 'application/json'
@@ -106,6 +114,7 @@ export const initialExposureAshfall: VectorLayerProduct & WpsData & Product = {
   uid: 'initial_Exposure',
   description: {
     id: 'selectedRowsGeoJson',
+    title: '',
     type: 'complex',
     reference: false,
     icon: 'building',

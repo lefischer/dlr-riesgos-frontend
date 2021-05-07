@@ -14,6 +14,7 @@ export const direction: StringSelectUconfProduct & WpsData = {
     uid: 'direction',
     description: {
         id: 'direction',
+        title: '',
         reference: false,
         type: 'literal',
         options: ['South', 'North'],
@@ -30,6 +31,7 @@ export const vei: Product & WpsData = {
     uid: 'intensity',
     description: {
         id: 'intensity',
+        title: '',
         reference: false,
         type: 'literal',
         defaultValue: 'VEI1',
@@ -41,6 +43,7 @@ export const parameter: StringSelectUconfProduct & WpsData = {
     uid: 'parameter',
     description: {
         id: 'parameter',
+        title: '',
         reference: false,
         type: 'literal',
         options: ['MaxHeight', 'MaxVelocity', 'MaxPressure', 'MaxErosion', 'Deposition'],
@@ -59,6 +62,7 @@ export const laharWms: WmsLayerProduct & WpsData = {
     uid: 'lahar_wms',
     description: {
         id: 'wms',
+        title: '',
         icon: 'avalance',
         name: 'laharWms',
         type: 'literal',  // this is deliberate. layer-wps returns this value as a literal, not as a complex.
@@ -80,6 +84,7 @@ export const laharShakemap: Product & WpsData = {
     uid: 'lahar_shakemap',
     description: {
         id: 'shakemap',
+        title: '',
         format: 'application/xml',
         reference: true,
         type: 'complex'

@@ -378,6 +378,7 @@ export const laharDamageM: WpsData & MultiVectorLayerProduct = {
     uid: 'lahar_damage_output_values',
     description: {
         id: 'merged_output',
+        title: '',
         reference: false,
         defaultValue: null,
         format: 'application/json',
@@ -393,6 +394,7 @@ export const laharUpdatedExposureRef: WpsData & Product = {
     uid: 'laharUpdatedExposureRef',
     description: {
         id: 'updated_exposure',
+        title: '',
         format: 'application/json',
         reference: true,
         type: 'complex'

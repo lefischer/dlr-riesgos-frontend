@@ -21,6 +21,7 @@ export const ashfall: WpsData & Product & VectorLayerProduct = {
     uid: 'ashfall',
     description: {
         id: 'ashfall',
+        title: '',
         icon: 'volcanoe',
         reference: false,
         type: 'complex',
@@ -134,6 +135,7 @@ export const ashfallPoint: WpsData & Product = {
     uid: 'ashfallPoint',
     description: {
         id: 'intensity',
+        title: '',
         reference: false,
         format: 'application/vnd.geo+json',
         type: 'complex'
@@ -146,6 +148,7 @@ export const probability: StringSelectUconfProduct & WpsData = {
     uid: 'ashfall_range_prob',
     description: {
         id: 'probability',
+        title: '',
         type: 'literal',
         reference: false,
         options: ['1', '50', '99'],

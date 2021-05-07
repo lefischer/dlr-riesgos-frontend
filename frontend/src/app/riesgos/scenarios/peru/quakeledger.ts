@@ -19,6 +19,7 @@ export class InputBoundingboxPeru implements BboxUconfProduct, BboxLayerProduct,
     constructor() {
         this.description = {
             id: 'input-boundingbox',
+            title: '',
             icon: 'earthquake',
             name: 'eq-selection: boundingbox',
             type: 'bbox',
@@ -61,6 +62,7 @@ export const tlonPeru: Product & WpsData = {
     uid: 'tlon_peru',
     description: {
         id: 'tlon',
+        title: '',
         description: 'longitude [decimal degrees]',
         defaultValue: '-77.00',
         reference: false,
@@ -74,6 +76,7 @@ export const tlatPeru: Product & WpsData = {
     uid: 'tlat_peru',
     description: {
         id: 'tlat',
+        title: '',
         description: 'latitude [decimal degrees]',
         defaultValue: '-12.00',
         reference: false,
@@ -89,6 +92,7 @@ export const mminPeru: StringUconfProduct & WpsData = {
     uid: 'mmin_peru',
     description: {
         id: 'mmin',
+        title: '',
         type: 'literal',
         wizardProperties: {
             name: 'mmin',
@@ -106,6 +110,7 @@ export const mmaxPeru: StringUconfProduct & WpsData = {
     uid: 'mmax_peru',
     description: {
         id: 'mmax',
+        title: '',
         type: 'literal',
         wizardProperties: {
             name: 'mmax',
@@ -123,6 +128,7 @@ export const zminPeru: StringUconfProduct & WpsData = {
     uid: 'zmin_peru',
     description: {
         id: 'zmin',
+        title: '',
         defaultValue: '0',
         type: 'literal',
         wizardProperties: {
@@ -139,6 +145,7 @@ export const zmaxPeru: StringUconfProduct & WpsData = {
     uid: 'zmax_peru',
     description: {
         id: 'zmax',
+        title: '',
         defaultValue: '100',
         type: 'literal',
         wizardProperties: {
@@ -156,6 +163,7 @@ export const pPeru: Product & WpsData = {
     uid: 'p_peru',
     description: {
         id: 'p',
+        title: '',
         description: 'p',
         type: 'literal',
         reference: false,
@@ -170,6 +178,7 @@ export const selectedEqsPeru: VectorLayerProduct & WpsData = {
     uid: 'QuakeledgerProcess_selectedRowsPeru',
     description: {
         id: 'selectedRows',
+        title: '',
         icon: 'earthquake',
         name: 'available earthquakes',
         description: 'Catalog data',

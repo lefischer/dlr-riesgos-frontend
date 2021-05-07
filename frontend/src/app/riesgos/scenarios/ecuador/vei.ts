@@ -11,6 +11,7 @@ export const selectableVei: StringSelectUconfProduct & WpsData = {
     uid: 'selectable_intensity',
     description: {
         id: 'intensity',
+        title: '',
         reference: false,
         type: 'literal',
         options: ['VEI1', 'VEI2', 'VEI3', 'VEI4'],

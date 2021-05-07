@@ -26,6 +26,7 @@ export const tsDamagePeru: VectorLayerProduct & WpsData & Product = {
     uid: 'ts_damage_peru',
     description: {
         id: 'damage',
+        title: '',
         reference: false,
         icon: 'dot-circle',
         type: 'complex',
@@ -120,6 +121,7 @@ export const tsTransitionPeru: VectorLayerProduct & WpsData & Product = {
     uid: 'ts_transition_peru',
     description: {
         id: 'transition',
+        title: '',
         icon: 'dot-circle',
         reference: false,
         type: 'complex',
@@ -240,6 +242,7 @@ export const tsUpdatedExposurePeru: VectorLayerProduct & WpsData & Product = {
     uid: 'ts_updated_exposure_peru',
     description: {
         id: 'updated_exposure',
+        title: '',
         icon: 'dot-circle',
         reference: false,
         type: 'complex',

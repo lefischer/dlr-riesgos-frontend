@@ -16,8 +16,9 @@ export const userinputSelectedEq: FeatureSelectUconfProduct & VectorLayerProduct
     uid: 'eq_selectedRow',
     description: {
         id: 'selectedRow',
+        title: 'selectedRow',
         icon: 'earthquake',
-        options: {},
+        featureSelectionOptions: {},
         defaultValue: null,
         reference: false,
         type: 'complex',
@@ -71,6 +72,7 @@ export const selectedEq: WpsData & Product = {
     uid: 'EqSelection_quakeMLFile',
     description: {
         id: 'quakeMLFile',
+        title: '',
         format: 'application/vnd.geo+json',
         reference: false,
         type: 'complex'
@@ -109,7 +111,7 @@ export const EqSelection: WizardableProcess & ExecutableProcess & ProductTransfo
                     options[feature.id] = featureCollection([feature]);
                 }
 
-                userinputSelectedEq.description.options = options;
+                userinputSelectedEq.description.featureSelectionOptions = options;
                 userinputSelectedEq.description.defaultValue = [Object.values(options)[0]];
 
                 return [userinputSelectedEq];

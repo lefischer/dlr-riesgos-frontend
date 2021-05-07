@@ -12,6 +12,7 @@ export const lonmin: Product & WpsData = {
   uid: 'lonmin',
   description: {
     id: 'lonmin',
+    title: '',
     type: 'literal',
     reference: false,
     defaultValue: '-71.8'
@@ -24,6 +25,7 @@ export const lonmax: Product & WpsData = {
   uid: 'lonmax',
   description: {
     id: 'lonmax',
+    title: '',
     type: 'literal',
     reference: false,
     defaultValue: '-71.4'
@@ -36,6 +38,7 @@ export const latmin: Product & WpsData = {
   uid: 'latmin',
   description: {
     id: 'latmin',
+    title: '',
     type: 'literal',
     reference: false,
     defaultValue: '-33.2'
@@ -48,6 +51,7 @@ export const latmax: Product & WpsData = {
   uid: 'latmax',
   description: {
     id: 'latmax',
+    title: '',
     type: 'literal',
     reference: false,
     defaultValue: '-33.0'
@@ -60,6 +64,7 @@ export const schema: Product & WpsData = {
   uid: 'schema',
   description: {
     id: 'schema',
+    title: '',
     defaultValue: 'SARA_v1.0',
     reference: false,
     type: 'literal'
@@ -73,6 +78,7 @@ export const assettype: Product & WpsData = {
   uid: 'assettype',
   description: {
     id: 'assettype',
+    title: '',
     defaultValue: 'res',
     reference: false,
     type: 'literal',
@@ -85,6 +91,7 @@ export const querymode: Product & WpsData = {
   uid: 'querymode',
   description: {
     id: 'querymode',
+    title: '',
     // options: ['intersects', 'within'],
     defaultValue: 'intersects',
     reference: false,
@@ -98,6 +105,7 @@ export const initialExposureRef: WpsData & Product = {
   uid: 'initial_Exposure_Ref',
   description: {
     id: 'selectedRowsGeoJson',
+    title: '',
     type: 'complex',
     reference: true,
     format: 'application/json'
@@ -109,6 +117,7 @@ export const initialExposure: VectorLayerProduct & WpsData & Product = {
   uid: 'initial_Exposure',
   description: {
     id: 'selectedRowsGeoJson',
+    title: '',
     type: 'complex',
     reference: false,
     icon: 'building',

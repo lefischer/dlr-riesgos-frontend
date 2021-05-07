@@ -26,6 +26,7 @@ export const lossPeru: WpsData & Product = {
     uid: 'lossPeru',
     description: {
         id: 'loss',
+        title: '',
         reference: false,
         type: 'literal'
     },
@@ -391,6 +392,7 @@ export const eqDamagePeruM: WpsData & MultiVectorLayerProduct = {
     uid: 'eq_deus_peru_output_values',
     description: {
         id: 'merged_output',
+        title: '',
         reference: false,
         defaultValue: null,
         format: 'application/json',

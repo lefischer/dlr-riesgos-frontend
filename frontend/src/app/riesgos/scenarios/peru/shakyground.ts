@@ -13,6 +13,7 @@ export const shakemapWmsOutputPeru: WpsData & WmsLayerProduct = {
     uid: 'ShakygroundProcess_shakeMapFile_wmsPeru',
     description: {
         id: 'shakeMapFile',
+        title: '',
         icon: 'earthquake',
         name: 'shakemap',
         type: 'complex',
@@ -34,6 +35,7 @@ export const eqShakemapRefPeru: WpsData & Product = {
     uid: 'ShakygroundProcess_shakeMapFile_shakemapPeru',
     description: {
         id: 'shakeMapFile',
+        title: '',
         type: 'complex',
         reference: true,
         format: 'text/xml',

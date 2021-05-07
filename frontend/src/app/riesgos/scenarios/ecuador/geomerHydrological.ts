@@ -15,6 +15,7 @@ export const hydrologicalSimulation: WmsLayerProduct & WpsData = {
     uid: 'geomerHydrological_hydrologicalSimulation',
     description: {
         id: 'hydrologicalSimulation',
+        title: '',
         icon: 'tsunami',
         name: 'Hydrological Simulation',
         format: 'application/WMS',
@@ -32,6 +33,7 @@ export const durationTiff: WpsData & Product = {
     uid: 'FlooddamageProcess_duration',
     description: {
         id: 'duration-h',
+        title: '',
         reference: true,
         type: 'complex',
         format: 'image/geotiff',
@@ -44,6 +46,7 @@ export const velocityTiff: WpsData & Product = {
     uid: 'FlooddamageProcess_velocity',
     description: {
         id: 'vsmax-ms',
+        title: '',
         reference: true,
         type: 'complex',
         format: 'image/geotiff',
@@ -56,6 +59,7 @@ export const depthTiff: WpsData & Product = {
     uid: 'FlooddamageProcess_depth',
     description: {
         id: 'wdmax-cm',
+        title: '',
         reference: true,
         type: 'complex',
         format: 'image/geotiff',
@@ -70,8 +74,9 @@ export const depthTiff: WpsData & Product = {
 export const userinputSelectedOutburst: StringSelectUconfProduct & WpsData = {
     uid: 'outburstSite',
     description: {
-        id: 'outburstSite',
         type: 'literal',
+        id: 'outburstSite',
+        title: 'outburstSite',
         reference: false,
         options: ['Rio San Pedro', 'Rio Pita'],
         defaultValue: 'Rio San Pedro',

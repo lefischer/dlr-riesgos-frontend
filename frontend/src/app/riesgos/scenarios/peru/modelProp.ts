@@ -10,6 +10,7 @@ export const assetcategoryPeru: Product & WpsData = {
     uid: 'assetcategoryPeru',
     description: {
         id: 'assetcategory',
+        title: '',
         defaultValue: 'buildings',
         reference: false,
         type: 'literal'
@@ -21,6 +22,7 @@ export const losscategoryPeru: Product & WpsData = {
     uid: 'losscategoryPeru',
     description: {
         id: 'losscategory',
+        title: '',
         defaultValue: 'structural',
         reference: false,
         type: 'literal'
@@ -32,6 +34,7 @@ export const taxonomiesPeru: Product & WpsData = {
     uid: 'taxonomiesPeru',
     description: {
         id: 'taxonomies',
+        title: '',
         reference: false,
         type: 'literal',
         defaultValue: 'none'
@@ -44,6 +47,7 @@ export const fragilityRefPeru: WpsData & Product = {
     uid: 'ModelpropProcess_FragilityPeru',
     description: {
       id: 'selectedRows',
+      title: '',
       type: 'complex',
       reference: true,
       format: 'application/json'

@@ -34,6 +34,7 @@ export const laharAshfallDamageM: WpsData & MultiVectorLayerProduct = {
     uid: 'lahar_ashfall_damage_output_values',
     description: {
         id: 'merged_output',
+        title: '',
         reference: false,
         defaultValue: null,
         format: 'application/json',
