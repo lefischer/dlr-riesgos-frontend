@@ -75,7 +75,7 @@ export class LayerMarshaller  {
             this.translator.onLangChange.subscribe((lce: LangChangeEvent) => {
                 this.currentLang = lce.lang;
             });
-        }
+    }
 
     private getDict(): Object {
         switch (this.currentLang) {
@@ -317,26 +317,48 @@ export class LayerMarshaller  {
         return laharLayers$;
     }
 
-    makeBboxLayer(product: BboxLayerProduct): Observable<ProductVectorLayer> {
+    makeBboxLayer(product: BboxLayerProduct): Observable<ProductCustomLayer> {
         const bboxArray: [number, number, number, number] =
-        [product.value.lllon, product.value.lllat, product.value.urlon, product.value.urlat];
-        const layer: ProductVectorLayer = new ProductVectorLayer({
+            [product.value.lllon, product.value.lllat, product.value.urlon, product.value.urlat];
+        const source = new olVectorSource({
+            features: (new GeoJSON()).readFeatures(
+                featureCollection([bboxPolygon(bboxArray)]))
+        });
+        const olLayer: olVectorLayer = new olVectorLayer({
+            source: source
+        });
+
+        const riesgosLayer: ProductCustomLayer = new ProductCustomLayer({
+            custom_layer: olLayer,
             productId: product.uid,
             id: `${product.uid}_${product.description.id}_result_layer`,
             name: `${product.description.name}`,
-            attribution: '',
-            removable: true,
             opacity: 1.0,
-            type: 'geojson',
+            visible: true,
+            attribution: '',
+            type: 'custom',
+            removable: true,
             filtertype: 'Overlays',
-            data: featureCollection([bboxPolygon(bboxArray)]),
-            options: { style: undefined },
-            popup: null,
-            icon: product.description.icon,
             hasFocus: false
         });
-        layer.productId = product.uid;
-        return of(layer);
+        return of(riesgosLayer);
+        // const layer: ProductVectorLayer = new ProductVectorLayer({
+        //     productId: product.uid,
+        //     id: `${product.uid}_${product.description.id}_result_layer`,
+        //     name: `${product.description.name}`,
+        //     attribution: '',
+        //     removable: true,
+        //     opacity: 1.0,
+        //     type: 'geojson',
+        //     filtertype: 'Overlays',
+        //     data: featureCollection([bboxPolygon(bboxArray)]),
+        //     options: { style: undefined },
+        //     popup: null,
+        //     icon: product.description.icon,
+        //     hasFocus: false
+        // });
+        // layer.productId = product.uid;
+        // return of(layer);
     }
 
     /**

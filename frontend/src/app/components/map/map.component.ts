@@ -417,7 +417,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
                             source: new olVectorSource({
                                 url: 'assets/data/geojson/linea_transmision_ecuador.geojson',
                                 format: new GeoJSON(),
-                                // @ts-ignore
                                 crossOrigin: 'anonymous'
                             })
                         }),
@@ -434,7 +433,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
                             source: new olVectorSource({
                                 url: 'assets/data/geojson/linea_subtransmision_ecuador.geojson',
                                 format: new GeoJSON(),
-                                // @ts-ignore
                                 crossOrigin: 'anonymous'
                             })
                         }),
@@ -457,86 +455,90 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private getBaseLayers(scenario: string): Observable<(Layer | LayerGroup)[]> {
 
-        const lightMap$ = this.wmtsFactory.createWmtsLayer(
-            'https://tiles.geoservice.dlr.de/service/wmts', 'eoc:litemap', this.mapSvc.EPSG).pipe(
-                map(l => {
-                    return new CustomLayer({
-                        custom_layer: l,
-                        id: 'lightMap',
-                        name: 'Light map',
-                        attribution: '&copy, <a href="//geoservice.dlr.de/eoc/basemap/">DLR</a>',
-                        continuousWorld: false,
-                        legendImg: 'https://geoservice.dlr.de/eoc/basemap/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&LAYERS=litemap&ATTRIBUTION=&WIDTH=256&HEIGHT=256&CRS=EPSG%3A3857&STYLES=&BBOX=0%2C0%2C10018754.171394622%2C10018754.171394622',
-                        description: 'http://www.naturalearthdata.com/about/',
-                        opacity: 1,
-                        visible: true
-                    });
-                })
-            );
-        const blueMarble$ = this.wmtsFactory.createWmtsLayer(
-            'https://tiles.geoservice.dlr.de/service/wmts', 'bmng_topo_bathy', this.mapSvc.EPSG).pipe(
-                map(l => {
-                    return new CustomLayer({
-                        custom_layer: l,
-                        id: 'blueMarble',
-                        name: 'Blue marble',
-                        attribution: '&copy, <a href="//geoservice.dlr.de/eoc/basemap/">DLR</a>',
-                        continuousWorld: false,
-                        legendImg: 'https://tiles.geoservice.dlr.de/service/wmts?layer=bmng_topo_bathy&style=_empty&tilematrixset=EPSG%3A3857&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix=EPSG%3A3857%3A5&TileCol=18&TileRow=11',
-                        description: 'Blue Marble NG dataset with topography and bathymetry',
-                        opacity: 1,
-                        visible: false
-                    });
-                })
-            );
-        const relief$ = this.wmtsFactory.createWmtsLayer(
-            'https://tiles.geoservice.dlr.de/service/wmts', 'eoc:world_relief_bw', this.mapSvc.EPSG).pipe(
-                map(l => {
-                    return new CustomLayer({
-                        custom_layer: l,
-                        id: 'relief',
-                        name: 'World relief',
-                        attribution: '&copy, <a href="//geoservice.dlr.de/eoc/basemap/">DLR</a>',
-                        continuousWorld: false,
-                        legendImg: 'https://tiles.geoservice.dlr.de/service/wmts?layer=eoc%3Aworld_relief_bw&style=_empty&tilematrixset=EPSG%3A3857&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix=EPSG%3A3857%3A5&TileCol=18&TileRow=11',
-                        description: 'World Relief Black / White',
-                        opacity: 1,
-                        visible: false
-                    });
-                })
-            );
+        return of([new OsmTileLayer({
+            visible: true,
+            legendImg: 'assets/layer-preview/osm-96px.jpg'
+        })]);
+        // const lightMap$ = this.wmtsFactory.createWmtsLayer(
+        //     'https://tiles.geoservice.dlr.de/service/wmts', 'eoc:litemap', this.mapSvc.EPSG).pipe(
+        //         map(l => {
+        //             return new CustomLayer({
+        //                 custom_layer: l,
+        //                 id: 'lightMap',
+        //                 name: 'Light map',
+        //                 attribution: '&copy, <a href="//geoservice.dlr.de/eoc/basemap/">DLR</a>',
+        //                 continuousWorld: false,
+        //                 legendImg: 'https://geoservice.dlr.de/eoc/basemap/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&LAYERS=litemap&ATTRIBUTION=&WIDTH=256&HEIGHT=256&CRS=EPSG%3A3857&STYLES=&BBOX=0%2C0%2C10018754.171394622%2C10018754.171394622',
+        //                 description: 'http://www.naturalearthdata.com/about/',
+        //                 opacity: 1,
+        //                 visible: true
+        //             });
+        //         })
+        //     );
+        // const blueMarble$ = this.wmtsFactory.createWmtsLayer(
+        //     'https://tiles.geoservice.dlr.de/service/wmts', 'bmng_topo_bathy', this.mapSvc.EPSG).pipe(
+        //         map(l => {
+        //             return new CustomLayer({
+        //                 custom_layer: l,
+        //                 id: 'blueMarble',
+        //                 name: 'Blue marble',
+        //                 attribution: '&copy, <a href="//geoservice.dlr.de/eoc/basemap/">DLR</a>',
+        //                 continuousWorld: false,
+        //                 legendImg: 'https://tiles.geoservice.dlr.de/service/wmts?layer=bmng_topo_bathy&style=_empty&tilematrixset=EPSG%3A3857&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix=EPSG%3A3857%3A5&TileCol=18&TileRow=11',
+        //                 description: 'Blue Marble NG dataset with topography and bathymetry',
+        //                 opacity: 1,
+        //                 visible: false
+        //             });
+        //         })
+        //     );
+        // const relief$ = this.wmtsFactory.createWmtsLayer(
+        //     'https://tiles.geoservice.dlr.de/service/wmts', 'eoc:world_relief_bw', this.mapSvc.EPSG).pipe(
+        //         map(l => {
+        //             return new CustomLayer({
+        //                 custom_layer: l,
+        //                 id: 'relief',
+        //                 name: 'World relief',
+        //                 attribution: '&copy, <a href="//geoservice.dlr.de/eoc/basemap/">DLR</a>',
+        //                 continuousWorld: false,
+        //                 legendImg: 'https://tiles.geoservice.dlr.de/service/wmts?layer=eoc%3Aworld_relief_bw&style=_empty&tilematrixset=EPSG%3A3857&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix=EPSG%3A3857%3A5&TileCol=18&TileRow=11',
+        //                 description: 'World Relief Black / White',
+        //                 opacity: 1,
+        //                 visible: false
+        //             });
+        //         })
+        //     );
 
-        return forkJoin([lightMap$, blueMarble$, relief$]).pipe(
-            map((layers: (Layer | LayerGroup)[]) => {
+        // return forkJoin([lightMap$, blueMarble$, relief$]).pipe(
+        //     map((layers: (Layer | LayerGroup)[]) => {
 
-                    const osmLayer = new OsmTileLayer({
-                        visible: false,
-                        legendImg: 'assets/layer-preview/osm-96px.jpg'
-                    });
-                    layers.push(osmLayer);
+        //             const osmLayer = new OsmTileLayer({
+        //                 visible: false,
+        //                 legendImg: 'assets/layer-preview/osm-96px.jpg'
+        //             });
+        //             layers.push(osmLayer);
 
-                    const gebco = new CustomLayer({
-                        id: 'gebco',
-                        name: 'GEBCO',
-                        custom_layer: new TileLayer({
-                            source: new TileWMS({
-                                url: 'https://www.gebco.net/data_and_products/gebco_web_services/2019/mapserv?',
-                                params: {
-                                    layers: 'GEBCO_2019_Grid',
-                                    tiled: true
-                                },
-                                crossOrigin: 'anonymous'
-                            })
-                        }),
-                        visible: false,
-                        opacity: 1.0,
-                        legendImg: 'https://www.gebco.net/data_and_products/gebco_web_services/2019/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&layers=GEBCO_2019_Grid&tiled=true&WIDTH=128&HEIGHT=128&CRS=EPSG%3A4326&STYLES=&BBOX=-22.5%2C-90%2C0%2C-67.5',
-                        attribution: '&copy, <a href="https://www.gebco.net/">GEBCO Compilation Group (2020) GEBCO 2020 Grid (doi:10.5285/a29c5465-b138-234d-e053-6c86abc040b9)</a>'
-                    });
-                    layers.push(gebco);
-                    return layers;
-            }),
-        );
+        //             const gebco = new CustomLayer({
+        //                 id: 'gebco',
+        //                 name: 'GEBCO',
+        //                 custom_layer: new TileLayer({
+        //                     source: new TileWMS({
+        //                         url: 'https://www.gebco.net/data_and_products/gebco_web_services/2019/mapserv?',
+        //                         params: {
+        //                             layers: 'GEBCO_2019_Grid',
+        //                             tiled: true
+        //                         },
+        //                         crossOrigin: 'anonymous'
+        //                     })
+        //                 }),
+        //                 visible: false,
+        //                 opacity: 1.0,
+        //                 legendImg: 'https://www.gebco.net/data_and_products/gebco_web_services/2019/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&layers=GEBCO_2019_Grid&tiled=true&WIDTH=128&HEIGHT=128&CRS=EPSG%3A4326&STYLES=&BBOX=-22.5%2C-90%2C0%2C-67.5',
+        //                 attribution: '&copy, <a href="https://www.gebco.net/">GEBCO Compilation Group (2020) GEBCO 2020 Grid (doi:10.5285/a29c5465-b138-234d-e053-6c86abc040b9)</a>'
+        //             });
+        //             layers.push(gebco);
+        //             return layers;
+        //     }),
+        // );
     }
 
 
