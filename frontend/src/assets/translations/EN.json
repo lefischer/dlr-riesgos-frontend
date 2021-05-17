@@ -24,11 +24,14 @@
     "Code licenses": "Code licenses",
     "Licenses disclaimer": "A lot of third party libraries were used to create this project. Their licenses are listed here.",
 
-    "TS-Service": "Tsunami Simulation",
+    "TS-Service": "Tsunami simulation",
 
     "Exposure (extended)": "Exposure",
     "Multihazard damage estimation / EQ": "Earthquake damage",
     "Multihazard damage estimation / TS": "Tsunami damage",
+
+    "VEI Selection": "VEI selection",
+    "Ashfall Service": "Ashfall service",
 
     "Lahar_S_VEI10mio_maxheight_25m": "Lahar: maximum depth",
     "Lahar_S_VEI10mio_maxpressure_25m": "Lahar: maximum preassure",
@@ -119,10 +122,17 @@
     "mwhLand_global": "Maximum flow depth / 100m",
     "mwhLand_local": "Maximum flow depth / 10m",
     "primary tif": "Shakemap",
+    "shakemap": "Shakemap",
 
+    "LaharService": "Lahar service",
+    "Lahar Damage": "Lahar damage",
+    "Lahar and Ashfall Damage": "Lahar and ashfall damage",
 
+    "Ashfall Damage": "Ashfall damage",
     "ashfallDamage": "Ashfall damage", 
     "ashfallExposure": "Ashfall exposure",
+    "eq-selection: boundingbox": "Eq-selection: boundingbox",
+    "available earthquakes": "Available earthquakes",
 
     "How to use this site ...": "The configuration wizard on the left side of the screen contains a list of all processes that you will step through in order. Processes are colored according to their current state. If a process requires you to make decisions about inputs, these can be entered in a form. When you are content with your selection, hit 'run' to execute the process.",
     "More on how to use this": "As you step through the process, more and more results will accumulate on the right hand side. The results are displayed in the map and listed in the layer-control. In the layer-control, you can change the order of layers, alter their opacity, etc. You can also find more information under 'Additional layers'",
@@ -147,7 +157,13 @@
 
     "This service returns damage caused by the selected tsunami.": "This service generates informations about the damage caused by a given tsunami.",
 
+    "Earthquake Catalogue": "Earthquake catalogue",
+
+
+
+    "Thickness": "Thickness",
     "Exposure": "Exposure",
+    "Exposure Ashfall": "Exposure ashfall",
     "eq-exposure": "Exposure and damage / EQ",
     "eq-transition": "Damage transitions / EQ",
     "eq-damage": "Loss / EQ",
@@ -157,7 +173,6 @@
     "lahar-exposure": "Exposure and damage / lahar",
     "lahar-transitions": "Damage transitions / lahar",
     "lahar-damage": "Loss / lahar",
-    "Amount of goods that are exposed to a hazard.": "Exposure",
     "exposure_description": "The situation of people, infrastructure, housing, production capacities and other tangible human assets located in hazard-prone areas.",
 
     "Infrastructure layer": "Electric infrastructure",
@@ -171,11 +186,11 @@
     "wd_max": "flood depth",
     "v_atwdmax": "velocity at max. depth",
     "duration": "duration",
-    "Lahar_maxheight": "max. depth",
-    "Lahar_deposition": "deposition",
-    "Lahar_maxerosion": "max. erosion",
-    "Lahar_maxpressure": "max. pressure",
-    "Lahar_maxvelocity": "max. velocity",
+    "Lahar_maxheight": "Max. depth",
+    "Lahar_deposition": "Deposition",
+    "Lahar_maxerosion": "Max. erosion",
+    "Lahar_maxpressure": "Max. pressure",
+    "Lahar_maxvelocity": "Max. velocity",
     "outburstSite": "Outburst site",
     "LaharArrival_S_VEI3_wgs_s1200": "Reach 2 min",
     "LaharArrival_S_VEI3_wgs_s7200": "Reach 120 min",
@@ -192,6 +207,7 @@
     "Deus Lahar description": "This service calculates the damage caused by a given lahar-event.",
     "Ashfall Service description": "This service returns a simulation of an ash-cloud and the resulting deposition",
     "Deus Lahar + Ashfall description": "This service calculates the combined damage caused by ashfall and a lahar.",
+    "ashfall-depth": "Ashfall depth",
 
     "Available_earthquakes": "Available earthquakes",
     "Magnitude": "Magnitude",
@@ -230,11 +246,13 @@
     "Gound_acceleration": "Ground acceleration",
     "Selected_earthquake": "Selected earthquake",
 
+
     "Quickstart": "Quickstart",
     "RIESGOS Demonstrator": "RIESGOS Demonstrator",
     "Ground_acceleration": "Ground acceleration",
     "Earthquake": "Earthquake",
     "EQ Exposure Model Selection": "Exposure model",
+    "EQ Exposure Model": "Exposure model",
     "Groundmotion Simulation": "Groundmotion",
 
     "VEI1": "VEI 1 - 2",
