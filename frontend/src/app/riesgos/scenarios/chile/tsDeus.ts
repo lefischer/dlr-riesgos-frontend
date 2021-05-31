@@ -1,8 +1,8 @@
 import { VectorLayerProduct } from 'src/app/riesgos/riesgos.datatypes.mappable';
 import { WpsData } from '@dlr-eoc/utils-ogc';
 import { Product, ProcessStateUnavailable, ExecutableProcess, ProcessState } from 'src/app/riesgos/riesgos.datatypes';
-import { redGreenRange, ninetyPercentLowerThan, toDecimalPlaces, greenRedRange, weightedDamage } from 'src/app/helpers/colorhelpers';
-import { BarData, createBarchart, createGroupedBarchart } from 'src/app/helpers/d3charts';
+import { toDecimalPlaces, greenRedRange, weightedDamage, blueRedRange, percentileValue } from 'src/app/helpers/colorhelpers';
+import { BarData, createGroupedBarchart } from 'src/app/helpers/d3charts';
 import { WizardableProcess, WizardProperties } from 'src/app/components/config_wizard/wizardable_processes';
 import { eqDamageM, eqUpdatedExposureRef } from './eqDeus';
 import { schema } from './exposure';
@@ -131,20 +131,17 @@ export const tsTransition: VectorLayerProduct & WpsData & Product = {
             style: (feature: olFeature, resolution: number) => {
                 const props = feature.getProperties();
 
-                const counts = Array(7).fill(0);
-                let total = 0;
-                const nrBuildings = props['transitions']['n_buildings'];
-                const states = props['transitions']['to_damage_state'];
-                for (let i = 0; i < states.length; i++) {
-                    const nr = nrBuildings[i];
-                    const state = states[i];
-                    counts[state] += nr;
-                    total += nr;
-                }
+                const total = props['transitions']['n_buildings'].reduce((v, c) => v + c, 0);
+
+                const toStates = props['transitions']['to_damage_state'];
+                const fromStates = props['transitions']['from_damage_state'];
+                const toPerc = percentileValue(toStates, 0.6);
+                const fromPerc = percentileValue(fromStates, 0.6);
+                const weightedChange = (toPerc - fromPerc) / (7 - fromPerc);
 
                 let r; let g; let b;
                 if (total > 0) {
-                    [r, g, b] = greenRedRange(0, 7, ninetyPercentLowerThan(Object.values(counts)));
+                    [r, g, b] = blueRedRange(0, 1, weightedChange);
                 } else {
                     r = g = b = 0;
                 }
@@ -182,7 +179,7 @@ export const tsTransition: VectorLayerProduct & WpsData & Product = {
                         } else if (c === 0) {
                             labeledMatrix[r][c] = `<b>${r - 1}</b>`;
                         } else if (r > 0 && c > 0) {
-                            labeledMatrix[r][c] = toDecimalPlaces(matrix[r-1][c-1], 0);
+                            labeledMatrix[r][c] = toDecimalPlaces(matrix[r-1][c-1], 1);
                         }
                     }
                 }

@@ -43,6 +43,14 @@ export function redGreenRange(startVal: number, endVal: number, currentVal: numb
     return [rgb.r, rgb.g, rgb.b];
 }
 
+export function blueRedRange(startVal: number, endVal: number, currentVal: number): [number, number, number] {
+  const degree = (currentVal - startVal) / (endVal - startVal);
+  const degreeTop = Math.max(Math.min(degree, 1), 0);
+  const hue = 230 * (1 - degreeTop);
+  const rgb = HSVtoRGB({h: hue / 360, s: 0.5, v: 0.5});
+  return [rgb.r, rgb.g, rgb.b];
+}
+
 export function ninetyPercentLowerThan(data: number[]): number {
     const total = data.reduce((carry, current) => carry + current, 0);
     let cuml = 0;
@@ -55,6 +63,36 @@ export function ninetyPercentLowerThan(data: number[]): number {
     }
     return data.length;
 }
+
+export function percentileValue(data: number[], percentile: number): number {
+  const sorted = data.sort();
+  let out = sorted[0];
+
+  const counts = {};
+  for (const val of sorted) {
+    if (counts[val]) {
+      counts[val] += 1;
+    } else {
+      counts[val] = 1;
+    }
+  }
+
+  const l = sorted.length;
+  let cuml = 0;
+  for (const val in counts) {
+    if (counts[val] !== undefined) {
+      const count = counts[val];
+      cuml += count;
+      const perc = cuml / l;
+
+      if (percentile <= perc) {
+        return out;
+      }
+      out = +val;
+    }
+  }
+}
+
 
 export function toDecimalPlaces(value: number, decimalPlaces: number): string {
     switch (typeof value) {

@@ -6,7 +6,7 @@ import { VectorLayerProduct, MultiVectorLayerProduct, VectorLayerProperties } fr
 import { Style as olStyle, Fill as olFill, Stroke as olStroke, Circle as olCircle, Text as olText } from 'ol/style';
 import { Feature as olFeature } from 'ol/Feature';
 import { createBarchart, BarData, createGroupedBarchart } from 'src/app/helpers/d3charts';
-import { redGreenRange, ninetyPercentLowerThan, toDecimalPlaces, weightedDamage, greenRedRange } from 'src/app/helpers/colorhelpers';
+import { toDecimalPlaces, weightedDamage, greenRedRange, percentileValue, blueRedRange } from 'src/app/helpers/colorhelpers';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { fragilityRef, VulnerabilityModel, assetcategory, losscategory, taxonomies } from './modelProp';
@@ -123,20 +123,19 @@ export const transitionProps: VectorLayerProperties = {
             style: (feature: olFeature, resolution: number) => {
                 const props = feature.getProperties();
 
-                const counts = Array(5).fill(0);
-                let total = 0;
-                const nrBuildings = props['transitions']['n_buildings'];
-                const states = props['transitions']['to_damage_state'];
-                for (let i = 0; i < states.length; i++) {
-                    const nr = nrBuildings[i];
-                    const state = states[i];
-                    counts[state] += nr;
-                    total += nr;
-                }
+
+                const total = props['transitions']['n_buildings'].reduce((v, c) => v + c, 0);
+
+                const toStates = props['transitions']['to_damage_state'];
+                const fromStates = props['transitions']['from_damage_state'];
+                const toPerc = percentileValue(toStates, 0.6);
+                const fromPerc = percentileValue(fromStates, 0.6);
+                const weightedChange = (toPerc - fromPerc) / (5 - fromPerc);
+
 
                 let r; let g; let b;
                 if (total > 0) {
-                    [r, g, b] = greenRedRange(0, 5, ninetyPercentLowerThan(Object.values(counts)));
+                    [r, g, b] =blueRedRange(0, 1, weightedChange);
                 } else {
                     r = g = b = 0;
                 }
@@ -189,7 +188,7 @@ export const transitionProps: VectorLayerProperties = {
                         } else if (c === 0) {
                             labeledMatrix[r][c] = `<b>${r - 1}</b>`;
                         } else if (r > 0 && c > 0) {
-                            labeledMatrix[r][c] = toDecimalPlaces(matrix[r-1][c-1], 0);
+                            labeledMatrix[r][c] = toDecimalPlaces(matrix[r-1][c-1], 1);
                         }
                     }
                 }
