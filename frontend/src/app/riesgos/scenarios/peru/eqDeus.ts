@@ -18,6 +18,7 @@ import { createKeyValueTableHtml, createHeaderTableHtml, createTableHtml, zeros,
 import { InfoTableComponentComponent } from 'src/app/components/dynamic/info-table-component/info-table-component.component';
 import { IDynamicComponent } from 'src/app/components/dynamic-component/dynamic-component.component';
 import { TranslatableStringComponent } from 'src/app/components/dynamic/translatable-string/translatable-string.component';
+import { maxDamage$ } from '../chile/constants';
 
 
 
@@ -38,7 +39,7 @@ const eqDamagePeruProps: VectorLayerProperties = {
         vectorLayerAttributes: {
             style: (feature: olFeature, resolution: number) => {
                 const props = feature.getProperties();
-                const [r, g, b] = greenRedRange(0, 3, props.loss_value / 1000000);
+                const [r, g, b] = greenRedRange(0, 3, props.loss_value / maxDamage$);
                 return new olStyle({
                   fill: new olFill({
                     color: [r, g, b, 0.5],

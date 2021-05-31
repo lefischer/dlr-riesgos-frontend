@@ -18,6 +18,7 @@ import { FeatureCollection } from '@turf/helpers';
 import { createTableHtml, zeros, filledMatrix } from 'src/app/helpers/others';
 import { BarData, createGroupedBarchart } from 'src/app/helpers/d3charts';
 import { InfoTableComponentComponent, TableEntry } from 'src/app/components/dynamic/info-table-component/info-table-component.component';
+import { maxDamage$ } from '../chile/constants';
 
 
 
@@ -27,7 +28,7 @@ export const laharLossProps: VectorLayerProperties = {
         vectorLayerAttributes: {
             style: (feature: olFeature, resolution: number) => {
                 const props = feature.getProperties();
-                const [r, g, b] = greenRedRange(0, 1, props.loss_value / 1000000);
+                const [r, g, b] = greenRedRange(0, 1, props.loss_value / maxDamage$);
                 return new olStyle({
                   fill: new olFill({
                     color: [r, g, b, 0.5],

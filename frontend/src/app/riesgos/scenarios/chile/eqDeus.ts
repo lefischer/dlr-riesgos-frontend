@@ -19,7 +19,7 @@ import { Cache } from '@dlr-eoc/utils-ogc';
 import { InfoTableComponentComponent } from 'src/app/components/dynamic/info-table-component/info-table-component.component';
 import { IDynamicComponent } from 'src/app/components/dynamic-component/dynamic-component.component';
 import { TranslatableStringComponent } from 'src/app/components/dynamic/translatable-string/translatable-string.component';
-
+import { maxDamage$ } from './constants';
 
 
 
@@ -39,7 +39,7 @@ export const damageProps: VectorLayerProperties = {
         vectorLayerAttributes: {
             style: (feature: olFeature, resolution: number) => {
                 const props = feature.getProperties();
-                const [r, g, b] = greenRedRange(0, 1, props.loss_value / 1000000);
+                const [r, g, b] = greenRedRange(0, 1, props.loss_value / maxDamage$);
                 return new olStyle({
                   fill: new olFill({
                     color: [r, g, b, 0.5],
@@ -81,7 +81,7 @@ export const damageProps: VectorLayerProperties = {
             }, {
                 feature: {
                     "type": "Feature",
-                    "properties": {'loss_value': 1000000},
+                    "properties": {'loss_value': maxDamage$},
                     "geometry": {
                       "type": "Polygon",
                       "coordinates": [ [
@@ -94,7 +94,7 @@ export const damageProps: VectorLayerProperties = {
                 text: 'Loss 1000000 USD'
             }],
             text: (props: object) => {
-                return `<h4>{{ Loss }}</h4><p>${toDecimalPlaces(props['loss_value'] / 1000000, 2)} M${props['loss_unit']}</p>`;
+                return `<h4>{{ Loss }}</h4><p>${toDecimalPlaces(props['loss_value'] / maxDamage$, 2)} M${props['loss_unit']}</p>`;
             },
             summary: (value: [FeatureCollection]) => {
                 const features = value[0].features;
