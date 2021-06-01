@@ -12,7 +12,7 @@ import { schemaEcuador, initialExposureAshfallRef } from './exposure';
 import { FeatureCollection } from '@turf/helpers';
 import { fragilityRef } from '../chile/modelProp';
 import { BarData, createGroupedBarchart } from 'src/app/helpers/d3charts';
-import { weightedDamage, greenRedRange, toDecimalPlaces, percentileValue, blueRedRange } from 'src/app/helpers/colorhelpers';
+import { weightedDamage, greenRedRange, toDecimalPlaces, yellowBlueRange } from 'src/app/helpers/colorhelpers';
 import { createTableHtml, zeros, filledMatrix } from 'src/app/helpers/others';
 import { Style as olStyle, Fill as olFill, Stroke as olStroke } from 'ol/style';
 import { Feature as olFeature } from 'ol/Feature';
@@ -113,17 +113,29 @@ const ashfallTransitionProps: VectorLayerProperties = {
             style: (feature: olFeature, resolution: number) => {
                 const props = feature.getProperties();
 
+                const I = props['transitions']['n_buildings'].length;
                 const total = props['transitions']['n_buildings'].reduce((v, c) => v + c, 0);
 
                 const toStates = props['transitions']['to_damage_state'];
                 const fromStates = props['transitions']['from_damage_state'];
-                const toPerc = percentileValue(toStates, 0.6);
-                const fromPerc = percentileValue(fromStates, 0.6);
-                const weightedChange = (toPerc - fromPerc) / (4 - fromPerc);
+                const nrBuildings = props['transitions']['n_buildings'];
+
+                let sumTo = 0;
+                let sumFrom = 0;
+                let sumBuildings = 0;
+                for (let i = 0; i < I; i++) {
+                    sumBuildings += nrBuildings[i];
+                    sumTo += toStates[i] * nrBuildings[i];
+                    sumFrom += fromStates[i] * nrBuildings[i];
+                }
+                const meanStateFrom = sumFrom / sumBuildings;
+                const meanStateTo = sumTo / sumBuildings;
+
+                const weightedChange = (meanStateTo - meanStateFrom) / (4 - meanStateFrom);
 
                 let r; let g; let b;
                 if (total > 0) {
-                    [r, g, b] = blueRedRange(0, 1, weightedChange);
+                    [r, g, b] = yellowBlueRange(0, 1, weightedChange);
                 } else {
                     r = g = b = 0;
                 }

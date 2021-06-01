@@ -6,7 +6,7 @@ import { VectorLayerProduct, MultiVectorLayerProduct, VectorLayerProperties } fr
 import { Style as olStyle, Fill as olFill, Stroke as olStroke, Circle as olCircle, Text as olText } from 'ol/style';
 import { Feature as olFeature } from 'ol/Feature';
 import { createBarchart, BarData, createGroupedBarchart } from 'src/app/helpers/d3charts';
-import { toDecimalPlaces, weightedDamage, greenRedRange, percentileValue, blueRedRange } from 'src/app/helpers/colorhelpers';
+import { toDecimalPlaces, weightedDamage, greenRedRange, yellowBlueRange } from 'src/app/helpers/colorhelpers';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { fragilityRef, VulnerabilityModel, assetcategory, losscategory, taxonomies } from './modelProp';
@@ -124,18 +124,30 @@ export const transitionProps: VectorLayerProperties = {
                 const props = feature.getProperties();
 
 
+                const I = props['transitions']['n_buildings'].length;
                 const total = props['transitions']['n_buildings'].reduce((v, c) => v + c, 0);
 
                 const toStates = props['transitions']['to_damage_state'];
                 const fromStates = props['transitions']['from_damage_state'];
-                const toPerc = percentileValue(toStates, 0.6);
-                const fromPerc = percentileValue(fromStates, 0.6);
-                const weightedChange = (toPerc - fromPerc) / (5 - fromPerc);
+                const nrBuildings = props['transitions']['n_buildings'];
+
+                let sumTo = 0;
+                let sumFrom = 0;
+                let sumBuildings = 0;
+                for (let i = 0; i < I; i++) {
+                    sumBuildings += nrBuildings[i];
+                    sumTo += toStates[i] * nrBuildings[i];
+                    sumFrom += fromStates[i] * nrBuildings[i];
+                }
+                const meanStateFrom = sumFrom / sumBuildings;
+                const meanStateTo = sumTo / sumBuildings;
+
+                const weightedChange = (meanStateTo - meanStateFrom) / (5 - meanStateFrom);
 
 
                 let r; let g; let b;
                 if (total > 0) {
-                    [r, g, b] =blueRedRange(0, 1, weightedChange);
+                    [r, g, b] =yellowBlueRange(0, 1, weightedChange);
                 } else {
                     r = g = b = 0;
                 }
