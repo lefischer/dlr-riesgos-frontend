@@ -39,7 +39,7 @@ const eqDamagePeruProps: VectorLayerProperties = {
         vectorLayerAttributes: {
             style: (feature: olFeature, resolution: number) => {
                 const props = feature.getProperties();
-                const [r, g, b] = greenRedRange(0, 3, props.loss_value / maxDamage$);
+                const [r, g, b] = greenRedRange(0, 1, props.loss_value / maxDamage$);
                 return new olStyle({
                   fill: new olFill({
                     color: [r, g, b, 0.5],
@@ -356,7 +356,7 @@ const eqUpdatedExposurePeruProps: VectorLayerProperties = {
                     </ul>
                 `;
 
-                return `<h4 style="color: var(--clr-p1-color, #666666);">{{ Earthquake }}: {{ damage_classification }}</h4>${anchor.innerHTML}<br/>${legend}<br/>{{GroupsSimplified}}`;
+                return `<h4 style="color: var(--clr-p1-color, #666666);">{{ Earthquake }}: {{ damage_classification }}</h4>${anchor.innerHTML}<br/>${legend}<br/>{{GroupsSimplified}}{{StatesNotComparable}}`;
             },
             summary: (value: [FeatureCollection]) => {
                 const counts = {

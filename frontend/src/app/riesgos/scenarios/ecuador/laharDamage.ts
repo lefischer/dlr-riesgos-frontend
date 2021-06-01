@@ -332,7 +332,7 @@ export const laharUpdatedExposureProps: VectorLayerProperties = {
                 }
 
                 const anchorUpdated = createGroupedBarchart(anchor, data, 400, 400, '{{ taxonomy_DX }}', '{{ nr_buildings }}');
-                return `<h4 style="color: var(--clr-p1-color, #666666);">Lahar: {{ damage_classification }}</h4>${anchor.innerHTML} {{ DamageStatesMavrouli }}`;
+                return `<h4 style="color: var(--clr-p1-color, #666666);">Lahar: {{ damage_classification }}</h4>${anchor.innerHTML} {{ DamageStatesMavrouli }}{{StatesNotComparable}}`;
             },
             summary: (value: [FeatureCollection]) => {
                 const counts = {
